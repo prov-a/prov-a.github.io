@@ -1,0 +1,190 @@
+<div class="card w-100" id="party[[index]]" style="background-color: #e2e3e5;">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <button class="btn btn-link text-dark font-weight-bold main-party-collapse" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#party[[index]]body">
+                <u class="party-title">Unknown Party</u>
+            </button>
+            <button class="btn btn-danger btn-sm float-end delete-party" type="button"
+                    for="party[[index]]"><i class="fa fa-trash"></i>
+            </button>
+        </h5>
+    </div>
+    <div id="party[[index]]body" class="collapse" data-parent="#partiesContainer">
+        <div class="card-body w-100">
+            <input type="hidden" class="party-id" id="party[[index]]id" name="party[[index]]id"
+                   value="">
+
+            <div id="party[[index]]selector">
+                <div class="my-4">
+                    <label>Select an existing Party or enter a new Party data in the form below</label>
+                    <select id="party[[index]]select2"
+                            class="form-control party-selector form-control-lg" required
+                            style="width:100%; height:100%">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <hr>
+            </div>
+
+            <div>
+                <div class="my-4 d-flex flex-row align-items-center flex-wrap">
+                    <label for="party[[index]]role" class="me-5"><h6>Party Role</h6></label>
+                    <select id="party[[index]]role" name="party[[index]]role"
+                            class="form-select w-auto party-role">
+                        <option value="" selected>Choose...</option>
+                        <option value="sender">Sender</option>
+                        <option value="receiver">Receiver</option>
+                        <option value="agent">Agent</option>
+                        <option value="sender_agent">Sender&#39;s Agent</option>
+                        <option value="receiver_agent">Receiver&#39;s Agent</option>
+                    </select>
+                </div>
+            </div>
+            <hr>
+
+            <div class="text-center">
+                <button id="party[[index]]edit" type="button" class="btn btn-warning edit-party" data-bs-toggle="modal"
+                        data-bs-target="#party[[index]]modal"><i class="fas fa-user-edit"></i> Edit Party
+                </button>
+            </div>
+            <div id="party[[index]]modal" class="modal fade party-data" tabindex="-1" for="party[[index]]">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header"style="background-color: #e2e3e5;">
+                            <h5 class="modal-title party-title">Unknown Party</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="my-4 d-flex flex-row align-items-center flex-wrap mb-3">
+                                <label for="party[[index]]label" class="me-5"><h6>Party Label</h6></label>
+                                <input type="text" class="form-control me-4 w-50 party-label"
+                                       id="party[[index]]label" name="party[[index]]label">
+                            </div>
+                            <div class="my-4">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input party-type" type="radio"
+                                           name="party[[index]]type"
+                                           id="party[[index]]person" value="person" checked="checked">
+                                    <label class="form-check-label" for="party[[index]]person"><h6>Person</h6></label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input party-type" type="radio"
+                                           name="party[[index]]type"
+                                           id="party[[index]]group" value="group">
+                                    <label class="form-check-label" for="party[[index]]group"><h6>Group</h6></label>
+                                </div>
+                            </div>
+                            <div class="my-5 w-100">
+                                <h6 class="border-bottom">Party Names</h6>
+                                <div id="party[[index]]nameContainer" class="w-100 my-4 name-container">
+                                </div>
+                                <div class="text-center">
+                                    <button for="party[[index]]nameContainer" type="button"
+                                            class="add-party-name btn btn-secondary mx-auto"><i
+                                            class="fas fa-plus-circle"></i> Add Name
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="my-4 person-data">
+                                <div class="d-flex flex-row align-items-center flex-wrap">
+                                    <label class="me-5"><h6>Gender</h6></label>
+                                    <select id="party[[index]]gender" name="party[[index]]gender"
+                                            class="w-auto form-select">
+                                        <option value="">Unknown</option>
+                                        <option value="aat:300411837">Feminine</option>
+                                        <option value="aat:300411836">Masculine</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="my-4">
+                                <label for="party[[index]]cultures"><h6>Culture (including Nationality, Ethnicity, and Religion)</h6></label>
+                                <select class="form-control w-100" id="party[[index]]cultures"
+                                        name="party[[index]]cultures">
+                                </select>
+                            </div>
+                            <div class="my-4 person-data">
+                                <label for="party[[index]]occupations"><h6>Occupations</h6></label>
+                                <select class="form-control w-100" id="party[[index]]occupations"
+                                        name="party[[index]]occupations">
+                                </select>
+                            </div>
+                            <div class="my-4 group-data" style="display: none;">
+                                <label for="party[[index]]groupTypes"><h6>Group Classification (including
+                                    Organizations and Social Groups)</h6></label>
+                                <select class="form-control w-100" id="party[[index]]groupTypes"
+                                        name="party[[index]]groupTypes">
+                                </select>
+                            </div>
+                            <div class="my-4">
+                                <label for="party[[index]]WD"><a
+                                        href="https://www.wikidata.org/wiki/Wikidata:Main_Page" target="_blank"><h6>Wikidata
+                                    ID</h6></a></label>
+                                <select class="form-control w-100 party-wikidata wikidata"
+                                        id="party[[index]]WD" name="party[[index]]WD" title="">
+                                    <option value="" selected>Choose</option>
+                                </select>
+                            </div>
+                            <div class="my-4">
+                                <label for="party[[index]]ULAN"><a
+                                        href="https://www.getty.edu/research/tools/vocabularies/ulan/" target="_blank"><h6>ULAN
+                                    ID</h6></a></label>
+                                <select class="form-control w-100 ulan"
+                                        id="party[[index]]ULAN" name="party[[index]]ULAN" title="">
+                                    <option value="" selected>Choose</option>
+                                </select>
+                            </div>
+
+                            <div class="my-5 w-100">
+                                <h6 class="border-bottom">Party Relations</h6>
+                                <div class="w-100 my-4" id="party[[index]]relationsContainer">
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" for="party[[index]]relationsContainer"
+                                            class="add-relation btn btn-secondary"><i
+                                            class="fas fa-plus-circle"></i> Add Relation
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="my-5">
+                                <h6 id="party[[index]]birthLabel" class="border-bottom">Birth</h6>
+                                <div class="px-3 pt-3 time-container">
+                                    <input class="form-control my-2 edtf-parse" id="party[[index]]birthTimeString" name="party[[index]]birthTimeString" type="text" placeholder="ex. January 19, 1920">
+                                    <div class="d-flex flex-row align-items-center flex-wrap my-2">
+                                        <label class="me-3 h6 m-0" for="party[[index]]birthTimeEDTF">EDTF</label>
+                                        <input class="form-control edtf-check w-auto" id="party[[index]]birthTimeEDTF" name="party[[index]]birthTimeEDTF" type="text" placeholder="ex. 1920-01-19">
+                                        <small>Time string according to <a href="https://www.loc.gov/standards/datetime/" target="_blank">Extended Date/Time Format (EDTF) Specification</a></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="my-5">
+                                <h6 id="party[[index]]deathLabel" class="border-bottom">Death</h6>
+                                <div class="px-3 pt-3 time-container">
+                                    <input class="form-control my-2 edtf-parse" id="party[[index]]deathTimeString" name="party[[index]]deathTimeString" type="text" placeholder="ex. January 19, 1920">
+                                    <div class="d-flex flex-row align-items-center flex-wrap my-2">
+                                        <label class="me-3 h6 m-0" for="party[[index]]deathTimeEDTF">EDTF</label>
+                                        <input class="form-control edtf-check w-auto" id="party[[index]]deathTimeEDTF" name="party[[index]]deathTimeEDTF" type="text" placeholder="ex. 1920-01-19">
+                                        <small>Time string according to <a href="https://www.loc.gov/standards/datetime/" target="_blank">Extended Date/Time Format (EDTF) Specification</a></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="my-5 w-100">
+                                <h6 class="border-bottom">Party Locations</h6>
+                                <div class="w-100 my-4 sort-loc" id="party[[index]]locationsContainer">
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" for="party[[index]]locationsContainer"
+                                            class="location-add btn btn-secondary"><i
+                                            class="fas fa-plus-circle"></i> Add
+                                        Location
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

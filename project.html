@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROVA, The Provenance App</title>
+     <!--Jquery-->
+     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+     <!--JqueryUI-->
+     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+     <!--Bootstrap-->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+     <style>
+        /* Custom CSS for smaller, horizontally scrollable table */
+        #dataTable {
+            font-size: smaller;
+            width: 100%; /* Extend table to page width */
+            border: 1px solid #dee2e6; /* Add border */
+        }
+        #dataTable th {
+            font-size: smaller;
+        }
+        td[contenteditable="true"] {
+            font-size: smaller;
+            border: 1px solid #ccc;
+            padding: 5px;
+            min-width: 50px; /* Set minimum width for cells */
+            white-space: pre-wrap; /* or pre-line */
+        }
+        tr.readonly-cell th {
+            vertical-align: top;
+            background-color: #f0f0f0; /* Gray background color */
+            color: #6c757d; /* Gray text color */
+        }
+      </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="index.html">Prova - The Provenance App</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <div class="container mt-5">
+        <form id="projectForm">
+            <div class="mb-5">
+                <label for="orcid" class="form-label">Author ORCID:</label>
+                <input type="text" class="form-control" id="orcid" name="orcid" required>
+                <small id="orcidHelp" class="form-text text-muted">Enter your ORCID (Open Researcher and Contributor ID). Learn more about ORCID <a href="https://orcid.org/" target="_blank">here</a>.</small>
+            </div>
+            <div class="mb-4">
+                <label for="license" class="form-label">Creative Commons License:</label>
+                <select class="form-select" id="license" name="license">
+                    <option value="https://creativecommons.org/publicdomain/zero/1.0/">CC 0</option>
+                    <option value="https://creativecommons.org/licenses/by/4.0/">CC BY</option>
+                    <option value="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</option>
+                </select>
+                <small id="licenseHelp" class="form-text text-muted">Select a Creative Commons license. Learn more about Creative Commons <a href="https://creativecommons.org/licenses/" target="_blank">here</a>.</small>
+            </div>
+          <div class="mb-5">
+            <div class="mb-3">
+                <span class="form-label">Data:</span>
+                <button type="button" class="btn btn-sm btn-danger float-end" id="resetTable">Reset Table</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable">
+                <thead>
+                    <tr>
+                    <th>title</th>
+                    <th>author</th>
+                    <th>institution</th>
+                    <th>url</th>
+                    <th>date</th>
+                    <th>medium</th>
+                    <th>accessionID</th>
+                    <th>provenance</th>
+                    <th>notes</th>
+                    <th>creditLine</th>
+                    <th>inscriptions</th>
+                    <th>exhibitions</th>
+                    <th>bibliography</th>
+                    </tr>
+                    <tr class="readonly-cell">
+                        <th>Title of the artifact</th>
+                        <th>Name of the author or creator</th>
+                        <th>Current owning institution</th>
+                        <th>URL of the artifact (if any)</th>
+                        <th>Date of creation</th>
+                        <th>Medium of the artifact</th>
+                        <th>Unique identifier for accession</th>
+                        <th>Provenance text</th>
+                        <th>Provenance text notes</th>
+                        <th>Credit line</th>
+                        <th>Inscriptions or markings</th>
+                        <th>Exhibition history</th>
+                        <th>List of related literature or references</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dynamically populated with JavaScript -->
+                </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-6 d-flex flex-column align-items-start">
+                    <button type="button" class="btn btn-sm btn-success" id="addRow">Add Row</button>
+                    <small class="form-text text-muted">(Maximum 200 Rows)</small>
+                </div>
+                <div class="col-6 d-flex flex-column align-items-end text-end">
+                    <button type="button" class="btn btn-sm btn-primary" id="downloadCSV">Download as CSV</button>
+                    <small class="form-text text-muted">Download table data and reload it later.</small>
+                </div>
+            </div>
+          </div>
+          <div class="mb-5">
+                <label for="csvFile" class="form-label">Upload CSV File:</label>
+                <input type="file" class="form-control" id="csvFile" accept=".csv">
+                <small class="form-text text-muted">Do you already have a CSV file? Upload it. (Maximum 2MB, 200 Rows)</small>
+            </div>
+          <hr>
+          <button type="submit" class="btn btn-primary">Initialize Project</button>
+          <small class="d-block text-muted">Once the project has been initialised, you can upload the project file in the <a href="editor.html">data structure section</a></small>
+
+        </form>
+      </div>
+</body>
+<script>
+    $(document).ready(function() {
+        const MAX_CSV_SIZE_MB = 2; // Maximum allowed CSV size in MB
+        const MAX_ROWS = 200; // Maximum allowed rows
+
+        // Function to handle CSV file upload
+        $('#csvFile').change(function() {
+            const file = this.files[0];
+            const fileSizeMB = file.size / (1024 * 1024); // Convert file size to MB
+            if (fileSizeMB > MAX_CSV_SIZE_MB) {
+                alert('CSV file size exceeds the limit of ' + MAX_CSV_SIZE_MB + ' MB.');
+                return;
+            }
+            else {
+                Papa.parse(file, {
+                  complete: function(results) {
+                    const data = results.data;
+                    const tableBody = $('#dataTable tbody');
+                    tableBody.empty();
+                    data.forEach(function(row) {
+                      const newRow = $('<tr></tr>');
+                      row.forEach(function(cell, index) {
+                        if (index < 13) {
+                            newRow.append($('<td contenteditable="true"></td>').text(cell));
+                        }
+                      });
+                      tableBody.append(newRow);
+                    });
+
+
+                    updateAddRowButtonVisibility(); // Update Add Row button visibility
+                  }
+                })
+            }
+        });
+
+        // Function to add a new row to the table
+        function addRow() {
+            const rowCount = $('#dataTable tbody tr').length;
+            if (rowCount >= MAX_ROWS) {
+                return
+            }
+            const newRow = $('<tr></tr>');
+            for (let i = 0; i < 13; i++) {
+                newRow.append($('<td contenteditable="true"></td>').text(''));
+            }
+            newRow.append($('<td><button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button></td>')); // Add remove button
+            $('#dataTable tbody').append(newRow);
+            updateAddRowButtonVisibility(); // Update Add Row button visibility
+        }
+
+        // Add event listener to the Add Row button
+        $('#addRow').click(function() {
+            addRow();
+        });
+
+        function updateAddRowButtonVisibility() {
+            const rowCount = $('#dataTable tbody tr').length;
+            if (rowCount >= MAX_ROWS) {
+                $('#addRow').hide(); // Hide Add Row button if maximum rows reached
+            } else {
+                $('#addRow').show(); // Show Add Row button otherwise
+            }
+        }
+
+        // Add event listener to remove buttons
+        $(document).on('click', '.btn-remove', function() {
+            const confirmed = confirm('Are you sure you want to delete the row?');
+            if (confirmed) {
+                $(this).closest('tr').remove();
+                updateAddRowButtonVisibility(); // Update Add Row button visibility
+            }
+        });
+
+        $('#resetTable').click(function() {
+            const confirmed = confirm('Are you sure you want to reset the table?');
+            if (confirmed) {
+                $('#dataTable tbody').empty();
+                $('#addRow').show(); // Show Add Row button
+            }
+        });
+
+        // Form submission
+        $('#projectForm').submit(function(e) {
+            e.preventDefault();
+            const formData = {
+                orcid: $('#orcid').val(),
+                license: $('#license').val(),
+                data: [],
+                parties: {}
+            };
+            $('#dataTable tbody tr').each(function(rowIndex) {
+                const rowData = {};
+                let hasData = false;
+                rowData["index"] = rowIndex
+                rowData["provenanceData"] = []
+                $(this).find('td[contenteditable="true"]').each(function(cellIndex) {
+                    const columnName = $('#dataTable thead th').eq(cellIndex).text().trim();
+                    const cellText = $(this).text().trim();
+                    rowData[columnName] = cellText;
+                    if (cellText !== '') {
+                        hasData = true;
+                    }
+                });
+                if (hasData) { // Check if rowData contains any data
+                    formData.data.push(rowData);
+                }
+            });
+            if (formData.data.length>0){
+                // Convert formData to JSON and download
+                const jsonData = JSON.stringify(formData);
+                const blob = new Blob([jsonData], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'project.prova';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+            else{
+                alert("Please enter data before initializing the project")
+            }
+        });
+
+        // Function to download table data as CSV
+        $('#downloadCSV').click(function() {
+            const csvContent = [];
+            $('#dataTable tbody tr').each(function() {
+                const rowData = [];
+                $(this).find('td[contenteditable="true"]').each(function() {
+                  const cellContent = $(this).text().replace(/"/g, '""').trim();
+                  rowData.push('"' + cellContent.replace(/\n/g, '\\n') + '"');
+                });
+                csvContent.push(rowData.join(','));
+            });
+            const csvString = csvContent.join('\n');
+            const encodedUri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvString);
+            const link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', 'table_data.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
+        // Confirmation before leaving the page
+        window.addEventListener('beforeunload', function(e) {
+            const confirmationMessage = 'Data will be lost. Are you sure you want to leave this page?';
+            e.returnValue = confirmationMessage;
+            return confirmationMessage;
+        });
+    });
+</script>
+
+</html>

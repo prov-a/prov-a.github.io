@@ -1,0 +1,381 @@
+<div class="row h-100">
+    <div class="col-md-3 p-4 h-100" style="overflow-y: scroll;">
+        <div class="py-3 w-100 ">
+            Found <span id="countData"></span> works.
+        </div>
+        <div class="py-3 w-100 mb-2">
+            <div class="alert alert-info small d-none" id="filtersArea">
+                <button id="removeFilter" class="btn btn-close float-end"></button>
+                <div id="filtersContainer"></div>
+            </div>
+            <div class="row">
+                <div class="col-10 pe-1" id="filterTitleContainer">
+                    <select id="filterTitle">
+                        <option val=""></option>
+                    </select>
+                </div>
+                <div class="col-2 ps-0 text-center" id="filterModalBtn">
+                    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#filterModal"><i class="fas fa-tasks"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <div class="d-flex justify-content-center">
+                <button id="prevObject"class="btn btn-dark mx-2">< Prev</button>
+                <button id="nextObject"class="btn btn-dark mx-2">Next ></button>
+            </div>
+        </div>
+        <h3 id="title"></h3>
+        <h4 id="author"></h4>
+        <h4 id="date"></h4>
+        <p><h5 id="institution"></h5><span id="accession"></span></p>
+        <p id="provenance"></p>
+        <div class="accordion">
+            <div id="cardNotes"  class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#notesCollapse">
+                    Notes
+                </button>
+              </h2>
+              <div id="notesCollapse" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    <p id="notes"></p>
+                </div>
+              </div>
+            </div>
+            <div id="cardMedium" class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#mediumCollapse">
+                      Medium
+                  </button>
+                </h2>
+                <div id="mediumCollapse" class="accordion-collapse collapse">
+                  <div class="accordion-body">
+                      <p id="medium"></p>
+                  </div>
+                </div>
+            </div>
+            <div id="cardCredit" class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#creditCollapse">
+                    Credit Line
+                </button>
+              </h2>
+              <div id="creditCollapse" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    <p id="credit"></p>
+                </div>
+              </div>
+            </div>
+            <div id="cardInscriptions" class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#inscriptionsCollapse">
+                    Inscriptions
+                </button>
+              </h2>
+              <div id="inscriptionsCollapse" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    <p id="inscriptions"></p>
+                </div>
+              </div>
+            </div>
+            <div id="cardExhibitions" class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#exhibitionsCollapse">
+                    Exhibitions
+                  </button>
+                </h2>
+                <div id="exhibitionsCollapse" class="accordion-collapse collapse">
+                  <div class="accordion-body">
+                    <p id="exhibitions"></p>
+                </div>
+                </div>
+            </div>
+            <div id="cardBibliography" class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bibliographyCollapse">
+                    Bibliography
+                  </button>
+                </h2>
+                <div id="bibliographyCollapse" class="accordion-collapse collapse">
+                  <div class="accordion-body">
+                    <p id="bibliography"></p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 p-5 bg-light h-100" style="overflow-y: scroll;">
+        <form id="activityForm" style="display:none">
+            <div class="card mt-5">
+                <div class="card-header bg-dark text-light">
+                    <h5>Provenance Activity</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-row align-items-center flex-wrap mt-4">
+                        <label for="activityCertainty" class="me-5">
+                            <h5>Activity Certainty</h5>
+                        </label>
+                        <select id="activityCertainty" name="activityCertainty" class="form-select w-auto">
+                            <option value="aat:300068765" selected>Certain</option>
+                            <option value="aat:300435721">Probably</option>
+                            <option value="aat:300435722">Possibly</option>
+                            <option value="aat:300404908">Obsolete</option>
+                        </select>
+                    </div>
+                    <div class="d-flex flex-row align-items-center flex-wrap mt-4">
+                        <label for="activityType" class="me-5">
+                            <h5>Activity Type</h5>
+                        </label>
+                        <select id="activityType" name="activityType" class="form-select w-auto">
+                            <option value="" selected>Unknown</option>
+                            <optgroup label="Production">
+                                <option value="aat:300404387__Creation">Creation</option>
+                                <option value="aat:300417639__Commission">Commission</option>
+                            </optgroup>
+                            <optgroup label="Change of Ownership">
+                                <option value="aat:300157782__Acquisition">Acquisition</option>
+                                <option value="aat:300417643__Auction">Auction</option>
+                                <option value="aat:300417641__Bequest">Bequest</option>
+                                <option value="aat:300417640__Endowment">Endowment</option>
+                                <option value="aat:300263427__Exchange">Exchange</option>
+                                <option value="aat:300263427/aat:300417642__Exchange and Purchase">Exchange and Purchase</option>
+                                <option value="aat:300417654__Field Collected">Field Collected</option>
+                                <option value="aat:300417637__Gift">Gift</option>
+                                <option value="aat:300417637/aat:300263427__Gift and Exchange">Gift and Exchange</option>
+                                <option value="aat:300417637/aat:300417642__Gift and Purchase">Gift and Purchase</option>
+                                <option value="aat:300444188__Inheritance">Inheritance</option>
+                                <option value="aat:300417637/aat:300404159__Partial Gift">Partial Gift</option>
+                                <option value="aat:300435595__Promised Gift">Promised Gift</option>
+                                <option value="aat:300417642__Purchase">Purchase</option>
+                            </optgroup>
+                            <optgroup label="Change of Custody">
+                                <option value="aat:300417658__Confiscation">Confiscation</option>
+                                <option value="aat:300417650__Consignment">Consignment</option>
+                                <option value="aat:300438600__Consignment (Withdrawn)">Consignment (Withdrawn)</option>
+                                <option value="aat:300438557__Encounter">Encounter</option>
+                                <option value="aat:300411616__In Possession">In Possession</option>
+                                <option value="aat:300379554__Looting">Looting</option>
+                                <option value="aat:300053892__Move">Move</option>
+                                <option value="aat:300056390__On Deposit">On Deposit</option>
+                                <option value="aat:300417645__On Loan">On Loan</option>
+                                <option value="aat:300438467__Return of Loan">Return of Loan</option>
+                                <option value="aat:300417843__Restitution">Restitution</option>
+                                <option value="aat:300444192__Sequestration">Sequestration</option>
+                                <option value="aat:300417657__Theft">Theft</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <hr>
+                    <div class="mt-5">
+                        <h5>Activity Time</h5>
+                        <div class="card-body time-container">
+                             <input class="form-control my-2 edtf-parse" id="activityTimeString" name="activityTimeString" type="text" placeholder="ex. January 19, 1920">
+                            <div class="d-flex flex-row align-items-center flex-wrap my-2">
+                                <label class="me-3 h6 m-0" for="activityTimeEDTF">EDTF</label>
+                                <input class="form-control edtf-check date-fill w-auto" id="activityTimeEDTF" name="activityTimeEDTF" type="text" placeholder="ex. 1920-01-19">
+                                <small>Time string according to <a href="https://www.loc.gov/standards/datetime/" target="_blank">Extended Date/Time Format (EDTF) Specification</a></small>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="mt-5">
+                        <h5>Activity Place</h5>
+                        <div class="row card-body">
+                            <div class="p-3 location-container">
+                                <div class="row w-100">
+                                    <div class="col-4 pe-1">
+                                        <label for="activityStreet">Street</label>
+                                        <input type="text" class="form-control" id="activityStreet" name="activityStreet">
+                                    </div>
+                                    <div class="col-2 px-1">
+                                        <label for="activityCity">City</label>
+                                        <input type="text" class="form-control location-data city" id="activityCity"
+                                               name="activityCity">
+                                    </div>
+                                    <div class="col-2 px-1">
+                                        <label for="activityProvince">Province</label>
+                                        <input type="text" class="form-control location-data province" id="activityProvince"
+                                               name="activityProvince">
+                                    </div>
+                                    <div class="col-2 px-1">
+                                        <label for="activityCountry">Country</label>
+                                        <input type="text" class="form-control location-data country" id="activityCountry"
+                                               name="activityCountry">
+                                    </div>
+                                    <div class="col-2 ps-1">
+                                        <div class="form-check mt-4 ms-2">
+                                            <input class="form-check-input" type="checkbox" id="activityLocationVague"
+                                                   name="activityLocationVague">
+                                            <label class="form-check-label" for="activityLocationVague">
+                                                Nearby
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-2 w-100">
+                                    <label for="activityLocationWD">
+                                        <a href="https://www.wikidata.org/wiki/Wikidata:Main_Page" target="_blank">Wikidata
+                                            ID</a>
+                                    </label>
+                                    <select class="form-control w-100 location-wikidata" id="activityLocationWD"
+                                            name="activityLocationWD" title="">
+                                        <option value="" selected>Choose</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="mt-5">
+                        <h5>Activity Title</h5>
+                        <div class="card-body p-3"> 
+                            <input type="text" class="form-control" id="activityTitle" name="activityTitle">
+                            <small>The title of the event within which the
+                                activity was carried out (i.e., an auction)</small>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="mt-5">
+                        <h5>Activity Artwork Identifiers</h5>
+                        <div class="card-body p-3">
+                            <div class="w-100" id="identifiersContainer">
+                            </div>
+                            <div class="text-center">
+                                <button id="addIdentifier" type="button" for="identifiersContainer"
+                                        class="btn btn-dark my-4"><i class="fas fa-plus-circle"></i> Add
+                                    Identifier
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="mt-5">
+                        <h5>Activity Artwork Prices</h5>
+                        <div class="card-body p-3">
+                            <div class="w-100" id="pricesContainer">
+                            </div>
+                            <div class="text-center">
+                                <button id="addPrice" type="button" for="pricesContainer"
+                                        class="btn btn-dark my-4"><i class="fas fa-plus-circle"></i> Add
+                                    Price
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-5">
+                <div class="card-header bg-dark text-light">
+                    <h5>Activity Parties</h5>
+                </div>
+                <div class="card-body w-100">
+                    <div id="partiesContainer" class="w-100">
+
+                    </div>
+                    <div class="text-center">
+                        <button id="addParty" type="button" class="btn btn-dark my-4"><i
+                                class="fas fa-plus-circle"></i> Add Party
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-5">
+                <div class="card-header bg-dark text-light">
+                    <h5>Activity Assertion</h5>
+                </div>
+                <div class="card-body w-100">
+                    <div class="card-body w-100">
+                        <div class="mb-3">
+                            <label for="assertionAuthor">
+                                <h5>Assertion Author</h5>
+                            </label>
+                            <input id="assertionAuthor" name="assertionAuthor" type="text" class="form-control" style="width:20em">
+                        </div>
+                        <div class="mb-5">
+                            <label for="assertionTimeString">
+                                <h5>Assertion Date</h5>
+                            </label>
+                            <div class="time-container">
+                                 <input class="form-control my-2 edtf-parse" id="assertionTimeString" name="assertionTimeString" type="text" placeholder="ex. January 19, 1920">
+                                <div class="d-flex flex-row align-items-center flex-wrap my-2">
+                                    <label class="me-3 h6 m-0" for="assertionTimeEDTF">EDTF</label>
+                                    <input class="form-control edtf-check w-auto" id="assertionTimeEDTF" name="assertionTimeEDTF" type="text" placeholder="ex. 1920-01-19">
+                                    <small>Time string according to <a href="https://www.loc.gov/standards/datetime/" target="_blank">Extended Date/Time Format (EDTF) Specification</a></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="assertionContradiction"
+                                   name="assertionContradiction">
+                            <label class="form-check-label" for="assertionContradiction"> <i
+                                    class="rounded-circle bg-light fas fa-lg text-info fa-question-circle"></i> This assertion is
+                                a hypothesis in contradiction with the previous activity (e.g., "or").</label>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="mr-5" for="assertionNotes"><h5>Assertion Notes</h5></label>
+                            <textarea class="form-control" id="assertionNotes" name="assertionNotes"
+                                      rows="3"></textarea>
+                        </div>
+                        <h5 class="border-bottom">Assertion Sources</h5>
+                        <div id="sourcesContainer" class="w-100"></div>
+                        <div class="text-center">
+                            <button id="addSource" type="button" class="btn btn-dark mx-auto my-4"><i
+                                    class="fas fa-plus-circle"></i> Add Source
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-3 p-4 h-100" style="overflow-y: scroll;">
+        <div>
+            <div class="py-5">
+                <h5>Activities:</h5>
+                <small class="text-secondary">Drag and drop <i class="fas fa-sort"></i> an Activity to change
+                    ascending chronological order</small>
+                <ul id="activitiesList" class="list-group mt-4 sort-li">
+                </ul>
+                <div class="text-center mt-3">
+                    <button id="addActivity" type="button" class="btn btn-dark"><i class="fas fa-plus-circle"></i>
+                        Add Activity
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="filterModal" class="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title text-light">Filters</h5>
+                <button type="button" class="btn-close text-light" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <label for="filterAuthor">Filter by Author:</label>
+                <select id="filterAuthor">
+                    <option val=""></option>
+                </select>
+                <hr>
+                <label for="filterInstitution">Filter by Institution:</label>
+                <select id="filterInstitution">
+                    <option val=""></option>
+                </select>
+                <hr>
+                <label for="filterParty">Filter by Party:</label>
+                <select id="filterParty">
+                    <option val=""></option>
+                </select>
+                <hr>
+                <label for="filterKeyword">Provenance Text Search:</label>
+                <input id="filterKeyword" type="text" value="">
+                <hr>
+                <div class="d-block py-3 text-center">
+                    <button id="search_button" type="button" class="btn btn-outline-secondary">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
