@@ -1,6 +1,25 @@
 /*
-# Copyright (C) 2024 Fabio Mariani, Provenance Lab, Leuphana University Lüneburg - All Rights Reserved
-# Unauthorized copying of this file, via any medium is strictly prohibited
+MIT License
+
+Copyright (C) 2024 Fabio Mariani, Provenance Lab, Leuphana University Lüneburg
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 */
 
 const CENTURY_RE =/(?:\d{1,3})(?:c\.?|(?:st|nd|rd|th))/g;
@@ -26,20 +45,16 @@ function parseDate(inputDate) {
     // Split input date into tokens
     splitted_date = inputDate.split(/\W+/);
     const alphabeticalArray = splitted_date.filter(item => /^[a-zA-Z]+$/.test(item));
-    const nonAlphabeticalArray = splitted_date.filter(item => !/^[a-zA-Z]+$/.test(item));
+    const nonAlphabeticalArray = splitted_date.filter(item => !/^[a-zA-Z]+$/.test(item)).sort((a, b) => parseInt(b, 10) - parseInt(a, 10));
     tokens = alphabeticalArray.concat(nonAlphabeticalArray);
-
     let year = null;
     let month = null;
     let day = null;
 
-    number_year = 0
     // Process tokens
-
     for (const token of tokens) {
-        if (token.length == 4 && token.match(/\d{4}/)) { // Year
-            number_year +=1
-            year = token;
+        if (!year && token.match(/\b\d+\b/g)) { // Year
+            year = token.padStart(4, '0');
         } else if (monthNames.includes(token) && !month) { // Month
             if (token.length <= 2) {
                 month = token.padStart(2, '0');
@@ -53,7 +68,7 @@ function parseDate(inputDate) {
         }
     }
     parsed_date = `${year}-${month}-${day}`
-    if (((!year)&&(!month)&&(!day))|| day>31 || number_year >1){
+    if (((!year)&&(!month)&&(!day))||day>31||year==0){
         return null
     }
     else{
@@ -130,7 +145,7 @@ function TextToEdtf(text) {
     }
     else{
         const is_single_century = t.match(CENTURY_RE) ? t.match(CENTURY_RE) : [];
-        const is_single_year = t.match(/(\d{4})/g) ? t.match(/(\d{4})/g) : [];
+        const is_single_year = t.match(/(\d{4})/g) ? t.match(/(\d{4})/g) :  t.match(/(\d{1,3}|\d{5,})/g) || [];
 
         if (is_single_year.length === 1 || is_single_century.length === 1) {
             // try parsing the whole thing
@@ -433,13 +448,13 @@ function parseEDTFDate(edtfDate) {
                 firstTwoDigits = parseInt(edtfCentury[0].substring(0, 2));
                 if (parsedDate.is_bce){
                     firstTwoDigits = - firstTwoDigits
-                    parsedDate.lowerLimit = (firstTwoDigits * 100 - 100) + "-01-01";
-                    parsedDate.upperLimit = (firstTwoDigits * 100 - 1) + "-12-31";
+                    parsedDate.lowerLimit = (firstTwoDigits * 100 - 100) + "-01-01T00:00:00Z";
+                    parsedDate.upperLimit = (firstTwoDigits * 100 - 1) + "-12-31T23:59:59Z";
                 }
                 else{
                     // Calculate lower and upper limits
-                    parsedDate.lowerLimit = (firstTwoDigits * 100) + "-01-01";
-                    parsedDate.upperLimit = (firstTwoDigits * 100 + 99) + "-12-31";
+                    parsedDate.lowerLimit = (firstTwoDigits * 100) + "-01-01T00:00:00Z";
+                    parsedDate.upperLimit = (firstTwoDigits * 100 + 99) + "-12-31T23:59:59Z";
                 }
             }
             else{
@@ -455,19 +470,19 @@ function parseEDTFDate(edtfDate) {
                     firstThreeDigits = -firstThreeDigits
                 }
                 // Calculate lower and upper limits
-                parsedDate.lowerLimit = (firstThreeDigits * 10) + "-01-01";
-                parsedDate.upperLimit = (firstThreeDigits * 10 + 9) + "-12-31";
+                parsedDate.lowerLimit = (firstThreeDigits * 10) + "-01-01T00:00:00Z";
+                parsedDate.upperLimit = (firstThreeDigits * 10 + 9) + "-12-31T23:59:59Z";
             }
             else{
                 return
             }
         }
+        else if (edtfDate.split('-')[0].length < 4){ //year must be always 4 digits
+            return
+        }
         else{
             //check already a date
             [year, month, day] = edtfDate.split('-').map(part => isNaN(part) ? null : parseInt(part));
-            if (parsedDate.is_bce){
-                year = -year
-            }
             if (day > 31 || day == 0){
                 return
             }
@@ -477,12 +492,15 @@ function parseEDTFDate(edtfDate) {
             if (year == 0){
                 return
             }
+            let startDate
+            let endDate
+            let isWinter = false
             // Check precision and set lower and upper limits accordingly
             if (day&&month&&year) {
                 if (month <= 12){
                     parsedDate.is_day = true
-                    parsedDate.lowerLimit = new Date(year, month - 1, day, 9).toISOString().split('T')[0];
-                    parsedDate.upperLimit = new Date(year, month - 1, day, 9).toISOString().split('T')[0];
+                    startDate = [year, month - 1, day, 0, 0, 0]
+                    endDate = [year, month - 1, day, 23, 59, 59]
                 }
                 else{
                     return
@@ -494,41 +512,61 @@ function parseEDTFDate(edtfDate) {
                     parsedDate.is_season = true
                     switch(month) {
                         case 21: // Spring
-                            seasonStart = new Date(year, 2, 20, 9).toISOString().split('T')[0]; // March 20th (Spring Equinox)
-                            seasonEnd = new Date(year, 5, 20, 9).toISOString().split('T')[0]; // June 20th (Summer Solstice)
+                            seasonStart = [year, 2, 20, 0, 0, 0]; // March 20th (Spring Equinox)
+                            seasonEnd = [year, 5, 20, 23, 59, 59]; // June 20th (Summer Solstice)
                             break;
                         case 22: // Summer
-                            seasonStart = new Date(year, 5, 20, 9).toISOString().split('T')[0]; // June 20th (Summer Solstice)
-                            seasonEnd = new Date(year, 8, 22, 9).toISOString().split('T')[0]; // September 22nd (Autumn Equinox)
+                            seasonStart = [year, 5, 20, 0, 0, 0]; // June 20th (Summer Solstice)
+                            seasonEnd = [year, 8, 22, 23, 59, 59]; // September 22nd (Autumn Equinox)
                             break;
                         case 23: // Autumn
-                            seasonStart = new Date(year, 8, 22, 9).toISOString().split('T')[0]; // September 22nd (Autumn Equinox)
-                            seasonEnd = new Date(year, 11, 20, 9).toISOString().split('T')[0]; // December 20th (Winter Solstice)
+                            seasonStart = [year, 8, 22, 0, 0, 0]; // September 22nd (Autumn Equinox)
+                            seasonEnd = [year, 11, 20, 23, 59, 59]; // December 20th (Winter Solstice)
                             break;
                         case 24: // Winter
-                            seasonStart = new Date(year, 11, 20, 9).toISOString().split('T')[0]; // December 20th (Winter Solstice)
-                            seasonEnd = new Date(year + 1, 2, 20, 9).toISOString().split('T')[0]; // March 20th (Spring Equinox) of the next year
+                            isWinter = true
+                            seasonStart = [year, 11, 20, 0, 0, 0]; // December 20th (Winter Solstice)
+                            if (parsedDate.is_bce){
+                                if (year==1){
+                                    seasonEnd = [1, 2, 20, 23, 59, 59];
+                                }
+                                else{
+                                    seasonEnd = [year - 1, 2, 20, 23, 59, 59]; // March 20th (Spring Equinox) of the next year
+                                }
+                            }
+                            else {
+                                seasonEnd = [year + 1, 2, 20, 23, 59, 59]; // March 20th (Spring Equinox) of the next year
+                            }
                             break;
                         default:
                             return;
                     }
-                    parsedDate.lowerLimit = seasonStart;
-                    parsedDate.upperLimit = seasonEnd;
+                    startDate = seasonStart;
+                    endDate = seasonEnd;
                 }
                 else {
                     parsedDate.is_month = true
-                    const lastDayOfMonth = new Date(2024, month, 0).getDate();
-                    parsedDate.lowerLimit = new Date(year, month - 1, 1, 9).toISOString().split('T')[0];
-                    parsedDate.upperLimit = new Date(year, month - 1, lastDayOfMonth, 9).toISOString().split('T')[0];
+                    let lastDayOfMonth = new Date(Date.UTC(2024, month, 0)).getDate();
+                    startDate = [year, month - 1, 1, 0, 0, 0]
+                    endDate = [year, month - 1, lastDayOfMonth, 23, 59, 59]
                 }
             } else if (year) {
                 parsedDate.is_year = true
-                parsedDate.lowerLimit = new Date(year, 0, 1, 9).toISOString().split('T')[0];
-                parsedDate.upperLimit = new Date(year, 11, 31, 9).toISOString().split('T')[0]; // December represented by 11
+                startDate = [year, 0, 1, 0, 0, 0]
+                endDate = [year, 11, 31, 23, 59, 59]
             }
             else{
                 return
             }
+            parsedDate.lowerLimit = new Date(new Date(Date.UTC(...startDate)).setUTCFullYear(startDate[0])).toISOString().slice(0, -5) + 'Z';
+            parsedDate.upperLimit = new Date(new Date(Date.UTC(...endDate)).setUTCFullYear(endDate[0])).toISOString().slice(0, -5) + 'Z';
+            if (parsedDate.is_bce){
+                parsedDate.lowerLimit = "-" + parsedDate.lowerLimit
+                if (!(isWinter && startDate[0]==1)){
+                    parsedDate.upperLimit = "-" + parsedDate.upperLimit
+                }
+            }
+
         }
         return parsedDate;
     }

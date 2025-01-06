@@ -2,10 +2,6 @@ import { Quadstore, Engine, BrowserLevel } from './dist/quadstore.js'
 const { DataFactory, StreamParser } = N3
 const { namedNode, literal, defaultGraph, quad, blank, blankNode } = DataFactory
 
-//_______
-const PLOD = "http://plod.art/"
-const orcid = "http://example.com/0000-0000-0000"
-const license = "http://example.com/CC-By"
 
 const pfx = {
     owl: "http://www.w3.org/2002/07/owl#>",
@@ -30,48 +26,60 @@ const ownershipChanges = ["aat:300157782__Acquisition", "aat:300417643__Auction"
     "aat:300417843__Restitution"
 ]
 
-const backend = new BrowserLevel("quadstore");
-const dataFactory = DataFactory
-const store = new Quadstore({ backend, dataFactory });
-const engine = new Engine(store);
+// Declare global variables
+let backend, dataFactory, store, engine, quadsArray;
 
-await store.open();
-await store.clear();
+export async function initializeDatabase() {
+  backend = new BrowserLevel("quadstore");
+  dataFactory = DataFactory;
+  store = new Quadstore({ backend, dataFactory });
+  engine = new Engine(store);
+  quadsArray = [];
+  await store.open();
+}
+
+
 
 export async function generateLOD(projData) {
+    await store.open();
+    await store.clear();
+    const orcid = "https://orcid.org/" + projData.orcid
+    const license = projData.license
+    const uri = projData.uri
+
     for (let i in projData.data) {
         let obj = projData.data[i]
-        let objGraphURI = PLOD + "graph/object/" + i
-        let objURI = PLOD + "object/" + i
+        let objGraphURI = uri + "graph/object/" + i
+        let objURI = uri + "object/" + i
 
         //_____title
         if (obj.title) {
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(objURI),
                 namedNode(pfx.rdfs + "label"),
                 literal(obj.title),
                 namedNode(objGraphURI)
             ))
             let titleNode = blankNode()
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(objURI),
                 namedNode(pfx.crm + "P102_has_title"),
                 titleNode,
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 titleNode,
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + "E35_Title"),
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 titleNode,
                 namedNode(pfx.crm + "P190_has_symbolic_content"),
                 literal(obj.title),
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 titleNode,
                 namedNode(pfx.crm + "P2_has_type"),
                 namedNode(pfx.aat + "300404670"),
@@ -82,37 +90,37 @@ export async function generateLOD(projData) {
         if (obj.url) {
             let pageNode = blankNode()
             let urlNode = blankNode()
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(objURI),
                 namedNode(pfx.crm + "P70i_is_documented_in"),
                 pageNode,
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 pageNode,
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + "E31_Document"),
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 pageNode,
                 namedNode(pfx.crm + "P1_is_identified_by"),
                 urlNode,
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 urlNode,
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + "E42_Identifier"),
                 objGraphURI
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 urlNode,
                 namedNode(pfx.crm + "P190_has_symbolic_content"),
                 literal(obj.url),
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 urlNode,
                 namedNode(pfx.crm + "P2_has_type"),
                 namedNode(pfx.aat + "300404630"),
@@ -122,25 +130,25 @@ export async function generateLOD(projData) {
         //_____author
         if (obj.author) {
             let authorNode = blankNode()
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(objURI),
                 namedNode(pfx.crm + "P67i_is_referred_to_by"),
                 authorNode,
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 authorNode,
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + "E33_Linguistic_Object"),
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 authorNode,
                 namedNode(pfx.crm + "P190_has_symbolic_content"),
                 literal(obj.author),
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 authorNode,
                 namedNode(pfx.crm + "P2_has_type"),
                 namedNode(pfx.aat + "300435446"),
@@ -150,25 +158,25 @@ export async function generateLOD(projData) {
         //_____institution
         if (obj.institution) {
             let institutionNode = blankNode()
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(objURI),
                 namedNode(pfx.crm + "P67i_is_referred_to_by"),
                 institutionNode,
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 institutionNode,
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + "E33_Linguistic_Object"),
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 institutionNode,
                 namedNode(pfx.crm + "P190_has_symbolic_content"),
                 literal(obj.institution),
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 institutionNode,
                 namedNode(pfx.crm + "P2_has_type"),
                 namedNode(pfx.aat + "300435449"),
@@ -178,25 +186,25 @@ export async function generateLOD(projData) {
         //_____date
         if (obj.date) {
             let dateNode = blankNode()
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(objURI),
                 namedNode(pfx.crm + "P67i_is_referred_to_by"),
                 dateNode,
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 dateNode,
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + "E33_Linguistic_Object"),
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 dateNode,
                 namedNode(pfx.crm + "P190_has_symbolic_content"),
                 literal(obj.date),
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 dateNode,
                 namedNode(pfx.crm + "P2_has_type"),
                 namedNode(pfx.aat + "300435447"),
@@ -206,25 +214,25 @@ export async function generateLOD(projData) {
         //_____accessionID
         if (obj.accessionID) {
             let accessionNode = blankNode()
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(objURI),
                 namedNode(pfx.crm + "P67i_is_referred_to_by"),
                 accessionNode,
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 accessionNode,
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + "E33_Linguistic_Object"),
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 accessionNode,
                 namedNode(pfx.crm + "P190_has_symbolic_content"),
                 literal(obj.accessionID),
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 accessionNode,
                 namedNode(pfx.crm + "P2_has_type"),
                 namedNode(pfx.aat + "300312355"),
@@ -234,25 +242,25 @@ export async function generateLOD(projData) {
         //_____medium
         if (obj.medium) {
             let mediumNode = blankNode()
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(objURI),
                 namedNode(pfx.crm + "P67i_is_referred_to_by"),
                 mediumNode,
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 mediumNode,
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + "E33_Linguistic_Object"),
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 mediumNode,
                 namedNode(pfx.crm + "P190_has_symbolic_content"),
                 literal(obj.medium),
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 mediumNode,
                 namedNode(pfx.crm + "P2_has_type"),
                 namedNode(pfx.aat + "300435429"),
@@ -262,25 +270,25 @@ export async function generateLOD(projData) {
         //_____creditLine
         if (obj.creditLine) {
             let creditNode = blankNode()
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(objURI),
                 namedNode(pfx.crm + "P67i_is_referred_to_by"),
                 creditNode,
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 creditNode,
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + "E33_Linguistic_Object"),
                 namedNode(objGraphURI)
              ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 creditNode,
                 namedNode(pfx.crm + "P190_has_symbolic_content"),
                 literal(obj.creditLine),
                 namedNode(objGraphURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 creditNode,
                 namedNode(pfx.crm + "P2_has_type"),
                 namedNode(pfx.aat + "300435418"),
@@ -290,63 +298,71 @@ export async function generateLOD(projData) {
 
         let prevPrevActivityURI = null
         let prevActivityURI = null
+        let prevActivityID = null
+        let contradictionCount = 0
         //____Activities
         for (let act_i in obj.provenanceData) {
             let act = obj.provenanceData[act_i].data
             let nanopub_idx = 0
             let activityURI
+            let nanopubURI
+            let argumentationURI
             if (act.assertionContradiction && prevActivityURI){
                 activityURI = prevActivityURI
+                nanopubURI = activityURI + "np/" + prevActivityID + "_" + contradictionCount + "/"
+                argumentationURI = uri + "object/" + i + "/argumentation/" + prevActivityID + "_" + contradictionCount + "/"
+                contradictionCount += 1
             }
             else{
-                activityURI = PLOD +"object/" + i + "/activity/" + act_i + "/" //todo check act_i not good here!
+                activityURI = uri +"object/" + i + "/activity/" + act_i + "/"
+                nanopubURI = activityURI + "np/" + act_i +"/"
+                argumentationURI = uri + "object/" + i + "/argumentation/" + act_i + "/"
+                contradictionCount = 0
             }
-            let nanopubURI = activityURI + "np/" + act_i +"/" //todo check act_i not good here!
-            let argumentationURI = PLOD + "object/" + i + "/argumentation/" + act_i + "/" //todo check act_i not good here!
             let nanopubURIhead = nanopubURI + "head/"
             let nanopubURIAssertion = nanopubURI + "assertionGraph/"
             let nanopubURIProvenance = nanopubURI + "provenanceGraph/"
             let nanopubURIPubInfo = nanopubURI + "pubInfoGraph/"
             //____NP head
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(nanopubURI),
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.np + "Nanopublication"),
                 namedNode(nanopubURIhead)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(nanopubURI),
                 namedNode(pfx.np + "hasProvenance"),
                 namedNode(nanopubURIProvenance),
                 namedNode(nanopubURIhead)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(nanopubURI),
                 namedNode(pfx.np + "hasPublicationInfo"),
                 namedNode(nanopubURIPubInfo),
                 namedNode(nanopubURIhead)
             ))
             //____PubInfo
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(nanopubURI),
                 namedNode(pfx.dct + "created"),
                 literal(new Date().toISOString(), namedNode(pfx.xsd +"dateTime")),
                 namedNode(nanopubURIPubInfo)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(nanopubURI),
                 namedNode(pfx.dct + "creator"),
                 namedNode(orcid),
                 namedNode(nanopubURIPubInfo)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(nanopubURI),
                 namedNode(pfx.dct + "license"),
                 namedNode(license),
                 namedNode(nanopubURIPubInfo)
             ))
             if (obj.url) {
-                await store.put(quad(
+                quadsArray.push(quad(
                     namedNode(nanopubURI),
                     namedNode(pfx.dct + "source"),
                     namedNode(obj.url),
@@ -354,19 +370,19 @@ export async function generateLOD(projData) {
                 ))
             }
             //____provenance graph
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(argumentationURI),
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crminf + "I15_Provenance_Assessment"),
                 namedNode(nanopubURIProvenance)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(argumentationURI),
                 namedNode(pfx.crm + "P2_has_type"),
                 namedNode(pfx.aat + "300444173"),
                 namedNode(nanopubURIProvenance)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(argumentationURI),
                 namedNode(pfx.crminf + "J20_is_about_the_provenance_of"),
                 namedNode(objURI),
@@ -374,19 +390,19 @@ export async function generateLOD(projData) {
             ))
             if (act.assertionAuthor){
                 let assertionAuthorNode = blankNode()
-                await store.put(quad(
+                quadsArray.push(quad(
                     namedNode(argumentationURI),
                     namedNode(pfx.crm + "P14_carried_out_by"),
                     assertionAuthorNode,
                     namedNode(nanopubURIProvenance)
                 ))
-                await store.put(quad(
+                quadsArray.push(quad(
                     assertionAuthorNode,
                     namedNode(pfx.rdf + "type"),
                     namedNode(pfx.crm + "E39_Actor"),
                     namedNode(nanopubURIProvenance)
                 ))
-                await store.put(quad(
+                quadsArray.push(quad(
                     assertionAuthorNode,
                     namedNode(pfx.rdfs + "label"),
                     literal(act.assertionAuthor),
@@ -397,7 +413,7 @@ export async function generateLOD(projData) {
                 timespan_creation(namedNode(argumentationURI), nanopubURIProvenance, act.assertionTimeString, act.assertionTimeEDTF)
             }
             if (act.assertionNotes){
-                await store.put(quad(
+                quadsArray.push(quad(
                     namedNode(argumentationURI),
                     namedNode(pfx.crm + "P3_has_note"),
                     literal(act.assertionNotes),
@@ -407,20 +423,20 @@ export async function generateLOD(projData) {
             if (act.sources){
                 for (let source of act.sources){
                     let sourceNode = blankNode()
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         namedNode(argumentationURI),
                         namedNode(pfx.crm + "P16_used_specific_object"),
                         sourceNode,
                         namedNode(nanopubURIProvenance)
                     ))
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         sourceNode,
                         namedNode(pfx.rdf + "type"),
                         namedNode(pfx.crm + "E73_Information_Object"),
                         namedNode(nanopubURIProvenance)
                     ))
                     if (source.type){
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             sourceNode,
                             namedNode(pfx.crm + "P2_has_type"),
                             namedNode(pfx.aat + source.type.split("__")[0].split("aat:")[1]),
@@ -429,25 +445,25 @@ export async function generateLOD(projData) {
                     }
                     if (source.citation){
                         let citationNode = blankNode()
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             sourceNode,
                             namedNode(pfx.crm + "P1_is_identified_by"),
                             citationNode,
                             namedNode(nanopubURIProvenance)
                         ))
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             citationNode,
                             namedNode(pfx.rdf + "type"),
                             namedNode(pfx.crm + "E41_Appellation"),
                             namedNode(nanopubURIProvenance)
                         ))
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             citationNode,
                             namedNode(pfx.crm + "P2_has_type"),
                             namedNode(pfx.aat + "300435423"),
                             namedNode(nanopubURIProvenance)
                         ))
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             citationNode,
                             namedNode(pfx.crm + "P190_has_symbolic_content"),
                             literal(source.citation),
@@ -456,25 +472,25 @@ export async function generateLOD(projData) {
                     }
                     if (source.quote){
                         let quoteNode = blankNode()
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             sourceNode,
                             namedNode(pfx.crm + "P165_incorporates"),
                             quoteNode,
                             namedNode(nanopubURIProvenance)
                         ))
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             quoteNode,
                             namedNode(pfx.rdf + "type"),
                             namedNode(pfx.crm + "E90_Symbolic_Object"),
                             namedNode(nanopubURIProvenance)
                         ))
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             quoteNode,
                             namedNode(pfx.crm + "P2_has_type"),
                             namedNode(pfx.aat + "300026941"),
                             namedNode(nanopubURIProvenance)
                         ))
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             quoteNode,
                             namedNode(pfx.crm + "P190_has_symbolic_content"),
                             literal(source.quote),
@@ -485,32 +501,32 @@ export async function generateLOD(projData) {
             }
             //____AssertionGraph
             //_____activity certainty
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(nanopubURI),
                 namedNode(pfx.np + "hasAssertion"),
                 namedNode(nanopubURIAssertion),
                 namedNode(nanopubURIhead)
             ))
             let beliefNode = blankNode()
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(argumentationURI),
                 namedNode(pfx.crminf + "J21_concluded_provenance"),
                 beliefNode,
                 namedNode(nanopubURIProvenance)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 beliefNode,
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crminf + "I14_Provenance_Belief"),
                 namedNode(nanopubURIProvenance)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 beliefNode,
                 namedNode(pfx.crminf + "J5_holds_to_be"),
                 namedNode(pfx.aat + act.activityCertainty.split("aat:")[1]),
                 namedNode(nanopubURIProvenance)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 beliefNode,
                 namedNode(pfx.crminf + "J4_that"),
                 namedNode(nanopubURIAssertion),
@@ -518,23 +534,24 @@ export async function generateLOD(projData) {
             ))
 
             //_____activity title
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(activityURI),
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + "E7_Activity"),
                 namedNode(nanopubURIAssertion)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(activityURI),
                 namedNode(pfx.crm + "P2_has_type"),
                 namedNode(pfx.aat + "300055863"),
                 namedNode(nanopubURIAssertion)
             ))
             if (act.activityType) {
-                let activityType = act.activityType.split("__")[0].split("aat:")[1] //todo check
+                let activityType = act.activityType.split("__")[0].split("aat:")[1]
                 if (activityType) {
-                    for (let actType of activityType.split("/")) {
-                        await store.put(quad(
+                    let activityParts = activityType.split("/").map(part => part.replace("aat:", ""))
+                    for (let actType of activityParts) {
+                        quadsArray.push(quad(
                             namedNode(activityURI),
                             namedNode(pfx.crm + "P2_has_type"),
                             namedNode(pfx.aat + actType),
@@ -545,26 +562,26 @@ export async function generateLOD(projData) {
             }
             let isCustody = false
             if (act.activityType == "aat:300404387__Creation" || act.activityType == "aat:300417639__Commission") {
-                await store.put(quad(
+                quadsArray.push(quad(
                     namedNode(activityURI),
                     namedNode(pfx.rdf + "type"),
                     namedNode(pfx.crm + "E12_Production"),
                     namedNode(nanopubURIAssertion)
                 ))
-                await store.put(quad(
+                quadsArray.push(quad(
                     namedNode(activityURI),
                     namedNode(pfx.crm + "P108_has_produced"),
                     namedNode(objURI),
                     namedNode(nanopubURIAssertion)
                 ))
             } else if (ownershipChanges.includes(act.activityType)) {
-                await store.put(quad(
+                quadsArray.push(quad(
                     namedNode(activityURI),
                     namedNode(pfx.rdf + "type"),
                     namedNode(pfx.crm + "E8_Acquisition"),
                     namedNode(nanopubURIAssertion)
                 ))
-                await store.put(quad(
+                quadsArray.push(quad(
                     namedNode(activityURI),
                     namedNode(pfx.crm + "P24_transferred_title_of"),
                     namedNode(objURI),
@@ -572,13 +589,13 @@ export async function generateLOD(projData) {
                 ))
             } else if (act.activityType) {
                 isCustody = true
-                await store.put(quad(
+                quadsArray.push(quad(
                     namedNode(activityURI),
                     namedNode(pfx.rdf + "type"),
                     namedNode(pfx.crm + "E10_Transfer_of_Custody"),
                     namedNode(nanopubURIAssertion)
                 ))
-                await store.put(quad(
+                quadsArray.push(quad(
                     namedNode(activityURI),
                     namedNode(pfx.crm + "P30_transferred_custody_of"),
                     namedNode(objURI),
@@ -587,7 +604,7 @@ export async function generateLOD(projData) {
             }
             //_____activity title
             if (act.activityTitle) {
-                await store.put(quad(
+                quadsArray.push(quad(
                     namedNode(activityURI),
                     namedNode(pfx.rdfs + "label"),
                     literal(act.activityTitle),
@@ -596,7 +613,7 @@ export async function generateLOD(projData) {
             }
             if (act.assertionContradiction){
                 if (prevPrevActivityURI){
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         namedNode(activityURI),
                         namedNode(pfx.crm + "P183i_starts_after_the_end_of"),
                         prevPrevActivityURI,
@@ -606,7 +623,7 @@ export async function generateLOD(projData) {
             }
             else{
                 if (prevActivityURI){
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         namedNode(activityURI),
                         namedNode(pfx.crm + "P183i_starts_after_the_end_of"),
                         prevActivityURI,
@@ -614,10 +631,12 @@ export async function generateLOD(projData) {
                     ))
                     prevPrevActivityURI = prevActivityURI
                     prevActivityURI = activityURI
+                    prevActivityID = act_i
                 }
                 else{
                     prevPrevActivityURI = prevActivityURI
                     prevActivityURI = activityURI
+                    prevActivityID = act_i
                 }
             }
             //_____activity Time
@@ -630,45 +649,45 @@ export async function generateLOD(projData) {
                 for (let idn of act.identifiers) {
                     if (idn.value) {
                         let identifierAssignmentNode = blankNode()
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             namedNode(activityURI),
                             namedNode(pfx.crm + "P9_consists_of"),
                             identifierAssignmentNode,
                             namedNode(nanopubURIAssertion)
                         ))
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             identifierAssignmentNode,
                             namedNode(pfx.rdf + "type"),
                             namedNode(pfx.crm + "E15_Identifier_Assignment"),
                             namedNode(nanopubURIAssertion)
                         ))
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             identifierAssignmentNode,
                             namedNode(pfx.crm + "P140_assigned_attribute_to"),
                             namedNode(objURI),
                             namedNode(nanopubURIAssertion)
                         ))
                         let identifierNode = blankNode()
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             identifierAssignmentNode,
                             namedNode(pfx.crm + "P141_assigned"),
                             identifierNode,
                             namedNode(nanopubURIAssertion)
                         ))
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             identifierNode,
                             namedNode(pfx.rdf + "type"),
                             namedNode(pfx.crm + "E42_Identifier"),
                             namedNode(nanopubURIAssertion)
                         ))
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             identifierNode,
                             namedNode(pfx.rdfs + "label"),
                             literal(idn.value),
                             namedNode(nanopubURIAssertion)
                         ))
                         if (idn.type) {
-                            await store.put(quad(
+                            quadsArray.push(quad(
                                 identifierNode,
                                 namedNode(pfx.crm + "P2_has_type"),
                                 namedNode(pfx.aat + idn.type.split("__")[0].split("aat:")[1]),
@@ -684,45 +703,45 @@ export async function generateLOD(projData) {
                 for (let price of act.prices) {
                     if (price.value) {
                         let attributeAssignmentNode = blankNode()
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             namedNode(activityURI),
                             namedNode(pfx.crm + "P9_consists_of"),
                             attributeAssignmentNode,
                             namedNode(nanopubURIAssertion)
                         ))
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             attributeAssignmentNode,
                             namedNode(pfx.rdf + "type"),
                             namedNode(pfx.crm + "E13_Attribute_Assignment"),
                             namedNode(nanopubURIAssertion)
                         ))
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             attributeAssignmentNode,
                             namedNode(pfx.crm + "P140_assigned_attribute_to"),
                             namedNode(objURI),
                             namedNode(nanopubURIAssertion)
                         ))
                         let attributeNode = blankNode()
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             attributeAssignmentNode,
                             namedNode(pfx.crm + "P141_assigned"),
                             attributeNode,
                             namedNode(nanopubURIAssertion)
                         ))
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             attributeNode,
                             namedNode(pfx.rdf + "type"),
                             namedNode(pfx.crm + "E97_Monetary_Amount"),
                             namedNode(nanopubURIAssertion)
                         ))
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             attributeNode,
                             namedNode(pfx.crm + "P90_has_value"),
                             literal(price.value),
                             namedNode(nanopubURIAssertion)
                         ))
                         if (price.type) {
-                            await store.put(quad(
+                            quadsArray.push(quad(
                                 attributeNode,
                                 namedNode(pfx.crm + "P2_has_type"),
                                 namedNode(pfx.aat + price.type.split("__")[0].split("aat:")[1]),
@@ -730,7 +749,7 @@ export async function generateLOD(projData) {
                             ))
                         }
                         if (price.currency) {
-                            await store.put(quad(
+                            quadsArray.push(quad(
                                 attributeNode,
                                 namedNode(pfx.crm + "P180_has_currency"),
                                 namedNode(pfx.aat + price.currency.split("__")[0].split("aat:")[1]),
@@ -743,11 +762,11 @@ export async function generateLOD(projData) {
             //_____activity Parties
             if (act.parties) {
                 for (let party of act.parties) {
-                    let pURI = PLOD + "party/" + party.data.id
+                    let pURI = uri + "party/" + party.data.id
                     let pRole = party.data.role
                     if (pRole == "sender"){
                         if(isCustody){
-                            await store.put(quad(
+                            quadsArray.push(quad(
                                 namedNode(activityURI),
                                 namedNode(pfx.crm + "P28_custody_surrendered_by"),
                                 namedNode(pURI),
@@ -755,7 +774,7 @@ export async function generateLOD(projData) {
                             ))
                         }
                         else{
-                            await store.put(quad(
+                            quadsArray.push(quad(
                                 namedNode(activityURI),
                                 namedNode(pfx.crm + "P23_transferred_title_from"),
                                 namedNode(pURI),
@@ -765,7 +784,7 @@ export async function generateLOD(projData) {
                     }
                     if (pRole == "receiver"){
                         if(isCustody){
-                            await store.put(quad(
+                            quadsArray.push(quad(
                                 namedNode(activityURI),
                                 namedNode(pfx.crm + "P29_custody_received_by"),
                                 namedNode(pURI),
@@ -773,7 +792,7 @@ export async function generateLOD(projData) {
                             ))
                         }
                         else{
-                            await store.put(quad(
+                            quadsArray.push(quad(
                                 namedNode(activityURI),
                                 namedNode(pfx.crm + "P22_transferred_title_to"),
                                 namedNode(pURI),
@@ -782,7 +801,7 @@ export async function generateLOD(projData) {
                         }
                     }
                     if (pRole == "agent"){
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             namedNode(activityURI),
                             namedNode(pfx.crm + "P14_carried_out_by"),
                             namedNode(pURI),
@@ -790,7 +809,7 @@ export async function generateLOD(projData) {
                         ))
                     }
                     if (pRole == "receiver_agent"){
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             namedNode(activityURI),
                             namedNode(pfx.crm + "P29_custody_received_by"),
                             namedNode(pURI),
@@ -798,7 +817,7 @@ export async function generateLOD(projData) {
                         ))
                     }
                     if (pRole == "sender_agent"){
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             namedNode(activityURI),
                             namedNode(pfx.crm + "P28_custody_surrendered_by"),
                             namedNode(pURI),
@@ -810,18 +829,18 @@ export async function generateLOD(projData) {
         }
     }
     //____Parties
-    let partiesURI = PLOD + "party/"
+    let partiesURI = uri + "party/"
     for (let i in projData.parties) {
         let party = projData.parties[i]
-        let pURI = PLOD + "party/" + party.id
-        await store.put(quad(
+        let pURI = uri + "party/" + party.id
+        quadsArray.push(quad(
             namedNode(pURI),
             namedNode(pfx.rdfs + "label"),
             literal(party.label),
             namedNode(partiesURI)
         ))
         if (party.type == "group"){
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(pURI),
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + "E74_Group"),
@@ -829,7 +848,7 @@ export async function generateLOD(projData) {
             ))
         }
         else {
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(pURI),
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + "E21_Person"),
@@ -837,7 +856,7 @@ export async function generateLOD(projData) {
             ))
         }
         if (party.WD) {
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(pURI),
                 namedNode(pfx.owl + "sameAs"),
                 namedNode(pfx.wd  + party.WD.split("_")[0]),
@@ -845,7 +864,7 @@ export async function generateLOD(projData) {
             ))
         }
         if (party.ULAN) {
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(pURI),
                 namedNode(pfx.owl + "sameAs"),
                 namedNode(pfx.ulan  + party.ULAN.split("_")[0].split("ulan/")[1]),
@@ -856,27 +875,27 @@ export async function generateLOD(projData) {
             for (let name of party.names) {
                 if (name.value){
                     let nameNode = blankNode()
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         namedNode(pURI),
                         namedNode(pfx.crm + "P1_is_identified_by"),
                         nameNode,
                         namedNode(partiesURI)
                     ))
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         nameNode,
                         namedNode(pfx.rdf + "type"),
                         namedNode(pfx.crm + "E41_Appellation"),
                         namedNode(partiesURI)
                     ))
                     if (name.type){
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             nameNode,
                             namedNode(pfx.crm + "P2_has_type"),
                             namedNode(pfx.aat  + name.type.split("_")[0].split("aat:")[1]),
                             namedNode(partiesURI)
                         ))
                     }
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         nameNode,
                         namedNode(pfx.crm + "P190_has_symbolic_content"),
                         literal(name.value),
@@ -888,19 +907,19 @@ export async function generateLOD(projData) {
         if (party.cultures){
             for (let culture of party.cultures) {
                 let cultureNode = namedNode(pfx.aat  + culture.split("_")[0].split("aat:")[1])
-                await store.put(quad(
+                quadsArray.push(quad(
                     namedNode(pURI),
                     namedNode(pfx.crm + "P2_has_type"),
                     cultureNode,
                     namedNode(partiesURI)
                 ))
-                await store.put(quad(
+                quadsArray.push(quad(
                     cultureNode,
                     namedNode(pfx.rdf + "type"),
                     namedNode(pfx.crm + "E55_Type"),
                     namedNode(partiesURI)
                 ))
-                await store.put(quad(
+                quadsArray.push(quad(
                     cultureNode,
                     namedNode(pfx.rdf + "P127_has_broader_term"),
                     namedNode(pfx.aat + "300055768"),
@@ -912,19 +931,19 @@ export async function generateLOD(projData) {
         if (party.occupations){
             for (let occupation of party.occupations) {
                 let occupationNode = namedNode(pfx.aat  + occupation.split("_")[0].split("aat:")[1])
-                await store.put(quad(
+                quadsArray.push(quad(
                     namedNode(pURI),
                     namedNode(pfx.crm + "P2_has_type"),
                     occupationNode,
                     namedNode(partiesURI)
                 ))
-                await store.put(quad(
+                quadsArray.push(quad(
                     occupationNode,
                     namedNode(pfx.rdf + "type"),
                     namedNode(pfx.crm + "E55_Type"),
                     namedNode(partiesURI)
                 ))
-                await store.put(quad(
+                quadsArray.push(quad(
                     occupationNode,
                     namedNode(pfx.rdf + "P127_has_broader_term"),
                     namedNode(pfx.aat + "300263369"),
@@ -936,19 +955,19 @@ export async function generateLOD(projData) {
         if (party.groupTypes){
             for (let groupType of party.groupTypes) {
                 let groupTypeNode = namedNode(pfx.aat  + groupType.split("_")[0].split("aat:")[1])
-                await store.put(quad(
+                quadsArray.push(quad(
                     namedNode(pURI),
                     namedNode(pfx.crm + "P2_has_type"),
                     groupTypeNode,
                     namedNode(partiesURI)
                 ))
-                await store.put(quad(
+                quadsArray.push(quad(
                     groupTypeNode,
                     namedNode(pfx.rdf + "type"),
                     namedNode(pfx.crm + "E55_Type"),
                     namedNode(partiesURI)
                 ))
-                await store.put(quad(
+                quadsArray.push(quad(
                     groupTypeNode,
                     namedNode(pfx.rdf + "P127_has_broader_term"),
                     namedNode(pfx.aat + "300192630"),
@@ -959,19 +978,19 @@ export async function generateLOD(projData) {
 
         if (party.gender){
             let genderNode = namedNode(pfx.aat  + party.gender.split("aat:")[1])
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(pURI),
                 namedNode(pfx.crm + "P2_has_type"),
                 genderNode,
                 namedNode(partiesURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 genderNode,
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + "E55_Type"),
                 namedNode(partiesURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 genderNode,
                 namedNode(pfx.rdf + "P127_has_broader_term"),
                 namedNode(pfx.aat + "300411836"),
@@ -982,10 +1001,10 @@ export async function generateLOD(projData) {
         if (party.relations){
             for (let relation of party.relations) {
                 if (relation.type && relation.party){
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         namedNode(pURI),
                         namedNode(pfx.gvp + relation.type.split("__")[0].split("gvp:")[1]),
-                        namedNode(PLOD + "party/" + relation.party),
+                        namedNode(uri + "party/" + relation.party),
                         namedNode(partiesURI)
                     ))
                 }
@@ -1003,13 +1022,13 @@ export async function generateLOD(projData) {
                 birthType = "E67_Birth"
             }
             let birthNode = blankNode()
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(pURI),
                 namedNode(pfx.crm + birthProperty),
                 birthNode,
                 namedNode(partiesURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 birthNode,
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + birthType),
@@ -1029,13 +1048,13 @@ export async function generateLOD(projData) {
                 deathType = "E69_Death"
             }
             let deathNode = blankNode()
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(pURI),
                 namedNode(pfx.crm + deathProperty),
                 deathNode,
                 namedNode(partiesURI)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 deathNode,
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + deathType),
@@ -1050,18 +1069,17 @@ export async function generateLOD(projData) {
             }
         }
     }
-
+    await store.multiPut(quadsArray)
     const { items } = await store.get({});
     const writer = new N3.Writer({format: 'N-Quads', prefixes: pfx}) // or 'TriG'
     items.forEach(quad => {
         writer.addQuad(quad)
     })
     writer.end((error, result) => {
-        console.log(result)
         let blob = new Blob([result], { type: 'application/n-quads' })
         let blobUrl = URL.createObjectURL(blob);
         $('#downloadLink').attr('href', blobUrl).attr('download', 'prova.nq').show();
-        $('#loader').modal('hide')
+        $('#loaderModal').modal('hide')
     })
 }
 
@@ -1071,7 +1089,7 @@ async function location_creation(subject, predicate, graph, street, city, provin
         let locationLabel = [city, province, country].filter(Boolean).join(", ")
         let locationNode = blankNode()
         let streetNode = blankNode()
-        await store.put(quad(
+        quadsArray.push(quad(
             locationNode,
             namedNode(pfx.rdf + "type"),
             namedNode(pfx.crm + "E53_Place"),
@@ -1085,13 +1103,13 @@ async function location_creation(subject, predicate, graph, street, city, provin
         } else if (country) {
             typeNode = namedNode(pfx.aat + "300387506");
         }
-        await store.put(quad(
+        quadsArray.push(quad(
             locationNode,
             namedNode(pfx.crm + "P2_has_type"),
             typeNode,
             namedNode(graph)
         ))
-        await store.put(quad(
+        quadsArray.push(quad(
             locationNode,
             namedNode(pfx.rdfs + "label"),
             literal(locationLabel),
@@ -1099,7 +1117,7 @@ async function location_creation(subject, predicate, graph, street, city, provin
         ))
 
         if (locationWD) {
-            await store.put(quad(
+            quadsArray.push(quad(
                 locationNode,
                 namedNode(pfx.owl + "sameAs"),
                 namedNode(pfx.wd + locationWD.split("_")[0]),
@@ -1109,25 +1127,25 @@ async function location_creation(subject, predicate, graph, street, city, provin
 
         if (street) {
             locationLabel = street + ", " + locationLabel
-            await store.put(quad(
+            quadsArray.push(quad(
                 streetNode,
                 namedNode(pfx.rdfs + "label"),
                 literal(locationLabel),
                 namedNode(graph)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 streetNode,
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + "E53_Place"),
                 namedNode(graph)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 streetNode,
                 namedNode(pfx.crm + "P2_has_type"),
                 namedNode(pfx.aat + "300386983"),
                 namedNode(graph)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 streetNode,
                 namedNode(pfx.crm + "P89_falls_within"),
                 locationNode,
@@ -1136,20 +1154,20 @@ async function location_creation(subject, predicate, graph, street, city, provin
         }
         if (locationVague) {
             let vagueNode = blankNode()
-            await store.put(quad(
+            quadsArray.push(quad(
                 vagueNode,
                 namedNode(pfx.rdfs + "label"),
                 literal("Near " + locationLabel),
                 namedNode(graph)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 vagueNode,
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + "E53_Place"),
                 namedNode(graph)
             ))
             if (street){
-                await store.put(quad(
+                quadsArray.push(quad(
                     vagueNode,
                     namedNode(pfx.crm + "P189i_is_approximated_by"),
                     streetNode,
@@ -1157,28 +1175,28 @@ async function location_creation(subject, predicate, graph, street, city, provin
                 ))
             }
             else {
-                await store.put(quad(
+                quadsArray.push(quad(
                     vagueNode,
                     namedNode(pfx.crm + "P189i_is_approximated_by"),
                     locationNode,
                     namedNode(graph)
                 ))
             }
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(subject),
                 namedNode(predicate),
                 vagueNode,
                 namedNode(graph)
             ))
         } else if (street){
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(subject),
                 namedNode(predicate),
                 streetNode,
                 namedNode(graph)
             ))
         } else {
-            await store.put(quad(
+            quadsArray.push(quad(
                 namedNode(subject),
                 namedNode(predicate),
                 locationNode,
@@ -1204,19 +1222,19 @@ async function timespan_creation(subject, graph, timeString, timeEDTF){
         }
         if (timespanList.length == 0) {
             let timespanNode = blankNode()
-            await store.put(quad(
+            quadsArray.push(quad(
                 subject,
                 namedNode(pfx.crm + "P4_has_time-span"),
                 timespanNode,
                 namedNode(graph)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 timespanNode,
                 namedNode(pfx.rdf + "type"),
                 namedNode(pfx.crm + "E52_Time-Span"),
                 namedNode(graph)
             ))
-            await store.put(quad(
+            quadsArray.push(quad(
                 timespanNode,
                 namedNode(pfx.rdfs + "label"),
                 literal(timeString),
@@ -1226,21 +1244,21 @@ async function timespan_creation(subject, graph, timeString, timeEDTF){
             let listTimespanNode = []
             for (let parsedDate of timespanList) {
                 let timespanNode = blankNode()
-                await store.put(quad(
+                quadsArray.push(quad(
                     timespanNode,
                     namedNode(pfx.rdf + "type"),
                     namedNode(pfx.crm + "E52_Time-Span"),
                     namedNode(graph)
                 ))
                 if (timespanList.length > 1) {
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         timespanNode,
                         namedNode(pfx.rdfs + "label"),
                         literal(parsedDate.string),
                         namedNode(graph)
                     ))
                 } else {
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         timespanNode,
                         namedNode(pfx.rdfs + "label"),
                         literal(timeString),
@@ -1249,7 +1267,7 @@ async function timespan_creation(subject, graph, timeString, timeEDTF){
                 }
                 if (parsedDate.range.length) {
                     if (parsedDate.lowerLimit) {
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             timespanNode,
                             namedNode(pfx.crm + "P82a_begin_of_the_begin"),
                             literal(parsedDate.lowerLimit, namedNode(pfx.xsd +"date")),
@@ -1257,7 +1275,7 @@ async function timespan_creation(subject, graph, timeString, timeEDTF){
                         ))
                     }
                     if (parsedDate.upperLimit) {
-                        await store.put(quad(
+                        quadsArray.push(quad(
                             timespanNode,
                             namedNode(pfx.crm + "P82b_end_of_the_end"),
                             literal(parsedDate.upperLimit, namedNode(pfx.xsd +"date")),
@@ -1265,13 +1283,13 @@ async function timespan_creation(subject, graph, timeString, timeEDTF){
                         ))
                     }
                 } else {
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         timespanNode,
                         namedNode(pfx.crm + "P82a_begin_of_the_begin"),
                         literal(parsedDate.lowerLimit, namedNode(pfx.xsd +"date")),
                         namedNode(graph)
                     ))
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         timespanNode,
                         namedNode(pfx.crm + "P82b_end_of_the_end"),
                         literal(parsedDate.upperLimit, namedNode(pfx.xsd +"date")),
@@ -1279,7 +1297,7 @@ async function timespan_creation(subject, graph, timeString, timeEDTF){
                     ))
                 }
                 if (parsedDate.is_vague) {
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         timespanNode,
                         namedNode(pfx.crm + "P2_has_type"),
                         namedNode(pfx.aat + "300435723"),
@@ -1287,7 +1305,7 @@ async function timespan_creation(subject, graph, timeString, timeEDTF){
                     ))
                 }
                 if (parsedDate.is_uncertain) {
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         timespanNode,
                         namedNode(pfx.crm + "P2_has_type"),
                         namedNode(pfx.aat + "300435722"),
@@ -1295,7 +1313,7 @@ async function timespan_creation(subject, graph, timeString, timeEDTF){
                     ))
                 }
                 if (parsedDate.is_bce) {
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         timespanNode,
                         namedNode(pfx.crm + "P2_has_type"),
                         namedNode(pfx.aat + "300455836"),
@@ -1303,42 +1321,42 @@ async function timespan_creation(subject, graph, timeString, timeEDTF){
                     ))
                 }
                 if (parsedDate.is_day) {
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         timespanNode,
                         namedNode(pfx.crm + "P2_has_type"),
                         namedNode(pfx.aat + "300379242"),
                         namedNode(graph)
                     ))
                 } else if (parsedDate.is_month) {
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         timespanNode,
                         namedNode(pfx.crm + "P2_has_type"),
                         namedNode(pfx.aat + "300379245"),
                         namedNode(graph)
                     ))
                 } else if (parsedDate.is_season) {
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         timespanNode,
                         namedNode(pfx.crm + "P2_has_type"),
                         namedNode(pfx.aat + "300133091"),
                         namedNode(graph)
                     ))
                 } else if (parsedDate.is_year) {
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         timespanNode,
                         namedNode(pfx.crm + "P2_has_type"),
                         namedNode(pfx.aat + "300379244"),
                         namedNode(graph)
                     ))
                 } else if (parsedDate.is_decade) {
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         timespanNode,
                         namedNode(pfx.crm + "P2_has_type"),
                         namedNode(pfx.aat + "300379246"),
                         namedNode(graph)
                     ))
                 } else if (parsedDate.is_century) {
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         timespanNode,
                         namedNode(pfx.crm + "P2_has_type"),
                         namedNode(pfx.aat + "300379247"),
@@ -1348,7 +1366,7 @@ async function timespan_creation(subject, graph, timeString, timeEDTF){
                 listTimespanNode.push(timespanNode)
             }
             if (listTimespanNode.length == 1){
-                await store.put(quad(
+                quadsArray.push(quad(
                     subject,
                     namedNode(pfx.crm + "P4_has_time-span"),
                     listTimespanNode[0],
@@ -1357,7 +1375,7 @@ async function timespan_creation(subject, graph, timeString, timeEDTF){
             }
             else{
                 for (let timespanNode of listTimespanNode) {
-                    await store.put(quad(
+                    quadsArray.push(quad(
                         subject,
                         namedNode(pfx.crm + "P4_has_time-span"),
                         timespanNode,
@@ -1369,12 +1387,26 @@ async function timespan_creation(subject, graph, timeString, timeEDTF){
     }
 }
 
+export async function download(){
+    const { items } = await store.get({});
+    const writer = new N3.Writer({format: 'N-Quads', prefixes: pfx}) // or 'TriG'
+    items.forEach(quad => {
+        writer.addQuad(quad)
+    })
+    writer.end((error, result) => {
+        let blob = new Blob([result], { type: 'application/n-quads' })
+        let blobUrl = URL.createObjectURL(blob);
+        $('#downloadLink').attr('href', blobUrl).attr('download', 'prova.nq').show();
+        $('#loaderModal').modal('hide')
+    })
+}
+
 
 export async function sparql(sparqlQuery){
     $("#error").addClass("d-none")
     $("#noresults").addClass("d-none")
     $("#resultsNav").addClass("d-none")
-    $('#loader').modal('show')
+    $('#loaderModalQuery').modal('show')
     var container = $("#resultsContainer");
     container.empty()
     var counter = $("#resultsCounter");
@@ -1389,7 +1421,7 @@ export async function sparql(sparqlQuery){
             }
         })
         stream.on('end', () => {
-            $('#loader').modal('hide')
+            $('#loaderModalQuery').modal('hide')
             if (results.length){
                 let headers = Object.getOwnPropertyNames(results[0]).reverse()
                 displayResults(headers, results)
@@ -1400,7 +1432,7 @@ export async function sparql(sparqlQuery){
         })
     }
     catch {
-        $('#loader').modal('hide')
+        $('#loaderModalQuery').modal('hide')
         $("#error").removeClass("d-none")
     }
 }

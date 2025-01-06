@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROVA, The Provenance App</title>
+    <title>PROV-A, The Provenance App</title>
      <!--Jquery-->
      <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
      <!--JqueryUI-->
@@ -43,99 +43,138 @@
 <body>
     <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="index.html">Prova - The Provenance App</a>
+          <a class="navbar-brand" href="index.html">PROV-A, The Provenance App</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                <a class="nav-link" aria-current="page" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="project.html">Initialize Project</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="editor.html">Structure Data</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="plod.html">Query Data</a>
               </li>
             </ul>
           </div>
         </div>
       </nav>
-    <div class="container mt-5">
+    <div class="container my-5">
         <form id="projectForm">
-            <div class="mb-5">
-                <label for="orcid" class="form-label">Author ORCID:</label>
-                <input type="text" class="form-control" id="orcid" name="orcid" required>
-                <small id="orcidHelp" class="form-text text-muted">Enter your ORCID (Open Researcher and Contributor ID). Learn more about ORCID <a href="https://orcid.org/" target="_blank">here</a>.</small>
-            </div>
-            <div class="mb-4">
-                <label for="license" class="form-label">Creative Commons License:</label>
-                <select class="form-select" id="license" name="license">
-                    <option value="https://creativecommons.org/publicdomain/zero/1.0/">CC 0</option>
-                    <option value="https://creativecommons.org/licenses/by/4.0/">CC BY</option>
-                    <option value="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</option>
-                </select>
-                <small id="licenseHelp" class="form-text text-muted">Select a Creative Commons license. Learn more about Creative Commons <a href="https://creativecommons.org/licenses/" target="_blank">here</a>.</small>
-            </div>
-          <div class="mb-5">
-            <div class="mb-3">
-                <span class="form-label">Data:</span>
-                <button type="button" class="btn btn-sm btn-danger float-end" id="resetTable">Reset Table</button>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable">
-                <thead>
-                    <tr>
-                    <th>title</th>
-                    <th>author</th>
-                    <th>institution</th>
-                    <th>url</th>
-                    <th>date</th>
-                    <th>medium</th>
-                    <th>accessionID</th>
-                    <th>provenance</th>
-                    <th>notes</th>
-                    <th>creditLine</th>
-                    <th>inscriptions</th>
-                    <th>exhibitions</th>
-                    <th>bibliography</th>
-                    </tr>
-                    <tr class="readonly-cell">
-                        <th>Title of the artifact</th>
-                        <th>Name of the author or creator</th>
-                        <th>Current owning institution</th>
-                        <th>URL of the artifact (if any)</th>
-                        <th>Date of creation</th>
-                        <th>Medium of the artifact</th>
-                        <th>Unique identifier for accession</th>
-                        <th>Provenance text</th>
-                        <th>Provenance text notes</th>
-                        <th>Credit line</th>
-                        <th>Inscriptions or markings</th>
-                        <th>Exhibition history</th>
-                        <th>List of related literature or references</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Dynamically populated with JavaScript -->
-                </tbody>
-                </table>
-            </div>
-            <div class="row">
-                <div class="col-6 d-flex flex-column align-items-start">
-                    <button type="button" class="btn btn-sm btn-success" id="addRow">Add Row</button>
-                    <small class="form-text text-muted">(Maximum 200 Rows)</small>
+            <section class="card mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h2 class="h5 mb-0">Author Information</h2>
                 </div>
-                <div class="col-6 d-flex flex-column align-items-end text-end">
-                    <button type="button" class="btn btn-sm btn-primary" id="downloadCSV">Download as CSV</button>
-                    <small class="form-text text-muted">Download table data and reload it later.</small>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="orcid" class="form-label">Author ORCID</label>
+                        <input type="text" class="form-control" id="orcid" name="orcid" placeholder="e.g., 0000-0001-2345-6789">
+                        <small class="form-text text-muted">
+                            Enter your ORCID (Open Researcher and Contributor ID).
+                            <a href="https://orcid.org/" target="_blank" rel="noopener">Learn more</a>.
+                        </small>
+                        <p id="orcid-validation-message" class="text-danger mt-1"></p>
+                    </div>
                 </div>
-            </div>
-          </div>
-          <div class="mb-5">
-                <label for="csvFile" class="form-label">Upload CSV File:</label>
-                <input type="file" class="form-control" id="csvFile" accept=".csv">
-                <small class="form-text text-muted">Do you already have a CSV file? Upload it. (Maximum 2MB, 200 Rows)</small>
-            </div>
-          <hr>
-          <button type="submit" class="btn btn-primary">Initialize Project</button>
-          <small class="d-block text-muted">Once the project has been initialised, you can upload the project file in the <a href="editor.html">data structure section</a></small>
+            </section>
 
+            <section class="card mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h2 class="h5 mb-0">License Information</h2>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="license" class="form-label">Creative Commons License</label>
+                        <select class="form-select" id="license" name="license">
+                            <option value="https://creativecommons.org/publicdomain/zero/1.0/">CC 0 - Public Domain</option>
+                            <option value="https://creativecommons.org/licenses/by/4.0/">CC BY - Attribution</option>
+                            <option value="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA - ShareAlike</option>
+                        </select>
+                        <small class="form-text text-muted">
+                            Choose a license type.
+                            <a href="https://creativecommons.org/licenses/" target="_blank" rel="noopener">Learn more</a>.
+                        </small>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h2 class="h5 mb-0">Artifacts Data</h2>
+                </div>
+                <div class="card-body">
+                    <!-- Action Panel -->
+                    <div class="d-flex flex-wrap justify-content-between align-items-end mb-3">
+                        <div>
+                            <div>
+                                <small class="text-muted">Upload an existing CSV file to populate the table.</small><br>
+                                <label for="csvFile" class="btn btn-sm btn-outline-primary me-2">
+                                    <i class="bi bi-upload"></i> Upload CSV
+                                </label>
+                                <input type="file" class="d-none" id="csvFile" accept=".csv">
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <small class="text-muted">Download your table data as a CSV file for future use.</small><br>
+                            <button type="button" class="btn btn-sm btn-outline-primary" id="downloadCSV">
+                                <i class="bi bi-download"></i> Download CSV
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable">
+                        <thead>
+                            <tr>
+                            <th>title</th>
+                            <th>author</th>
+                            <th>institution</th>
+                            <th>url</th>
+                            <th>date</th>
+                            <th>medium</th>
+                            <th>accessionID</th>
+                            <th>provenance</th>
+                            <th>creditLine</th>
+                            <th>inscriptions</th>
+                            <th>exhibitions</th>
+                            <th>bibliography</th>
+                            </tr>
+                            <tr class="readonly-cell">
+                                <th>Title of the artifact</th>
+                                <th>Name of the author or creator</th>
+                                <th>Current owning institution</th>
+                                <th>URL of the artifact (if any)</th>
+                                <th>Date of creation</th>
+                                <th>Medium of the artifact</th>
+                                <th>Unique identifier for accession</th>
+                                <th>Provenance text</th>
+                                <th>Credit line</th>
+                                <th>Inscriptions or markings</th>
+                                <th>Exhibition history</th>
+                                <th>List of related literature or references</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        </table>
+                    </div>
+                    <!-- Action Buttons -->
+                    <div class="mt-3 text-center">
+                        <button type="button" class="btn btn-sm btn-success" id="addRow">+ Add Row</button>
+                    </div>
+                </div>
+            </section>
+            <div class="text-center mt-5">
+                <button type="submit" class="btn-lg btn btn-primary">Initialize Project</button>
+                 <p class="d-block text-muted mt-2">
+                   Once initialized, upload the project file in the <a href="editor.html">Structure Data</a> section.
+                </p>
+            </div>
         </form>
       </div>
 </body>
@@ -161,14 +200,13 @@
                     data.forEach(function(row) {
                       const newRow = $('<tr></tr>');
                       row.forEach(function(cell, index) {
-                        if (index < 13) {
+                        if (index < 12) {
                             newRow.append($('<td contenteditable="true"></td>').text(cell));
                         }
                       });
+                      newRow.append($('<td><button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button></td>')); // Add remove button
                       tableBody.append(newRow);
                     });
-
-
                     updateAddRowButtonVisibility(); // Update Add Row button visibility
                   }
                 })
@@ -182,7 +220,7 @@
                 return
             }
             const newRow = $('<tr></tr>');
-            for (let i = 0; i < 13; i++) {
+            for (let i = 0; i < 12; i++) {
                 newRow.append($('<td contenteditable="true"></td>').text(''));
             }
             newRow.append($('<td><button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button></td>')); // Add remove button
@@ -213,12 +251,25 @@
             }
         });
 
-        $('#resetTable').click(function() {
-            const confirmed = confirm('Are you sure you want to reset the table?');
-            if (confirmed) {
-                $('#dataTable tbody').empty();
-                $('#addRow').show(); // Show Add Row button
-            }
+        // Function to download table data as CSV
+        $('#downloadCSV').click(function() {
+            const csvContent = [];
+            $('#dataTable tbody tr').each(function() {
+                const rowData = [];
+                $(this).find('td[contenteditable="true"]').each(function() {
+                  const cellContent = $(this).text().replace(/"/g, '""').trim();
+                  rowData.push('"' + cellContent.replace(/\n/g, '\\n') + '"');
+                });
+                csvContent.push(rowData.join(','));
+            });
+            const csvString = csvContent.join('\n');
+            const encodedUri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvString);
+            const link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', 'table_data.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         });
 
         // Form submission
@@ -247,14 +298,17 @@
                     formData.data.push(rowData);
                 }
             });
-            if (formData.data.length>0){
+            if (!isValidORCID(document.getElementById('orcid').value.trim())) {
+                alert("Please provide a valid ORCID before initializing the project")
+            }
+            else if (formData.data.length>0){
                 // Convert formData to JSON and download
                 const jsonData = JSON.stringify(formData);
                 const blob = new Blob([jsonData], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'project.prova';
+                a.download = 'project.json';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
@@ -265,32 +319,51 @@
             }
         });
 
-        // Function to download table data as CSV
-        $('#downloadCSV').click(function() {
-            const csvContent = [];
-            $('#dataTable tbody tr').each(function() {
-                const rowData = [];
-                $(this).find('td[contenteditable="true"]').each(function() {
-                  const cellContent = $(this).text().replace(/"/g, '""').trim();
-                  rowData.push('"' + cellContent.replace(/\n/g, '\\n') + '"');
-                });
-                csvContent.push(rowData.join(','));
-            });
-            const csvString = csvContent.join('\n');
-            const encodedUri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvString);
-            const link = document.createElement('a');
-            link.setAttribute('href', encodedUri);
-            link.setAttribute('download', 'table_data.csv');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        });
-
         // Confirmation before leaving the page
         window.addEventListener('beforeunload', function(e) {
             const confirmationMessage = 'Data will be lost. Are you sure you want to leave this page?';
             e.returnValue = confirmationMessage;
             return confirmationMessage;
+        });
+
+        function isValidORCID(orcid) {
+            // Remove hyphens for checksum validation
+            const strippedORCID = orcid.replace(/-/g, '');
+
+            // ORCID should have 16 digits
+            if (!/^\d{16}$/.test(strippedORCID)) {
+                return false;
+            }
+
+            // MOD 11-2 checksum validation
+            let total = 0;
+            for (let i = 0; i < 15; i++) {
+                total = (total + parseInt(strippedORCID.charAt(i), 10)) * 2;
+            }
+            const remainder = total % 11;
+            const result = (12 - remainder) % 11;
+            const checkDigit = result === 10 ? 'X' : result.toString();
+
+            return checkDigit === strippedORCID.charAt(15);
+        }
+
+        // Add event listener for real-time validation
+        const orcidInput = document.getElementById('orcid');
+        const validationMessage = document.getElementById('orcid-validation-message');
+
+        orcidInput.addEventListener('input', () => {
+            const orcidValue = orcidInput.value.trim();
+            if (!orcidValue) {
+                validationMessage.textContent = ''; // Clear message if empty
+            } else if (isValidORCID(orcidValue)) {
+                validationMessage.textContent = 'Valid ORCID!';
+                validationMessage.classList.remove('text-danger');
+                validationMessage.classList.add('text-success');
+            } else {
+                validationMessage.textContent = 'Invalid ORCID! Please check the format or digits.';
+                validationMessage.classList.remove('text-success');
+                validationMessage.classList.add('text-danger');
+            }
         });
     });
 </script>

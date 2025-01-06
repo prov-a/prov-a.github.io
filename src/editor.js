@@ -180,18 +180,20 @@ function fillPage(editor_snippet, party_snippet, location_snippet, relation_snip
             filters["party"]["label"] = $('#filterParty').find(':selected').text()
         }
         if (filterKeywordValue){
-            filters["keyword"] = $('#filterInstitution').val()
+            filters["keyword"] = $('#filterKeyword').val()
         }
         if (Object.keys(filters).length > 0) {
-            filteredDataIndexList = projectData.data.filter((item, index) => {
-                    return Object.entries(filters).every(([key, value]) => {
+            filteredDataIndexList = projectData.data
+                .map((item, index) => ({ item, index })) // Include index alongside item
+                .filter(({ item }) =>
+                    Object.entries(filters).every(([key, value]) => {
                         if (key === "keyword" && value !== null && !item.provenance.toLowerCase().includes(value.toLowerCase())) {
                             return false;
                         }
-                        if (key === "party" && value !== null ) {
-                            let found = false
+                        else if (key === "party" && value !== null) {
+                            let found = false;
                             for (let act of item.provenanceData) {
-                                if (act.data.parties){
+                                if (act.data.parties) {
                                     for (let p of act.data.parties) {
                                         if (p.data.id == value["id"]) {
                                             found = true;
@@ -201,18 +203,17 @@ function fillPage(editor_snippet, party_snippet, location_snippet, relation_snip
                                 }
                                 if (found) break;
                             }
-                            if (!found){
+                            if (!found) {
                                 return false;
                             }
-                        }
-                        else if (value !== null && item[key] !== value) {
+                        } else if (!["keyword", "party"].includes(key) && value !== null && item[key] !== value) {
                             return false;
                         }
                         return true;
-                    });
-                }).map(data => data["_id"])
-            if (filteredDataIndexList){
-                console.log(filteredDataIndexList)
+                    })
+                )
+                .map(({ index }) => index); // Map to index only
+            if (filteredDataIndexList && filteredDataIndexList.length > 0){
                 currentObjectID = filteredDataIndexList[0]
                 objectData = projectData.data[currentObjectID]
                 $("#editorContainer").empty()
@@ -1809,7 +1810,6 @@ function fillPage(editor_snippet, party_snippet, location_snippet, relation_snip
         try {
             let itemKey = zoteroAPIvalue.split("items/")[1].split("/")[0]
             let itemGroup = zoteroAPIvalue.split("items/")[0].split("groups/")[1].split("/")[0]
-            console.log("https://api.zotero.org/groups/" + itemGroup + "/items/" + itemKey)
             $.get("https://api.zotero.org/groups/" + itemGroup + "/items/" + itemKey + "?format=bib",
                 function (result) {
                     if (result) {
@@ -1819,7 +1819,6 @@ function fillPage(editor_snippet, party_snippet, location_snippet, relation_snip
                         $.get("https://api.zotero.org/groups/" + itemGroup + "/items/" + itemKey,
                             function (resultData) {
                                 let type = resultData.data.itemType
-                                console.log(type)
                                 if (type == "book") {
                                     $(zoteroAPIselector + "type").append(new Option("books", "aat:300028051__books", true, true))
                                 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROVA, The Provenance App</title>
+    <title>PROV-A, The Provenance App</title>
      <!--Jquery-->
      <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
      <!--JqueryUI-->
@@ -15,109 +15,138 @@
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css">
      <style>
-        .icon-circular{
+        /* Circular Icons */
+        .icon-circular {
             width: 160px;
             height: 160px;
             border-radius: 50%;
             line-height: 160px;
         }
 
-        .home-card{
-            transition: filter 0.3s;
+        /* Card Hover Effects */
+        .home-card {
+            transition: filter 0.3s, transform 0.3s;
         }
-        .home-card:hover{
-            filter: brightness(0.8); /* Adjust the brightness to darken the element */
-            color: white
-        }
-        .bg-init{
-            background-color: #ef476f !important;
-            color: white
-        }
-        .bg-edit{
-            background-color: #ffd166 !important;
-            color: white
-        }
-        .bg-plod{
-            background-color: #06d6a0 !important;
-            color: white
-        }
-        .bg-ins{
-            background-color: #118ab2 !important;
-            color: white
+        .home-card:hover {
+            filter: brightness(0.85);
+            transform: scale(1.05);
         }
 
+        /* Step Colors */
+        .bg-init { background-color: #ef476f !important; color: white; }
+        .bg-edit { background-color: #ffd166 !important; color: white; }
+        .bg-data { background-color: #06d6a0 !important; color: white; }
 
+        /* Arrows Styling */
+        .arrow {
+            font-size: 3rem;
+            color: #999;
+        }
+
+        /* Footer Styling */
+        .footer {
+            background-color: #222;
+            color: #bbb;
+            padding: 20px 15px;
+            font-size: 0.9em;
+        }
+        .footer a { color: #ddd; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
      </style>
 </head>
-<body style = "display: flex; flex-direction: column; min-height: 100vh;">
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
     <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Prova - The Provenance App</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-              </li>
-            </ul>
+          <a class="navbar-brand" href="#">PROV-A, The Provenance App</a>
+          <small class="text-muted">Structure and query provenance data with ease.</small>
+        </div>
+    </nav>
+     <section class="hero bg-light text-dark py-4">
+      <div class="container text-center">
+        <div class="row align-items-center">
+          <div class="col-md-12 text-md-start">
+              <h2>Welcome to PROV-A</h2>
+            <p class="lead mt-4">
+              Provenance traces the journey of artifacts—from creation to their present location in <b>galleries, libraries, archives, and museums (GLAM)</b>.
+                <br>
+              PROV-A bridges the gap between traditional provenance studies and modern digital methods. By integrating expert human curation within a semi-automated workflow, PROV-A empowers art historians to transform free-text provenance records into <b>Linked Open Data (LOD)</b>. This approach supports new opportunities for analysis, collaboration, and discovery, harnessing both human expertise and technology.
+            </p>
           </div>
         </div>
-      </nav>
+      </div>
+    </section>
 
-      <div class="container" style="flex: 1">
-            <div class="row text-center my-5 mx-5">
-                <div class="col-sm pb-2">
-                    <div class="card shadow">
-                        <div class="card-body d-flex flex-column align-items-center">
-                            <a href="project.html" class="home-card"><i class="fa-solid fa-play fa-6x bg-init text-white icon-circular"></i><br>
-                                <span class="btn bg-init mt-3">Initialize Project</span></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm pb-2">
-                    <div class="card shadow">
-                        <div class="card-body d-flex flex-column align-items-center">
-                            <a href="editor.html" class="home-card"><i class="fa-solid fa-list-check fa-6x bg-edit text-white icon-circular"></i><br>
-                                <span class="btn bg-edit mt-3">Structure Data</span></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm pb-2">
-                    <div class="card shadow">
-                        <div class="card-body d-flex flex-column align-items-center">
-                            <a href="plod.html" class="home-card"><i class="fa-solid fa-diagram-project fa-6x bg-plod text-white icon-circular"></i><br>
-                                <span class="btn bg-plod mt-3">PLOD</span></a>
-                        </div>
+    <div class="container" style="flex: 1">
+        <div class="row text-center my-5 mx-5 align-items-stretch">
+            <!-- Step 1: Initialize Project -->
+            <div class="col-sm pb-2">
+                <div class="card shadow h-100 d-flex flex-column">
+                    <div class="card-body d-flex flex-column align-items-center flex-grow-1 justify-content-between">
+                        <a href="project.html" class="home-card" aria-label="Initialize Project">
+                            <i class="fa-solid fa-play fa-6x bg-init text-white icon-circular"></i><br>
+                            <span class="btn bg-init mt-3">Initialize Project</span>
+                        </a>
+                        <p class="mt-2 text-muted">
+                            Start your project by importing a table or creating one from scratch.
+                        </p>
                     </div>
                 </div>
             </div>
-    </div>
-    <footer>
-        <div class="footer border-top border-2 border-dark" style="margin-bottom: 0px;margin-top: 100px;">
-            <div class="container">
-                <div class="row" style="margin-top:60px; margin-bottom:40px">
-                    <div class="col-md-8 mb-5 mb-md-0 px-5 px-md-0">
-                        <h4 class="mb-3 mb-md-5">PROVA is a Provenance Lab Platform</h4>
-                        <h5 class="py-1"><a href="mailto:provenance@leuphana.de" class="text-dark link_main" target="_blank"><i class="fa-solid fa-envelope fa-xs"></i> provenance@leuphana.de</a></h5>
-                        <h5 class="py-1"><a href="https://provenance.hypotheses.org/" class="text-dark link_main" target="_blank"><i class="fa-solid fa-link fa-xs"></i> Blog</a></h5>
-                        <h5 class="py-1"><a href="https://twitter.com/Provenance_Lab" class="text-dark link_main" target="_blank"><i class="fa-brands fa-square-twitter fa-x"></i> Twitter</a></h5>
+
+            <!-- Arrow Between Steps (Hidden Below md) -->
+            <div class="col-sm-auto d-none d-md-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-arrow-right arrow"></i>
+            </div>
+
+            <!-- Step 2: Structure Data -->
+            <div class="col-sm pb-2">
+                <div class="card shadow h-100 d-flex flex-column">
+                    <div class="card-body d-flex flex-column align-items-center flex-grow-1 justify-content-between">
+                        <a href="editor.html" class="home-card" aria-label="Structure Data">
+                            <i class="fa-solid fa-list-check fa-6x bg-edit text-white icon-circular"></i><br>
+                            <span class="btn bg-edit mt-3">Structure Data</span>
+                        </a>
+                        <p class="mt-2 text-muted">
+                            Organize and structure your data interactively.
+                        </p>
                     </div>
-                    <div class="col-md-4 px-5 px-md-0">
-                        <img class="img-fluid w-100 mb-4 mb-md-3 px-5" src="./img/Logo_Volkswagenstiftung.svg" alt="...">
-                        <img class="img-fluid w-100 px-5" src="./img/Leuphanalogo.svg" alt="...">
+                </div>
+            </div>
+
+            <!-- Arrow Between Steps (Hidden Below md) -->
+            <div class="col-sm-auto d-none d-md-flex align-items-center justify-content-center">
+                <i class="fa-solid fa-arrow-right arrow"></i>
+            </div>
+
+            <!-- Step 3: Initialize Dataset -->
+            <div class="col-sm pb-2">
+                <div class="card shadow h-100 d-flex flex-column">
+                    <div class="card-body d-flex flex-column align-items-center flex-grow-1 justify-content-between">
+                        <a href="plod.html" class="home-card" aria-label="Query Data">
+                            <i class="fa-solid fa-diagram-project fa-6x bg-data text-white icon-circular"></i><br>
+                            <span class="btn bg-data mt-3">Query Data</span>
+                        </a>
+                        <p class="mt-2 text-muted">
+                            Generate Linked Open Data and query it using SPARQL.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="footer bg-dark text-light py-2" style="margin-bottom: 0px;margin-top: 0px; padding-right: 20px; padding-left: 20px;">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8 footer_link">
-                            ©2024  Provenance Lab - PROVA - The Provenance App
-                        </div>
-                    </div>
+    </div>
+
+    <footer>
+        <div class="footer bg-dark text-light py-2">
+            <div class="container my-3">
+                <div class="text-center">
+                    © 2024 PROV-A, The Provenance App.
+                    <br>
+                    Created by Fabio Mariani.
+                    <br>
+                    <p>PROV-A is an open-source project licensed under the <a href="https://github.com/prov-a/prov-a.github.io?tab=MIT-1-ov-file#readme" target="_blank"><u>MIT License</u></a>.</p>
+                    <a href="https://github.com/prov-a/prov-a.github.io" target="_blank"><i class="fa-brands fa-github"></i> <u>GitHub Repository</u></a>
                 </div>
+            </div>
         </div>
     </footer>
 </body>
