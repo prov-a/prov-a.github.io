@@ -86,6 +86,23 @@
 
             <section class="card mb-4">
                 <div class="card-header bg-dark text-white">
+                    <h2 class="h5 mb-0">URI</h2>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="uri" class="form-label">URI</label>
+                        <input type="text" class="form-control" id="uri" name="uri" placeholder="e.g., https://example.org/resource">
+                        <small class="form-text text-muted">
+                            Enter URI (Uniform Resource Identifier) for Linked Open Data.
+                            <a href="https://www.ietf.org/rfc/rfc2396.txt" target="_blank" rel="noopener">Learn more</a>.
+                        </small>
+                        <p id="uri-validation-message" class="text-danger mt-1"></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card mb-4">
+                <div class="card-header bg-dark text-white">
                     <h2 class="h5 mb-0">License Information</h2>
                 </div>
                 <div class="card-body">
@@ -301,6 +318,9 @@
             if (!isValidORCID(document.getElementById('orcid').value.trim())) {
                 alert("Please provide a valid ORCID before initializing the project")
             }
+            else if (!isValidURI(document.getElementById('uri').value.trim())) {
+                alert("Please provide a valid URI before initializing the project")
+            }
             else if (formData.data.length>0){
                 // Convert formData to JSON and download
                 const jsonData = JSON.stringify(formData);
@@ -365,6 +385,82 @@
                 validationMessage.classList.add('text-danger');
             }
         });
+
+        function isValidURI(uri) {
+            try {
+                const url = new URL(uri);
+                // 1. Check if the protocol is 'http' or 'https'
+                if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+                    return false;
+                }
+                // 2. Ensure there is no fragment (#) or query (? parameters)
+                if (url.hash || url.search) {
+                    return false;
+                }
+                // 3. Check for invalid characters in the path (e.g., ":", "#", "?", etc.)
+                if (/[:?#]/.test(url.pathname)) {
+                    return false;
+                }
+                // 4. Check the hostname (domain or IP)
+                const hostname = url.hostname;
+
+                // Ensure it's not empty
+                if (!hostname || hostname === '') {
+                    return false;
+                }
+
+                // Validate domain name structure (should contain at least one period and no special characters like `:`)
+                const domainRegex = /^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
+                if (!domainRegex.test(hostname)) {
+                    return false;
+                }
+
+                // 5. Ensure that domain doesn't start or end with a hyphen
+                if (hostname.startsWith('-') || hostname.endsWith('-')) {
+                    return false;
+                }
+
+                // 6. Check for valid domain characters (only alphanumeric, dots, and hyphens)
+                if (!/^[a-zA-Z0-9.-]+$/.test(hostname)) {
+                    return false;
+                }
+
+                // 7. Check for invalid ports
+                if (url.port && url.port !== '' && !/^[0-9]+$/.test(url.port)) {
+                    return false;
+                }
+
+                // 8. Check for invalid path components (e.g., trailing slashes)
+                if (url.pathname.includes('//')) {
+                    return false;
+                }
+                // 9. Ensure the URL path is not  empty
+                if (url.pathname === '') {
+                    return false;
+                }
+            } catch (error) {
+                // If there's any error parsing the URI, return false
+                return false;
+            }
+            return true;
+        }
+
+        // Real-time validation for Base URI input
+        const uriInput = $('#uri');
+        const uriValidationMessage = $('#uri-validation-message');
+
+        uriInput.on('input', function () {
+            const uriValue = uriInput.val().trim();
+
+            if (!uriValue) {
+                uriValidationMessage.text(''); // Clear message if empty
+            } else if (isValidURI(uriValue)) {
+                uriValidationMessage.text('Valid URI!').removeClass('text-danger').addClass('text-success');
+            } else {
+                uriValidationMessage.text('Invalid URI! Please check the format.').removeClass('text-success').addClass('text-danger');
+            }
+        });
+
     });
 </script>
 

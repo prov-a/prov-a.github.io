@@ -252,7 +252,7 @@ function fillPage(editor_snippet, party_snippet, location_snippet, relation_snip
     //fill form if data_____________________________________
     if (objectData["provenanceData"].length) {
         $('#loader').modal('show')
-        structuredData = objectData["provenanceData"]
+        structuredData = JSON.parse(JSON.stringify(objectData["provenanceData"]));
         activityID = 0
         for (let thisActivity in objectData["provenanceData"]) {
             let thisActivityID = parseInt(objectData["provenanceData"][thisActivity]["id"])
@@ -1409,17 +1409,10 @@ function fillPage(editor_snippet, party_snippet, location_snippet, relation_snip
                 for (let activityParty of newData["parties"]) {
                     let activityPartyData = Object.assign({}, activityParty["data"])
                     let activityPartyID = activityPartyData["id"]
-                    let newPartyData = {}
-                    activityParty["data"] = {}
-                    for (let [key, value] of Object.entries(activityPartyData)) {
-                        if (key !== "role") {
-                            newPartyData[key] = value;
-                        }
-                        if (key === "id" || key === "role") {
-                            activityParty["data"][key] = value;
-                        }
-                    }
-                    projectData.parties[activityPartyID] = newPartyData
+                    let activityPartyRole = activityPartyData["role"]
+                    activityParty["data"] = {"id": activityPartyID, "role": activityPartyRole}
+                    delete activityPartyData["role"]
+                    projectData.parties[activityPartyID] = activityPartyData
                 }
             }
             structuredData[selectedActivityIndex]["data"] = newData
@@ -1442,26 +1435,23 @@ function fillPage(editor_snippet, party_snippet, location_snippet, relation_snip
                 if (key == "parties") {
                     for (let par of form["parties"]) {
                         let remotePartyData = projectData.parties[par["data"]["id"]]
-                        for (let partyKey in remotePartyData) {
-                            par["data"][partyKey] = remotePartyData[partyKey];
-                        }
                         let parID = parseInt(par["index"])
                         if (parID >= partyID) { partyID = parID + 1 }
-                        for (let parKey in par["data"]) {
+                        for (let parKey in remotePartyData) {
                             if (parKey == "locations") {
-                                for (let loc of par["data"][parKey]) {
+                                for (let loc of remotePartyData[parKey]) {
                                     let locID = parseInt(loc["id"])
                                     if (locID >= locationID) { locationID = locID + 1 }
                                 }
                             }
                             else if (parKey == "relations") {
-                                for (let rel of par["data"][parKey]) {
+                                for (let rel of remotePartyData[parKey]) {
                                     let relID = parseInt(rel["id"])
                                     if (relID >= relationID) { relationID = relID + 1 }
                                 }
                             }
                             else if (parKey == "names") {
-                                for (let na of par["data"][parKey]) {
+                                for (let na of remotePartyData[parKey]) {
                                     let naID = parseInt(na["id"])
                                     if (naID >= nameID) { nameID = naID + 1 }
                                 }
@@ -1807,6 +1797,9 @@ function fillPage(editor_snippet, party_snippet, location_snippet, relation_snip
     function zoteroAPI(zoteroAPIselector, zoteroAPIvalue){
         $(zoteroAPIselector + "title").html("Unknown Source")
         $(zoteroAPIselector + "citation").val("")
+        $(zoteroAPIselector + "type").val("").change()
+        $(zoteroAPIselector + "author").val("")
+        $(zoteroAPIselector + "date").val("")
         try {
             let itemKey = zoteroAPIvalue.split("items/")[1].split("/")[0]
             let itemGroup = zoteroAPIvalue.split("items/")[0].split("groups/")[1].split("/")[0]
@@ -1819,10 +1812,10 @@ function fillPage(editor_snippet, party_snippet, location_snippet, relation_snip
                         $.get("https://api.zotero.org/groups/" + itemGroup + "/items/" + itemKey,
                             function (resultData) {
                                 let type = resultData.data.itemType
-                                if (type == "book") {
+                                if (type == "book" || type == "bookSection") {
                                     $(zoteroAPIselector + "type").append(new Option("books", "aat:300028051__books", true, true))
                                 }
-                                else if (type == "article-journal") {
+                                else if (type == "journalArticle") {
                                     $(zoteroAPIselector + "type").append(new Option("articles", "aat:300048715__articles", true, true))
                                 }
                                 let authors = resultData.data.creators

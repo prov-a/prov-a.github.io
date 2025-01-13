@@ -38,14 +38,16 @@ export async function initializeDatabase() {
   await store.open();
 }
 
-
+function ensureTrailingSlash(uri) {
+    return uri.endsWith('/') ? uri : uri + '/';
+}
 
 export async function generateLOD(projData) {
     await store.open();
     await store.clear();
     const orcid = "https://orcid.org/" + projData.orcid
     const license = projData.license
-    const uri = projData.uri
+    const uri = ensureTrailingSlash(projData.uri)
 
     for (let i in projData.data) {
         let obj = projData.data[i]
@@ -444,56 +446,68 @@ export async function generateLOD(projData) {
                         ))
                     }
                     if (source.citation){
-                        let citationNode = blankNode()
                         quadsArray.push(quad(
                             sourceNode,
-                            namedNode(pfx.crm + "P1_is_identified_by"),
-                            citationNode,
-                            namedNode(nanopubURIProvenance)
-                        ))
-                        quadsArray.push(quad(
-                            citationNode,
-                            namedNode(pfx.rdf + "type"),
-                            namedNode(pfx.crm + "E41_Appellation"),
-                            namedNode(nanopubURIProvenance)
-                        ))
-                        quadsArray.push(quad(
-                            citationNode,
-                            namedNode(pfx.crm + "P2_has_type"),
-                            namedNode(pfx.aat + "300435423"),
-                            namedNode(nanopubURIProvenance)
-                        ))
-                        quadsArray.push(quad(
-                            citationNode,
-                            namedNode(pfx.crm + "P190_has_symbolic_content"),
+                            namedNode(pfx.rdfs + "label"),
                             literal(source.citation),
                             namedNode(nanopubURIProvenance)
                         ))
                     }
-                    if (source.quote){
+                    if (source.author || source.date){
+                        let sourceCreation = blankNode()
+                        quadsArray.push(quad(
+                            sourceNode,
+                            namedNode(pfx.crm + "P94i_was_created_by"),
+                            sourceCreation,
+                            namedNode(nanopubURIProvenance)
+                        ))
+                        quadsArray.push(quad(
+                            sourceCreation,
+                            namedNode(pfx.rdf + "type"),
+                            namedNode(pfx.crm + "E65_Creation"),
+                            namedNode(nanopubURIProvenance)
+                        ))
+                        if (source.date){
+                            timespan_creation(sourceCreation, nanopubURIProvenance, source.date, source.date)
+                        }
+                        if (source.author){
+                            for (let aut of source.author.split(";")) {
+                                let agent = blankNode()
+                                quadsArray.push(quad(
+                                    sourceCreation,
+                                    namedNode(pfx.crm + "P14_carried_out_by"),
+                                    agent,
+                                    namedNode(nanopubURIProvenance)
+                                ))
+                                quadsArray.push(quad(
+                                    agent,
+                                    namedNode(pfx.rdf + "type"),
+                                    namedNode(pfx.crm + "E39_Actor"),
+                                    namedNode(nanopubURIProvenance)
+                                ))
+                                quadsArray.push(quad(
+                                    agent,
+                                    namedNode(pfx.rdfs + "label"),
+                                    literal(aut.trim()),
+                                    namedNode(nanopubURIProvenance)
+                                ))
+                            }
+                        }
+                    }
+                    if (source.url) {
+                        quadsArray.push(quad(
+                            sourceNode,
+                            namedNode(pfx.owl + "sameAs"),
+                            namedNode(source.url),
+                            namedNode(nanopubURIProvenance)
+                        ))
+                    }
+                    if (source.notes){
                         let quoteNode = blankNode()
                         quadsArray.push(quad(
                             sourceNode,
-                            namedNode(pfx.crm + "P165_incorporates"),
-                            quoteNode,
-                            namedNode(nanopubURIProvenance)
-                        ))
-                        quadsArray.push(quad(
-                            quoteNode,
-                            namedNode(pfx.rdf + "type"),
-                            namedNode(pfx.crm + "E90_Symbolic_Object"),
-                            namedNode(nanopubURIProvenance)
-                        ))
-                        quadsArray.push(quad(
-                            quoteNode,
-                            namedNode(pfx.crm + "P2_has_type"),
-                            namedNode(pfx.aat + "300026941"),
-                            namedNode(nanopubURIProvenance)
-                        ))
-                        quadsArray.push(quad(
-                            quoteNode,
-                            namedNode(pfx.crm + "P190_has_symbolic_content"),
-                            literal(source.quote),
+                            namedNode(pfx.crm + "P3_has_note"),
+                            literal(source.notes),
                             namedNode(nanopubURIProvenance)
                         ))
                     }
