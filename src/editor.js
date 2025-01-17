@@ -1510,9 +1510,6 @@ function fillPage(editor_snippet, party_snippet, location_snippet, relation_snip
                 if (key == "parties") {
                     for (let par of form["parties"]) {
                         let remotePartyData = projectData.parties[par["data"]["id"]]
-                        for (let partyKey in remotePartyData) {
-                            par["data"][partyKey] = remotePartyData[partyKey];
-                        }
                         let parID = parseInt(par["index"])
                         let partySnippet = party_snippet.split("[[index]]").join(parID)
                         $("#partiesContainer").append(partySnippet).promise().done(function() {
@@ -1536,24 +1533,30 @@ function fillPage(editor_snippet, party_snippet, location_snippet, relation_snip
                                 $(".party-role option[value='sender_agent'], .party-role option[value='receiver_agent']").prop("disabled", true)
                             }
                             if (parID >= partyID) { partyID = parID + 1 }
-                            if ("label" in par["data"]) {
-                                let partyLabel = par["data"]["label"]
-                                if ("WD" in par["data"]) {
-                                    promises.push(queryWD(partyLabel, "#party" + parID + "WD", par["data"]["WD"]))
+                            if ("label" in remotePartyData) {
+                                let partyLabel = remotePartyData["label"]
+                                if ("WD" in remotePartyData) {
+                                    promises.push(queryWD(partyLabel, "#party" + parID + "WD", remotePartyData["WD"]))
                                 }
                                 else {
                                     promises.push(queryWD(partyLabel, "#party" + parID + "WD"))
                                 }
-                                if ("ULAN" in par["data"]) {
-                                    promises.push(queryULAN(partyLabel, "#party" + parID + "ULAN", par["data"]["ULAN"]))
+                                if ("ULAN" in remotePartyData) {
+                                    promises.push(queryULAN(partyLabel, "#party" + parID + "ULAN", remotePartyData["ULAN"]))
                                 }
                                 else {
                                     promises.push(queryULAN(partyLabel, "#party" + parID + "ULAN"))
                                 }
                             }
-                            for (let parKey in par["data"]) {
+                            if ("role" in par["data"]){
+                                let parVal = par["data"]["role"]
+                                let parSel = "party" + parID + "role"
+                                let parSelector = "select[name=" + parSel + "], input[name=" + parSel + "]"
+                                $(parSelector).val(parVal)
+                            }
+                            for (let parKey in remotePartyData) {
                                 if (parKey == "locations") {
-                                    for (let loc of par["data"][parKey]) {
+                                    for (let loc of remotePartyData[parKey]) {
                                         let locID = parseInt(loc["id"])
                                         if (locID >= locationID) { locationID = locID + 1 }
                                         let locationSnippet = location_snippet.split("[[index]]").join(locID)
@@ -1603,7 +1606,7 @@ function fillPage(editor_snippet, party_snippet, location_snippet, relation_snip
                                     }
                                 }
                                 if (parKey == "relations") {
-                                    for (let rel of par["data"][parKey]) {
+                                    for (let rel of remotePartyData[parKey]) {
                                         let relID = parseInt(rel["id"])
                                         if (relID >= relationID) { relationID = relID + 1 }
                                         let relationSnippet = relation_snippet.split("[[index]]").join(relID)
@@ -1619,23 +1622,23 @@ function fillPage(editor_snippet, party_snippet, location_snippet, relation_snip
                                     }
                                 }
                                 else if (parKey == "names") {
-                                    for (let na of par["data"][parKey]) {
+                                    for (let na of remotePartyData[parKey]) {
                                         let naID = parseInt(na["id"])
                                         partyNameAdd(naID, parID, na["type"], na["value"])
                                         if (naID >= nameID) { nameID = naID + 1 }
                                     }
                                 }
                                 else if (parKey == "cultures") {
-                                    cultureSelector("#party" + parID + "cultures", par["data"][parKey])
+                                    cultureSelector("#party" + parID + "cultures", remotePartyData[parKey])
                                 }
                                 else if (parKey == "groupTypes") {
-                                    groupSelector("#party" + parID + "groupTypes", par["data"][parKey])
+                                    groupSelector("#party" + parID + "groupTypes", remotePartyData[parKey])
                                 }
                                 else if (parKey == "occupations") {
-                                    occupationSelector("#party" + parID + "occupations", par["data"][parKey])
+                                    occupationSelector("#party" + parID + "occupations", remotePartyData[parKey])
                                 }
                                 else {
-                                    let parVal = par["data"][parKey]
+                                    let parVal = remotePartyData[parKey]
                                     let parSel = "party" + parID + parKey
                                     let parSelector = "select[name=" + parSel + "], input[name=" + parSel + "]"
                                     if (parVal == "on") {
@@ -1656,7 +1659,7 @@ function fillPage(editor_snippet, party_snippet, location_snippet, relation_snip
                             if (partyTitle != "") {
                                 $("#party" + parID + " .party-title").html(partyTitle)
                             }
-                            if (par["data"]["type"] == "group") {
+                            if (remotePartyData["type"] == "group") {
                                 $("#party" + parID + "body .group-data").show()
                                 $("#party" + parID + "body .person-data").hide()
                                 $("#party" + parID + "deathLabel").text("Dissolution")
