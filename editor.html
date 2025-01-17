@@ -116,6 +116,7 @@
         });
 
         $(document).on('click', '.btn-save', function() {
+            partyClear()
             const storedJsonData = localStorage.getItem('provaData');
             if (!storedJsonData) {
                 console.error('No data found in localStorage.');
