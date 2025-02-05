@@ -34,8 +34,8 @@
               </li>
             </ul>
             <div class="d-flex">
-                <button class="btn btn-primary btn-save me-5" type="button">Save Data</button>
-                <button class="btn btn-warning btn-change" type="button">Change Project</button>
+                <button class="btn btn-primary control-project-element btn-save me-5" type="button">Save Data</button>
+                <button class="btn btn-warning control-project-element btn-change" type="button">Change Project</button>
             </div>
           </div>
         </div>
@@ -91,6 +91,7 @@
     <script type="text/javascript" src="./src/editor.js"></script>
     <script type="text/javascript" src="./src/edtf.js"></script>
     <script>
+    $(".control-project-element").hide();
     Promise.all([
         fetch('src/snippets/editor_snippet.html').then(response => response.text()),
         fetch('src/snippets/party_snippet.html').then(response => response.text()),
@@ -145,6 +146,7 @@
 
         const storedJsonData = localStorage.getItem('provaData');
         if (storedJsonData) {
+            $(".control-project-element").show();
             projectData = JSON.parse(storedJsonData);
             objectData = projectData.data[0]
             uniqueAuthors = Array.from(new Set(projectData.data.map(item => item.author))).map(author => ({ id: author, text: author }));
@@ -173,10 +175,12 @@
                             uniqueInstitution = Array.from(new Set(projectData.data.map(item => item.institution))).map(institution => ({ id: institution, text: institution }));
                             document.getElementById('editorContainer').classList.remove("d-none");
                             document.getElementById('projectLoader').classList.add("d-none");
+                            $(".control-project-element").show();
                             $("#editorContainer").append(editor_snippet).promise().done(function() {
                                 setTimeout(function () { fillPage(editor_snippet, party_snippet, location_snippet, relation_snippet) }, 500)
                             })
                         } catch (error) {
+                            $(".control-project-element").hide();
                             alert('Error: Invalid Project file');
                         }
                     }
