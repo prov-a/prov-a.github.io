@@ -1,0 +1,4 @@
+pytest
+rdflib
+pyshacl
+jsonschema

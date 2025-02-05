@@ -157,9 +157,6 @@
                             <th>accessionID</th>
                             <th>provenance</th>
                             <th>creditLine</th>
-                            <th>inscriptions</th>
-                            <th>exhibitions</th>
-                            <th>bibliography</th>
                             </tr>
                             <tr class="readonly-cell">
                                 <th>Title of the artifact</th>
@@ -171,9 +168,6 @@
                                 <th>Unique identifier for accession</th>
                                 <th>Provenance text</th>
                                 <th>Credit line</th>
-                                <th>Inscriptions or markings</th>
-                                <th>Exhibition history</th>
-                                <th>List of related literature or references</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -217,7 +211,7 @@
                     data.forEach(function(row) {
                       const newRow = $('<tr></tr>');
                       row.forEach(function(cell, index) {
-                        if (index < 12) {
+                        if (index < 9) {
                             newRow.append($('<td contenteditable="true"></td>').text(cell));
                         }
                       });
@@ -237,7 +231,7 @@
                 return
             }
             const newRow = $('<tr></tr>');
-            for (let i = 0; i < 12; i++) {
+            for (let i = 0; i < 9; i++) {
                 newRow.append($('<td contenteditable="true"></td>').text(''));
             }
             newRow.append($('<td><button type="button" class="btn btn-danger btn-sm btn-remove">Remove</button></td>')); // Add remove button

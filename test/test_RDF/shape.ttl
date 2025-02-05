@@ -1,0 +1,580 @@
+@prefix ex: <http://example.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix crm: <http://www.cidoc-crm.org/cidoc-crm/> .
+@prefix crminf: <http://www.cidoc-crm.org/crminf/> .
+@prefix np: <http://www.nanopub.org/nschema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix gvp: <http://vocab.getty.edu/ontology#> .
+@prefix aat: <http://vocab.getty.edu/aat/> .
+@prefix wd: <https://www.wikidata.org/wiki/> .
+@prefix ulan: <http://vocab.getty.edu/ulan/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+
+## SHACL Shape for Physical Objects
+ex:PhysicalObjectShape a sh:NodeShape ;
+    sh:targetClass crm:E19_Physical_Object ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+    ] ;
+    ## title
+    sh:property [
+        sh:path crm:P102_has_title ;
+        sh:class crm:E35_Title ;
+        sh:node [
+            sh:property [
+                sh:path crm:P190_has_symbolic_content ;
+                sh:datatype xsd:string ;
+            ] ;
+            sh:property [
+                sh:path crm:P2_has_type ;
+                sh:value aat:300404670 ;
+            ] ;
+        ] ;
+    ] ;
+    ## URL
+    sh:property [
+        sh:path crm:P70i_is_documented_in ;
+        sh:class crm:E31_Document ;
+        sh:node [
+            sh:property [
+                sh:path crm:P1_is_identified_by ;
+                sh:class crm:E42_Identifier ;
+                sh:node [
+                    sh:property [
+                        sh:path crm:P190_has_symbolic_content ;
+                        sh:datatype xsd:string ;
+                    ] ;
+                    sh:property [
+                        sh:path crm:P2_has_type ;
+                        sh:value aat:300404630 ;
+                    ] ;
+                ] ;
+            ] ;
+        ] ;
+    ] ;
+    ## author
+    sh:property [
+        sh:path crm:P67i_is_referred_to_by ;
+        sh:class crm:E33_Linguistic_Object ;
+        sh:node [
+            sh:property [
+                sh:path crm:P190_has_symbolic_content ;
+                sh:datatype xsd:string ;
+            ] ;
+            sh:property [
+                sh:path crm:P2_has_type ;
+                sh:value aat:300435446 ;
+            ] ;
+        ] ;
+    ] ;
+    ## institution
+    sh:property [
+        sh:path crm:P67i_is_referred_to_by ;
+        sh:class crm:E33_Linguistic_Object ;
+        sh:node [
+            sh:property [
+                sh:path crm:P190_has_symbolic_content ;
+                sh:datatype xsd:string ;
+            ] ;
+            sh:property [
+                sh:path crm:P2_has_type ;
+                sh:value aat:300435449 ;
+            ] ;
+        ] ;
+    ] ;
+    ## date
+    sh:property [
+        sh:path crm:P67i_is_referred_to_by ;
+        sh:class crm:E33_Linguistic_Object ;
+        sh:node [
+            sh:property [
+                sh:path crm:P190_has_symbolic_content ;
+                sh:datatype xsd:string ;
+            ] ;
+            sh:property [
+                sh:path crm:P2_has_type ;
+                sh:value aat:300435447 ;
+            ] ;
+        ] ;
+    ] ;
+    ## accessionID
+    sh:property [
+        sh:path crm:P67i_is_referred_to_by ;
+        sh:class crm:E33_Linguistic_Object ;
+        sh:node [
+            sh:property [
+                sh:path crm:P190_has_symbolic_content ;
+                sh:datatype xsd:string ;
+            ] ;
+            sh:property [
+                sh:path crm:P2_has_type ;
+                sh:value aat:300312355 ;
+            ] ;
+        ] ;
+    ] ;
+    ## medium
+    sh:property [
+        sh:path crm:P67i_is_referred_to_by ;
+        sh:class crm:E33_Linguistic_Object ;
+        sh:node [
+            sh:property [
+                sh:path crm:P190_has_symbolic_content ;
+                sh:datatype xsd:string ;
+            ] ;
+            sh:property [
+                sh:path crm:P2_has_type ;
+                sh:value aat:300435429 ;
+            ] ;
+        ] ;
+    ] ;
+    ## creditLine
+    sh:property [
+        sh:path crm:P67i_is_referred_to_by ;
+        sh:class crm:E33_Linguistic_Object ;
+        sh:node [
+            sh:property [
+                sh:path crm:P190_has_symbolic_content ;
+                sh:datatype xsd:string ;
+            ] ;
+            sh:property [
+                sh:path crm:P2_has_type ;
+                sh:value aat:300435418 ;
+            ] ;
+        ] ;
+    ] .
+
+## SHACL Shape for Nanopublication
+ex:NanopublicationShape a sh:NodeShape ;
+    sh:targetClass np:Nanopublication ;
+    sh:property [
+        sh:path np:hasProvenance ;
+        sh:nodeKind sh:IRI ;
+    ] ;
+    sh:property [
+        sh:path np:hasPublicationInfo ;
+        sh:nodeKind sh:IRI ;
+    ] ;
+    sh:property [
+        sh:path np:hasAssertion ;
+        sh:nodeKind sh:IRI ;
+    ] ;
+    sh:property [
+        sh:path dct:created ;
+        sh:datatype xsd:dateTime ;
+    ] ;
+    sh:property [
+        sh:path dct:creator ;
+        sh:nodeKind sh:IRI ;
+    ] ;
+    sh:property [
+        sh:path dct:license ;
+        sh:nodeKind sh:IRI ;
+    ] ;
+    sh:property [
+        sh:path dct:source ;
+        sh:nodeKind sh:IRI ;
+    ] .
+
+## SHACL Shape for Provenance Assessment
+ex:ProvenanceAssessmentShape a sh:NodeShape ;
+    sh:targetClass crminf:I15_Provenance_Assessment ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property [
+        sh:path crm:P2_has_type ;
+        sh:value aat:300444173 ;
+    ] ;
+    sh:property [
+        sh:path crminf:J20_is_about_the_provenance_of ;
+        sh:node ex:PhysicalObjectShape ;
+    ] ;
+    sh:property [
+        sh:path crm:P14_carried_out_by ;
+        sh:class crm:E39_Actor ;
+        sh:node [
+            sh:property [
+                sh:path rdf:label ;
+                sh:datatype xsd:string ;
+            ] ;
+        ] ;
+    ] ;
+    sh:property [
+        sh:path crm:P4_has_time-span ;
+        sh:node ex:TimespanShape ;
+    ] ;
+    sh:property [
+        sh:path crm:P3_has_note ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property [
+        sh:path crm:P16_used_specific_object ;
+        sh:class crm:E73_Information_Object ;
+        sh:node [
+            sh:property [
+                sh:path crm:P2_has_type ;
+                sh:nodeKind sh:IRI ;
+                sh:pattern "^http://vocab.getty.edu/aat/" ;
+            ] ;
+            sh:property [
+                sh:path rdfs:label ;
+                sh:datatype xsd:string ;
+            ] ;
+            sh:property [
+                sh:path crm:P94i_was_created_by ;
+                sh:class crm:E65_Creation ;
+                sh:node [
+                    sh:property [
+                        sh:path crm:P14_carried_out_by ;
+                        sh:class crm:E39_Actor ;
+                        sh:node [
+                            sh:property [
+                                sh:path rdfs:label ;
+                                sh:datatype xsd:string ;
+                            ] ;
+                        ];
+                    ] ;
+                    sh:property [
+                        sh:path crm:P4_has_time-span ;
+                        sh:node ex:TimespanShape ;
+                    ] ;
+                ];
+            ] ;
+            sh:property [
+                sh:path owl:sameAs ;
+                sh:nodeKind sh:IRI ;
+            ] ;
+            sh:property [
+                sh:path crm:P3_has_note ;
+                sh:datatype xsd:string ;
+            ] ;
+        ] ;
+    ] ;
+    sh:property [
+        sh:path crminf:J21_concluded_provenance ;
+        sh:class crminf:I14_Provenance_Belief ;
+        sh:node [
+            sh:property [
+                sh:path crminf:J5_holds_to_be ;
+                sh:in (aat:300068765 aat:300435721 aat:300435722 aat:300404908) ;
+            ] ;
+            sh:property [
+                sh:path crminf:J4_that ;
+                sh:nodeKind sh:IRI ;
+            ] ;
+        ] ;
+    ] .
+
+## SHACL Shape for Provenance Activities
+ex:ProvenanceActivityShape a sh:NodeShape ;
+    sh:targetClass crm:E7_Activity ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property [
+        sh:path crm:P2_has_type ;
+        sh:nodeKind sh:IRI ;
+        sh:pattern "^http://vocab.getty.edu/aat/" ;
+    ] ;
+    sh:property [
+        sh:path crm:P183i_starts_after_the_end_of ;
+        sh:node ex:ProvenanceActivityShape ;
+    ] ;
+    sh:property [
+        sh:path crm:P4_has_time-span ;
+        sh:node ex:TimespanShape ;
+    ] ;
+    sh:property [
+        sh:path crm:P7_took_place_at ;
+        sh:node ex:LocationShape ;
+    ] ;
+    sh:property [
+        sh:path crm:P9_consists_of ;
+        sh:or (
+            # crm:E15_Identifier_Assignment Constraints
+            [ sh:class crm:E15_Identifier_Assignment ;
+              sh:node [
+                  sh:property [
+                      sh:path crm:P140_assigned_attribute_to ;
+                      sh:node ex:PhysicalObjectShape ;
+                  ] ;
+                  sh:property [
+                      sh:path crm:P141_assigned ;
+                      sh:class crm:E42_Identifier ;
+                      sh:node [
+                          sh:property [
+                              sh:path rdfs:label ;
+                              sh:datatype xsd:string ;
+                          ] ;
+                          sh:property [
+                              sh:path crm:P2_has_type ;
+                              sh:nodeKind sh:IRI ;
+                              sh:pattern "^http://vocab.getty.edu/aat/" ;
+                          ] ;
+                      ] ;
+                  ] ;
+              ] ;
+            ]
+            # crm:E13_Attribute_Assignment Constraints
+            [ sh:class crm:E13_Attribute_Assignment ;
+              sh:node [
+                  sh:property [
+                      sh:path crm:P140_assigned_attribute_to ;
+                      sh:node ex:PhysicalObjectShape ;
+                  ] ;
+                  sh:property [
+                      sh:path crm:P141_assigned ;
+                      sh:class crm:E97_Monetary_Amount ;
+                      sh:node [
+                          sh:property [
+                              sh:path crm:P90_has_value ;
+                              sh:datatype xsd:string ;
+                          ] ;
+                          sh:property [
+                              sh:path crm:P2_has_type ;
+                              sh:nodeKind sh:IRI ;
+                              sh:pattern "^http://vocab.getty.edu/aat/" ;
+                          ] ;
+                          sh:property [
+                              sh:path crm:P180_has_currency ;
+                              sh:nodeKind sh:IRI ;
+                              sh:pattern "^http://vocab.getty.edu/aat/" ;
+                          ] ;
+                      ] ;
+                  ] ;
+              ] ;
+            ]
+            # crm:E8_Acquisition Constraints
+            [ sh:class crm:E8_Acquisition ;
+              sh:node [
+                  sh:property [
+                      sh:path crm:P24_transferred_title_of ;
+                      sh:node ex:PhysicalObjectShape ;
+                  ] ;
+                  sh:property [
+                      sh:path crm:P23_transferred_title_from ;
+                      sh:node ex:PartyShape ;
+                  ] ;
+                  sh:property [
+                      sh:path crm:P22_transferred_title_to ;
+                      sh:node ex:PartyShape ;
+                  ] ;
+                  sh:property [
+                      sh:path crm:P14_carried_out_by ;
+                      sh:node ex:PartyShape ;
+                  ] ;
+                  sh:property [
+                      sh:path crm:P11_had_participant ;
+                      sh:node ex:PartyShape ;
+                  ] ;
+              ] ;
+            ]
+            # crm:E10_Transfer_of_Custody Constraints
+            [ sh:class crm:E10_Transfer_of_Custody ;
+              sh:node [
+                  sh:property [
+                      sh:path crm:P30_transferred_custody_of ;
+                      sh:node ex:PhysicalObjectShape ;
+                  ] ;
+                  sh:property [
+                      sh:path crm:P28_custody_surrendered_by ;
+                      sh:node ex:PartyShape ;
+                  ] ;
+                  sh:property [
+                      sh:path crm:P29_custody_received_by ;
+                      sh:node ex:PartyShape ;
+                  ] ;
+                  sh:property [
+                      sh:path crm:P14_carried_out_by ;
+                      sh:node ex:PartyShape ;
+                  ] ;
+              ] ;
+            ]
+            # crm:E12_Production Constraints
+            [ sh:class crm:E12_Production ;
+              sh:node [
+                  sh:property [
+                      sh:path crm:P108_has_produced ;
+                      sh:node ex:PhysicalObjectShape ;
+                  ] ;
+                  sh:property [
+                      sh:path crm:P14_carried_out_by ;
+                      sh:node ex:PartyShape ;
+                  ] ;
+              ] ;
+            ]
+        ) ;
+    ] .
+
+## SHACL Shape for Party
+ex:PartyShape a sh:NodeShape ;
+    sh:targetClass crm:E21_Person ;
+    sh:targetClass crm:E74_Group ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property [
+        sh:path owl:sameAs ;
+        sh:nodeKind sh:IRI ;
+    ] ;
+    sh:property [
+        sh:path crm:P1_is_identified_by ;
+        sh:class crm:E41_Appellation ;
+        sh:node [
+            sh:property [
+                sh:path crm:P2_has_type ;
+                sh:nodeKind sh:IRI ;
+                sh:pattern "^http://vocab.getty.edu/aat/" ;
+            ] ;
+            sh:property [
+                sh:path crm:P190_has_symbolic_content ;
+                sh:datatype xsd:string ;
+            ] ;
+        ] ;
+    ] ;
+    ## cultures
+    sh:property [
+        sh:path crm:P2_has_type ;
+        sh:class crm:E55_Type ;
+        sh:node [
+            sh:property [
+                sh:path crm:P127_has_broader_term ;
+                sh:value aat:300055768 ;
+            ] ;
+            sh:pattern "^http://vocab.getty.edu/aat/" ;
+        ] ;
+    ] ;
+    ## occupations
+    sh:property [
+        sh:path crm:P2_has_type ;
+        sh:class crm:E55_Type ;
+        sh:node [
+            sh:property [
+                sh:path crm:P127_has_broader_term ;
+                sh:value aat:300263369 ;
+            ] ;
+            sh:pattern "^http://vocab.getty.edu/aat/" ;
+        ] ;
+    ] ;
+    ## group type
+    sh:property [
+        sh:path crm:P2_has_type ;
+        sh:class crm:E55_Type ;
+        sh:node [
+            sh:property [
+                sh:path crm:P127_has_broader_term ;
+                sh:value aat:300192630 ;
+            ] ;
+            sh:pattern "^http://vocab.getty.edu/aat/" ;
+        ] ;
+    ] ;
+    ## gender
+    sh:property [
+        sh:path crm:P2_has_type ;
+        sh:class crm:E55_Type ;
+        sh:node [
+            sh:property [
+                sh:path crm:P127_has_broader_term ;
+                sh:value aat:300445640 ;
+            ] ;
+            sh:pattern "^http://vocab.getty.edu/aat/" ;
+        ] ;
+    ] ;
+    sh:property [
+        sh:path crm:P98i_was_born ;
+        sh:class crm:E67_Birth ;
+        sh:node [
+            sh:property [
+                sh:path crm:P4_has_time-span ;
+                sh:node ex:TimespanShape ;
+            ] ;
+        ] ;
+    ] ;
+    sh:property [
+        sh:path crm:P95i_was_formed_by ;
+        sh:class crm:E66_Formation ;
+        sh:node [
+            sh:property [
+                sh:path crm:P4_has_time-span ;
+                sh:node ex:TimespanShape ;
+            ] ;
+        ] ;
+    ] ;
+    sh:property [
+        sh:path crm:P100i_died_in ;
+        sh:class crm:E69_Death ;
+        sh:node [
+            sh:property [
+                sh:path crm:P4_has_time-span ;
+                sh:node ex:TimespanShape ;
+            ] ;
+        ] ;
+    ] ;
+    sh:property [
+        sh:path crm:P99i_was_dissolved_by ;
+        sh:class crm:E68_Dissolution ;
+        sh:node [
+            sh:property [
+                sh:path crm:P4_has_time-span ;
+                sh:node ex:TimespanShape ;
+            ] ;
+        ] ;
+    ] ;
+    sh:property [
+        sh:path crm:P74_has_current_or_former_residence ;
+        sh:node ex:LocationShape ;
+    ] .
+
+## SHACL Shape for Timespan
+ex:TimeSpanShape a sh:NodeShape ;
+    sh:targetClass crm:E52_Time-Span ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property [
+        sh:path crm:P82a_begin_of_the_begin ;
+        sh:datatype xsd:date ;
+    ] ;
+    sh:property [
+        sh:path crm:P82b_end_of_the_end ;
+        sh:datatype xsd:date ;
+    ] ;
+    sh:property [
+        sh:path crm:P2_has_type ;
+        sh:nodeKind sh:IRI ;
+        sh:pattern "^http://vocab.getty.edu/aat/" ;
+    ] .
+
+## SHACL Shape for Location
+ex:LocationShape a sh:NodeShape ;
+    sh:targetClass crm:E53_Place ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property [
+        sh:path owl:sameAs ;
+        sh:nodeKind sh:IRI ;
+    ] ;
+    sh:property [
+        sh:path crm:P89_falls_within ;
+        sh:node ex:LocationShape ;
+    ] ;
+    sh:property [
+        sh:path crm:P189i_is_approximated_by ;
+        sh:node ex:LocationShape ;
+    ] ;
+    sh:property [
+        sh:path crm:P2_has_type ;
+        sh:nodeKind sh:IRI ;
+        sh:pattern "^http://vocab.getty.edu/aat/" ;
+    ] .

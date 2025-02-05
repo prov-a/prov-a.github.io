@@ -1,10 +1,34 @@
+/*
+MIT License
+
+Copyright (C) 2025 Fabio Mariani, Provenance Lab, Leuphana University Lüneburg
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 import { Quadstore, Engine, BrowserLevel } from './dist/quadstore.js'
 const { DataFactory, StreamParser } = N3
 const { namedNode, literal, defaultGraph, quad, blank, blankNode } = DataFactory
 
 
 const pfx = {
-    owl: "http://www.w3.org/2002/07/owl#>",
+    owl: "http://www.w3.org/2002/07/owl#",
     rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     rdfs: "http://www.w3.org/2000/01/rdf-schema#",
     xsd: "http://www.w3.org/2001/XMLSchema#",
@@ -54,6 +78,12 @@ export async function generateLOD(projData) {
         let objGraphURI = uri + "graph/object/" + i
         let objURI = uri + "object/" + i
 
+        quadsArray.push(quad(
+            namedNode(objURI),
+            namedNode(pfx.rdf + "type"),
+            namedNode(pfx.crm + "E19_Physical_Object"),
+            namedNode(objGraphURI)
+        ))
         //_____title
         if (obj.title) {
             quadsArray.push(quad(
@@ -574,29 +604,36 @@ export async function generateLOD(projData) {
                     }
                 }
             }
+            let subActivityNode = blankNode()
+            quadsArray.push(quad(
+                namedNode(activityURI),
+                namedNode(pfx.crm + "P9_consists_of"),
+                subActivityNode,
+                namedNode(nanopubURIAssertion)
+            ))
             let isCustody = false
             if (act.activityType == "aat:300404387__Creation" || act.activityType == "aat:300417639__Commission") {
                 quadsArray.push(quad(
-                    namedNode(activityURI),
+                    subActivityNode,
                     namedNode(pfx.rdf + "type"),
                     namedNode(pfx.crm + "E12_Production"),
                     namedNode(nanopubURIAssertion)
                 ))
                 quadsArray.push(quad(
-                    namedNode(activityURI),
+                    subActivityNode,
                     namedNode(pfx.crm + "P108_has_produced"),
                     namedNode(objURI),
                     namedNode(nanopubURIAssertion)
                 ))
             } else if (ownershipChanges.includes(act.activityType)) {
                 quadsArray.push(quad(
-                    namedNode(activityURI),
+                    subActivityNode,
                     namedNode(pfx.rdf + "type"),
                     namedNode(pfx.crm + "E8_Acquisition"),
                     namedNode(nanopubURIAssertion)
                 ))
                 quadsArray.push(quad(
-                    namedNode(activityURI),
+                    subActivityNode,
                     namedNode(pfx.crm + "P24_transferred_title_of"),
                     namedNode(objURI),
                     namedNode(nanopubURIAssertion)
@@ -604,13 +641,13 @@ export async function generateLOD(projData) {
             } else if (act.activityType) {
                 isCustody = true
                 quadsArray.push(quad(
-                    namedNode(activityURI),
+                    subActivityNode,
                     namedNode(pfx.rdf + "type"),
                     namedNode(pfx.crm + "E10_Transfer_of_Custody"),
                     namedNode(nanopubURIAssertion)
                 ))
                 quadsArray.push(quad(
-                    namedNode(activityURI),
+                    subActivityNode,
                     namedNode(pfx.crm + "P30_transferred_custody_of"),
                     namedNode(objURI),
                     namedNode(nanopubURIAssertion)
@@ -630,7 +667,7 @@ export async function generateLOD(projData) {
                     quadsArray.push(quad(
                         namedNode(activityURI),
                         namedNode(pfx.crm + "P183i_starts_after_the_end_of"),
-                        prevPrevActivityURI,
+                        namedNode(prevPrevActivityURI),
                         namedNode(nanopubURIAssertion)
                     ))
                 }
@@ -640,7 +677,7 @@ export async function generateLOD(projData) {
                     quadsArray.push(quad(
                         namedNode(activityURI),
                         namedNode(pfx.crm + "P183i_starts_after_the_end_of"),
-                        prevActivityURI,
+                        namedNode(prevActivityURI),
                         namedNode(nanopubURIAssertion)
                     ))
                     prevPrevActivityURI = prevActivityURI
@@ -648,7 +685,6 @@ export async function generateLOD(projData) {
                     prevActivityID = act_i
                 }
                 else{
-                    prevPrevActivityURI = prevActivityURI
                     prevActivityURI = activityURI
                     prevActivityID = act_i
                 }
@@ -781,7 +817,7 @@ export async function generateLOD(projData) {
                     if (pRole == "sender"){
                         if(isCustody){
                             quadsArray.push(quad(
-                                namedNode(activityURI),
+                                subActivityNode,
                                 namedNode(pfx.crm + "P28_custody_surrendered_by"),
                                 namedNode(pURI),
                                 namedNode(nanopubURIAssertion)
@@ -789,7 +825,7 @@ export async function generateLOD(projData) {
                         }
                         else{
                             quadsArray.push(quad(
-                                namedNode(activityURI),
+                                subActivityNode,
                                 namedNode(pfx.crm + "P23_transferred_title_from"),
                                 namedNode(pURI),
                                 namedNode(nanopubURIAssertion)
@@ -799,7 +835,7 @@ export async function generateLOD(projData) {
                     if (pRole == "receiver"){
                         if(isCustody){
                             quadsArray.push(quad(
-                                namedNode(activityURI),
+                                subActivityNode,
                                 namedNode(pfx.crm + "P29_custody_received_by"),
                                 namedNode(pURI),
                                 namedNode(nanopubURIAssertion)
@@ -807,7 +843,7 @@ export async function generateLOD(projData) {
                         }
                         else{
                             quadsArray.push(quad(
-                                namedNode(activityURI),
+                                subActivityNode,
                                 namedNode(pfx.crm + "P22_transferred_title_to"),
                                 namedNode(pURI),
                                 namedNode(nanopubURIAssertion)
@@ -816,7 +852,7 @@ export async function generateLOD(projData) {
                     }
                     if (pRole == "agent"){
                         quadsArray.push(quad(
-                            namedNode(activityURI),
+                            subActivityNode,
                             namedNode(pfx.crm + "P14_carried_out_by"),
                             namedNode(pURI),
                             namedNode(nanopubURIAssertion)
@@ -824,16 +860,16 @@ export async function generateLOD(projData) {
                     }
                     if (pRole == "receiver_agent"){
                         quadsArray.push(quad(
-                            namedNode(activityURI),
-                            namedNode(pfx.crm + "P29_custody_received_by"),
+                            subActivityNode,
+                            namedNode(pfx.crm + "P11_had_participant"),
                             namedNode(pURI),
                             namedNode(nanopubURIAssertion)
                         ))
                     }
                     if (pRole == "sender_agent"){
                         quadsArray.push(quad(
-                            namedNode(activityURI),
-                            namedNode(pfx.crm + "P28_custody_surrendered_by"),
+                            subActivityNode,
+                            namedNode(pfx.crm + "P11_had_participant"),
                             namedNode(pURI),
                             namedNode(nanopubURIAssertion)
                         ))
@@ -1007,7 +1043,7 @@ export async function generateLOD(projData) {
             quadsArray.push(quad(
                 genderNode,
                 namedNode(pfx.rdf + "P127_has_broader_term"),
-                namedNode(pfx.aat + "300411836"),
+                namedNode(pfx.aat + "300445640"),
                 namedNode(partiesURI)
             ))
         }

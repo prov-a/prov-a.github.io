@@ -1,0 +1,260 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "PROV-A JSON Schema",
+    "type": "object",
+    "properties": {
+      "orcid": {
+        "type": "string",
+        "format": "uri"
+      },
+      "license": {
+        "type": "string",
+        "format": "uri"
+      },
+      "uri": {
+        "type": "string",
+        "format": "uri"
+      },
+      "data": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "integer"
+            },
+            "title": {
+              "type": "string"
+            },
+            "author": {
+              "type": "string"
+            },
+            "institution": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "date": {
+              "type": "string"
+            },
+            "accessionID": {
+              "type": "string"
+            },
+            "provenance": {
+              "type": "string"
+            },
+            "creditLine": {
+              "type": "string"
+            },
+            "medium": {
+              "type": "string"
+            },
+            "provenanceData": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "activityCertainty": {
+                        "type": "string",
+                        "enum": [
+                          "aat:300068765",
+                          "aat:300435721",
+                          "aat:300435722",
+                          "aat:300404908"
+                        ]
+                      },
+                      "activityType": {
+                        "type": "string",
+                        "enum": [
+                          "aat:300404387__Creation",
+                          "aat:300417639__Commission",
+                          "aat:300157782__Acquisition",
+                          "aat:300417643__Auction",
+                          "aat:300417641__Bequest",
+                          "aat:300417640__Endowment",
+                          "aat:300263427__Exchange",
+                          "aat:300263427/aat:300417642__Exchange and Purchase",
+                          "aat:300417654__Field Collected",
+                          "aat:300417637__Gift",
+                          "aat:300417637/aat:300263427__Gift and Exchange",
+                          "aat:300417637/aat:300417642__Gift and Purchase",
+                          "aat:300444188__Inheritance",
+                          "aat:300417637/aat:300404159__Partial Gift",
+                          "aat:300435595__Promised Gift",
+                          "aat:300417642__Purchase",
+                          "aat:300417658__Confiscation",
+                          "aat:300417650__Consignment",
+                          "aat:300438600__Consignment (Withdrawn)",
+                          "aat:300438557__Encounter",
+                          "aat:300411616__In Possession",
+                          "aat:300379554__Looting",
+                          "aat:300053892__Move",
+                          "aat:300056390__On Deposit",
+                          "aat:300417645__On Loan",
+                          "aat:300438467__Return of Loan",
+                          "aat:300417843__Restitution",
+                          "aat:300444192__Sequestration",
+                          "aat:300417657__Theft"
+                        ]
+                      },
+                      "activityTimeString": {
+                        "type": "string"
+                      },
+                      "activityTimeEDTF": {
+                        "type": "string",
+                        "description": "Extended Date/Time Format (EDTF) date, e.g., '1880-06-10'. Expected format: 'YYYY-MM-DD'."
+                      },
+                      "activityCity": {
+                        "type": "string"
+                      },
+                      "activityProvince": {
+                        "type": "string"
+                      },
+                      "activityCountry": {
+                        "type": "string"
+                      },
+                      "activityLocationWD": {
+                        "type": "string",
+                        "description": "Wikidata reference for location, formatted as 'Qxxxxxx___Label', e.g., 'Q90___Paris_(Q90)_-_capital_of_France'."
+                      },
+                      "activityTitle": {
+                        "type": "string"
+                      },
+                      "parties": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "index": {
+                              "type": "integer"
+                            },
+                            "data": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "role": {
+                                  "type": "string",
+                                  "enum": [
+                                    "sender",
+                                    "receiver",
+                                    "agent",
+                                    "sender_agent",
+                                    "receiver_agent"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "role"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "data"
+                ]
+              }
+            }
+          },
+          "required": [
+            "_id",
+            "title",
+            "author",
+            "institution"
+          ]
+        }
+      },
+      "parties": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "person",
+                "group"
+              ]
+            },
+            "gender": {
+              "type": "string",
+              "enum": [
+                "aat:300411837",
+                "aat:300411836"
+              ]
+            },
+            "birthTimeString": {
+              "type": "string"
+            },
+            "birthTimeEDTF": {
+              "type": "string",
+              "description": "Extended Date/Time Format (EDTF) date, e.g., '1880-06-10'. Expected format: 'YYYY-MM-DD'."
+            },
+            "deathTimeString": {
+              "type": "string"
+            },
+            "deathTimeEDTF": {
+              "type": "string",
+              "description": "Extended Date/Time Format (EDTF) date, e.g., '1880-06-10'. Expected format: 'YYYY-MM-DD'."
+            },
+            "locations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "province": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "string"
+                  },
+                  "WD": {
+                    "type": "string",
+                    "description": "Wikidata reference for location, formatted as 'Qxxxxxx___Label', e.g., 'Q90___Paris_(Q90)_-_capital_of_France'."
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "id",
+            "label",
+            "type"
+          ]
+        }
+      }
+    },
+    "required": [
+      "orcid",
+      "license",
+      "uri",
+      "data"
+    ]
+  }
