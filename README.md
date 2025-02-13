@@ -33,3 +33,5 @@ PROV-A leverages open-source libraries, including:
 
 ## License
 PROV-A is released under the MIT License. See [LICENSE](https://github.com/prov-a/prov-a.github.io/blob/main/LICENSE) for details.
+
+![tests](https://github.com/prov-a/prov-a.github.io/actions/workflows/main.yml/badge.svg)
