@@ -24,12 +24,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r https://raw.githubusercontent.com/prov-a/prov-a.github.io/main/test/requirements.txt
+        pip install -r https://raw.githubusercontent.com/prov-a/prov-a.github.io/refs/heads/main/test/requirements.txt
 
     - name: Run tests for test_RDF_validation.py
       run: |
-        pytest https://raw.githubusercontent.com/prov-a/prov-a.github.io/main/test/test_RDF/test_RDF_validation.py
+        pytest https://raw.githubusercontent.com/prov-a/prov-a.github.io/refs/heads/main/test/test_JSON/test_JSON_validation.py
 
     - name: Run tests for test_JSON_validation.py
       run: |
-        pytest https://raw.githubusercontent.com/prov-a/prov-a.github.io/main/test/test_JSON/test_JSON_validation.py
+        pytest https://raw.githubusercontent.com/prov-a/prov-a.github.io/refs/heads/main/test/test_RDF/test_RDF_validation.py
