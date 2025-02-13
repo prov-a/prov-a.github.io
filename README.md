@@ -1,3 +1,5 @@
+![tests](https://github.com/prov-a/prov-a.github.io/actions/workflows/main.yml/badge.svg)
+
 # PROV-A: the Provenance App
 
 PROV-A (The Provenance App) is a web-based tool designed to streamline the creation and publication of provenance information as Linked Open Data (LOD). By integrating AI-driven natural language processing (NLP) with human validation, PROV-A balances efficiency with scholarly rigor, making provenance research more accessible and scalable for cultural institutions.
@@ -33,5 +35,3 @@ PROV-A leverages open-source libraries, including:
 
 ## License
 PROV-A is released under the MIT License. See [LICENSE](https://github.com/prov-a/prov-a.github.io/blob/main/LICENSE) for details.
-
-![tests](https://github.com/prov-a/prov-a.github.io/actions/workflows/main.yml/badge.svg)
