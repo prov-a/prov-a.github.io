@@ -1,4 +1,6 @@
+![License](https://img.shields.io/badge/license-MIT-blue)
 ![tests](https://github.com/prov-a/prov-a.github.io/actions/workflows/main.yml/badge.svg)
+
 
 # PROV-A: the Provenance App
 
