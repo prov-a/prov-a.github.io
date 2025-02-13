@@ -1,4 +1,4 @@
-# PROV-A: The Provenance App
+# PROV-A: the Provenance App
 
 PROV-A (The Provenance App) is a web-based tool designed to streamline the creation and publication of provenance information as Linked Open Data (LOD). By integrating AI-driven natural language processing (NLP) with human validation, PROV-A balances efficiency with scholarly rigor, making provenance research more accessible and scalable for cultural institutions.
 
