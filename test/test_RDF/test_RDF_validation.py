@@ -1,40 +1,40 @@
 import pytest
 import rdflib
 from pyshacl import validate
-
-# File paths
-TEST_NQUADS_FILE = "test_data.nq"  # Input N-Quads file
-TEST_NTRIPLES_FILE = "converted_data.ttl"  # Converted N-Triples file
-TEST_SHACL_FILE = "shape.ttl"  # SHACL constraints file
+from io import BytesIO
 
 
-def nquads_to_ntriples(nquads_file, output_ntriples_file):
+def nquads_to_ntriples(nquads_file):
     """
     Converts N-Quads to N-Triples by removing named graphs.
+    Returns the N-Triples as an in-memory string.
     """
     g = rdflib.ConjunctiveGraph()
     g.parse(nquads_file, format="nquads")
 
-    # Serialize as Turtle (which works for SHACL validation)
-    g.serialize(destination=output_ntriples_file, format="ttl")
-
-    print(f"✅ Converted N-Quads saved as N-Triples: {output_ntriples_file}")
+    # Serialize as N-Triples in memory
+    ntriples_data = BytesIO()
+    g.serialize(destination=ntriples_data, format="nt")
+    ntriples_data.seek(0)  # Go to the start of the BytesIO buffer
+    
+    return ntriples_data
 
 
 def test_validate_ntriples_with_shacl():
     """
     Test if converted N-Triples conform to SHACL constraints.
     """
-    # Step 1: Convert N-Quads to N-Triples
-    nquads_to_ntriples(TEST_NQUADS_FILE, TEST_NTRIPLES_FILE)
+    # Step 1: Convert N-Quads to N-Triples (in-memory)
+    with open("test_data.nq", "rb") as nquads_file:
+        ntriples_data = nquads_to_ntriples(nquads_file)
 
     # Step 2: Load SHACL shapes graph
     shacl_graph = rdflib.Graph()
-    shacl_graph.parse(TEST_SHACL_FILE, format="ttl")
+    shacl_graph.parse("shape.ttl", format="ttl")
 
-    # Step 3: Load RDF data graph
+    # Step 3: Load RDF data graph from in-memory N-Triples
     data_graph = rdflib.Graph()
-    data_graph.parse(TEST_NTRIPLES_FILE, format="ttl")
+    data_graph.parse(ntriples_data, format="nt")
 
     # Step 4: Validate RDF against SHACL constraints
     conforms, results_graph, report_text = validate(
