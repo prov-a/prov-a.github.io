@@ -879,7 +879,7 @@ export async function generateLOD(projData) {
         }
     }
     //____Parties
-    let partiesURI = uri + "party/" + "123" + "/graph"
+    let partiesURI = uri + "party/"
     for (let i in projData.parties) {
         let party = projData.parties[i]
         let pURI = uri + "party/" + party.id
