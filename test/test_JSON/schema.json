@@ -54,7 +54,7 @@
                 "type": "object",
                 "properties": {
                   "id": {
-                    "type": "string"
+                    "type": "integer"
                   },
                   "data": {
                     "type": "object",
