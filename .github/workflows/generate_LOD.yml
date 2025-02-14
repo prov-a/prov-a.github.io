@@ -32,6 +32,6 @@ jobs:
         curl -o test_RDF_validation.py https://raw.githubusercontent.com/prov-a/prov-a.github.io/refs/heads/main/test/test_RDF/test_RDF_validation.py
         curl -o test_data.nq https://raw.githubusercontent.com/prov-a/prov-a.github.io/refs/heads/main/test/test_RDF/test_data.nq
 
-    - name: Run tests for test_JSON_validation.py
+    - name: Run tests for test_RDF_validation.py
       run: |
         pytest test_RDF_validation.py
