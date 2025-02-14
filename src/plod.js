@@ -887,7 +887,7 @@ export async function generateLOD(projData) {
             namedNode(pURI),
             namedNode(pfx.rdfs + "label"),
             literal(party.label),
-            namedNode()
+            namedNode(partiesURI)
         ))
         if (party.type == "group"){
             quadsArray.push(quad(
