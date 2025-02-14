@@ -28,7 +28,7 @@ jobs:
 
     - name: Download test files
       run: |
-        curl -o shape.ttl https://github.com/prov-a/prov-a.github.io/blob/main/test/test_RDF/shape.ttl
+        curl -o shape.ttl https://raw.githubusercontent.com/prov-a/prov-a.github.io/refs/heads/main/test/test_RDF/shape.ttl
         curl -o test_RDF_validation.py https://raw.githubusercontent.com/prov-a/prov-a.github.io/refs/heads/main/test/test_RDF/test_RDF_validation.py
         curl -o test_data.nq https://raw.githubusercontent.com/prov-a/prov-a.github.io/refs/heads/main/test/test_RDF/test_data.nq
 
