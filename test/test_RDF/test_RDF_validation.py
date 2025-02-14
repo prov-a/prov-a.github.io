@@ -20,6 +20,9 @@ def test_validate_ntriples_with_shacl():
     # Step 2: Load RDF data graph
     data_graph = rdflib.Graph()
     data_graph.parse(TEST_NQUADS_FILE, format="nquads")
+
+    for subj, pred, obj in data_graph:
+        print(subj, pred, obj)
     
     # Step 3: Validate RDF against SHACL constraints
     conforms, results_graph, report_text = validate(
