@@ -879,15 +879,15 @@ export async function generateLOD(projData) {
         }
     }
     //____Parties
-    let partiesURI = uri + "party/"
     for (let i in projData.parties) {
+        let partiesURI = uri + "party/" + projData.parties[i] + /graph
         let party = projData.parties[i]
         let pURI = uri + "party/" + party.id
         quadsArray.push(quad(
             namedNode(pURI),
             namedNode(pfx.rdfs + "label"),
             literal(party.label),
-            namedNode(partiesURI)
+            namedNode()
         ))
         if (party.type == "group"){
             quadsArray.push(quad(
