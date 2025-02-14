@@ -22,7 +22,7 @@ PROV-A is available at: [prov-a.github.io](https://prov-a.github.io)
 - **Generated RDF SHACL:** The structure of RDF output follows a data model available at: [SHACL Schema](https://github.com/prov-a/prov-a.github.io/blob/main/test/test_RDF/shape.ttl)
 
 ## Usage
-1. **Initialsze Project**: Enter metadata, select licensing, and input artefacts records.
+1. **Initialise Project**: Enter metadata, select licensing, and input artefacts records.
 2. **Structure Data**: Validate and refine AI-extracted provenance information.
 3. **Generate LOD**: Transform provenance data into RDF and query the SPARQL endpoint.
 
