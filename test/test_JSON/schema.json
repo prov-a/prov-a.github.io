@@ -169,7 +169,6 @@
             }
           },
           "required": [
-            "_id",
             "title",
             "author",
             "institution"
