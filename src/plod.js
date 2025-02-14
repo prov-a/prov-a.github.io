@@ -879,9 +879,9 @@ export async function generateLOD(projData) {
         }
     }
     //____Parties
-    let partiesURI = uri + "party/"
     for (let i in projData.parties) {
         let party = projData.parties[i]
+        let partiesURI = uri + "party/" + party.id + "/graph"
         let pURI = uri + "party/" + party.id
         quadsArray.push(quad(
             namedNode(pURI),
