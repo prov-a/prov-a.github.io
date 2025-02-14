@@ -1,4 +1,0 @@
-pytest
-rdflib
-pyshacl
-jsonschema
