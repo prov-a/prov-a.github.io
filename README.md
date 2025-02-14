@@ -1,4 +1,3 @@
-![License](https://img.shields.io/badge/license-MIT-blue)
 ![Structure Data Test](https://github.com/prov-a/prov-a.github.io/actions/workflows/structure_data.yml/badge.svg)
 ![Generate LOD Test](https://github.com/prov-a/prov-a.github.io/actions/workflows/generate_LOD.yml/badge.svg)
 
