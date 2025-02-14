@@ -1,0 +1,624 @@
+{
+  "orcid": "0000-0002-1825-0097",
+  "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "uri": "https://example.com/provenance",
+  "data": [
+    {
+      "index": 0,
+      "provenanceData": [
+        {
+          "id": 0,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300404387__Creation",
+            "activityTimeString": "1787",
+            "activityTimeEDTF": "1787",
+            "parties": [
+              {
+                "index": "3",
+                "data": {
+                  "id": "GZq1739525870909",
+                  "role": "agent"
+                }
+              }
+            ],
+            "assertionAuthor": "Cracked Pots Museum",
+            "assertionTimeString": "February 14, 2025",
+            "assertionTimeEDTF": "2025-02-14"
+          }
+        },
+        {
+          "id": 1,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300157782__Acquisition",
+            "activityTimeString": "between 1805 and 1810",
+            "activityTimeEDTF": "1805/1810",
+            "parties": [
+              {
+                "index": "0",
+                "data": {
+                  "id": "MaU1739525635687",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "Cracked Pots Museum",
+            "assertionTimeString": "February 14, 2025",
+            "assertionTimeEDTF": "2025-02-14"
+          }
+        },
+        {
+          "id": 2,
+          "data": {
+            "activityCertainty": "aat:300435721",
+            "activityType": "aat:300157782__Acquisition",
+            "activityTimeString": "between 1805 and 1810",
+            "activityTimeEDTF": "1805/1810",
+            "parties": [
+              {
+                "index": "1",
+                "data": {
+                  "id": "MaU1739525635687",
+                  "role": "receiver"
+                }
+              },
+              {
+                "index": "2",
+                "data": {
+                  "id": "GZq1739525870909",
+                  "role": "sender"
+                }
+              }
+            ],
+            "assertionAuthor": "Cracked Pots Museum",
+            "assertionTimeString": "February 14, 2025",
+            "assertionTimeEDTF": "2025-02-14",
+            "assertionContradiction": "on",
+            "sources": [
+              {
+                "id": "0",
+                "type": "aat:300048715__articles",
+                "citation": "Jonathan Crump, The Cracked Pot: A History of Eccentric Curiosities (New York: Arcane Press, 2000), 58.",
+                "author": "Jonathan Crump",
+                "date": "2000"
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300417642__Purchase",
+            "activityTimeString": "by 1840 circa",
+            "activityTimeEDTF": "../1840~",
+            "parties": [
+              {
+                "index": "4",
+                "data": {
+                  "id": "dLo1739525982805",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "Cracked Pots Museum",
+            "assertionTimeString": "February 14, 2025",
+            "assertionTimeEDTF": "2025-02-14"
+          }
+        },
+        {
+          "id": 4,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300417643__Auction",
+            "activityTimeString": "19 January 1898",
+            "activityTimeEDTF": "1898-01-19",
+            "activityCity": "Paris",
+            "activityCountry": "France",
+            "activityLocationWD": "Q90___Paris_(Q90)_-_capital_city_and_largest_city_of_France",
+            "activityTitle": "Lovelace Sale",
+            "identifiers": [
+              {
+                "id": "0",
+                "type": "aat:300404628",
+                "value": "42"
+              }
+            ],
+            "prices": [
+              {
+                "id": "0",
+                "type": "aat:300417246",
+                "value": "27",
+                "currency": "aat:300412163__guinea"
+              }
+            ],
+            "parties": [
+              {
+                "index": "5",
+                "data": {
+                  "id": "dLo1739525982805",
+                  "role": "sender"
+                }
+              },
+              {
+                "index": "6",
+                "data": {
+                  "id": "CRd1739526474508",
+                  "role": "agent"
+                }
+              }
+            ],
+            "assertionAuthor": "Cracked Pots Museum",
+            "assertionTimeString": "February 14, 2025",
+            "assertionTimeEDTF": "2025-02-14"
+          }
+        },
+        {
+          "id": 5,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300417637__Gift",
+            "activityTimeString": "2001",
+            "activityTimeEDTF": "2001",
+            "identifiers": [
+              {
+                "id": "1",
+                "type": "aat:300312355",
+                "value": "CPM2001"
+              }
+            ],
+            "parties": [
+              {
+                "index": "7",
+                "data": {
+                  "id": "kiZ1739525137347",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "Cracked Pots Museum",
+            "assertionTimeString": "February 14, 2025",
+            "assertionTimeEDTF": "2025-02-14"
+          }
+        }
+      ],
+      "title": "Fragmented Reflections",
+      "author": "John Doe",
+      "institution": "Cracked Pots Museum",
+      "url": "https://example.com/artefact/1",
+      "date": "1787",
+      "medium": "Maiolica",
+      "accessionID": "CPM2001",
+      "provenance": "Charles Babbage, London, probably acquired directly from the artist, between 1805 and 1810. Sold to Ada Lovelace, London, by 1840 circa; sold, Eccentric Curiosities & Co., Paris, 19 January 1898 (lot 42, 27 guineas). Given to the Cracked Pots Museum, 2001.",
+      "creditLine": "Anonymous gift"
+    },
+    {
+      "index": 1,
+      "provenanceData": [
+        {
+          "id": 0,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300404387__Creation",
+            "activityTimeString": "1810",
+            "activityTimeEDTF": "1810",
+            "parties": [
+              {
+                "index": "0",
+                "data": {
+                  "id": "jxK1739523969179",
+                  "role": "agent"
+                }
+              }
+            ],
+            "assertionAuthor": "Cracked Pots Museum",
+            "assertionTimeString": "February 14, 2025",
+            "assertionTimeEDTF": "2025-02-14"
+          }
+        },
+        {
+          "id": 1,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300157782__Acquisition",
+            "parties": [
+              {
+                "index": "1",
+                "data": {
+                  "id": "sSa1739524142149",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "Cracked Pots Museum",
+            "assertionTimeString": "February 14, 2025",
+            "assertionTimeEDTF": "2025-02-14"
+          }
+        },
+        {
+          "id": 3,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300417642__Purchase",
+            "activityTimeString": "spring 1850",
+            "activityTimeEDTF": "1850-21",
+            "parties": [
+              {
+                "index": "2",
+                "data": {
+                  "id": "zNw1739524483758",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "Cracked Pots Museum",
+            "assertionTimeString": "February 14, 2025",
+            "assertionTimeEDTF": "2025-02-14"
+          }
+        },
+        {
+          "id": 4,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300417643__Auction",
+            "activityTimeString": "12 March 1903",
+            "activityTimeEDTF": "1903-03-12",
+            "activityCity": "Vienna",
+            "activityCountry": "Austria",
+            "activityLocationWD": "Q1741___Vienna_(Q1741)_-_capital_of_and_state_in_Austria",
+            "activityTitle": "Mary Somerville Sale",
+            "identifiers": [
+              {
+                "id": "0",
+                "type": "aat:300404628",
+                "value": "87"
+              }
+            ],
+            "prices": [
+              {
+                "id": "0",
+                "type": "aat:300417246",
+                "value": "35",
+                "currency": "aat:300412160__German florin"
+              }
+            ],
+            "parties": [
+              {
+                "index": "3",
+                "data": {
+                  "id": "zNw1739524483758",
+                  "role": "sender"
+                }
+              },
+              {
+                "index": "4",
+                "data": {
+                  "id": "thq1739524716463",
+                  "role": "agent"
+                }
+              }
+            ],
+            "assertionAuthor": "Cracked Pots Musem",
+            "assertionTimeString": "February 14, 2025",
+            "assertionTimeEDTF": "2025-02-14"
+          }
+        },
+        {
+          "id": 5,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300157782__Acquisition",
+            "activityTimeString": "1999",
+            "activityTimeEDTF": "1999",
+            "parties": [
+              {
+                "index": "5",
+                "data": {
+                  "id": "UwN1739524861297",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "Cracked Pots Museum",
+            "assertionTimeString": "February 14, 2025",
+            "assertionTimeEDTF": "2025-02-14"
+          }
+        },
+        {
+          "id": 6,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300417642__Purchase",
+            "activityTimeString": "2005",
+            "activityTimeEDTF": "2005",
+            "identifiers": [
+              {
+                "id": "1",
+                "type": "aat:300312355",
+                "value": "CPM2005"
+              }
+            ],
+            "parties": [
+              {
+                "index": "6",
+                "data": {
+                  "id": "UwN1739524861297",
+                  "role": "sender"
+                }
+              },
+              {
+                "index": "7",
+                "data": {
+                  "id": "kiZ1739525137347",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "Cracked Pots Museum",
+            "assertionTimeString": "February 14, 2025",
+            "assertionTimeEDTF": "2025-02-14"
+          }
+        }
+      ],
+      "title": "The Echo of Shards",
+      "author": "Jane Doe",
+      "institution": "Cracked Pots Museum",
+      "url": "https://example.com/artefact/2",
+      "date": "1810",
+      "medium": "Tin-glazed pottery",
+      "accessionID": "CPM2005",
+      "provenance": "Possibly John Herschel, Cambridge. Sold to Mary Somerville, London, spring 1850; sold, Arcane Antiquities Ltd., Vienna, 12 March 1903 (lot 87, 35 florins). Obscura Collectors' Society, 1999; sold to the Cracked Pots Museum, 2005.",
+      "creditLine": "Acquired through the Fragmenta Fund"
+    }
+  ],
+  "parties": {
+    "jxK1739523969179": {
+      "id": "jxK1739523969179",
+      "label": "Jane Doe",
+      "type": "person",
+      "names": [
+        {
+          "id": "0",
+          "type": "aat:300404651__first name",
+          "value": "Jane"
+        },
+        {
+          "id": "1",
+          "type": "aat:300435247__family name",
+          "value": "Doe"
+        }
+      ],
+      "gender": "aat:300411837",
+      "cultures": [
+        "aat:300111159__British (modern)"
+      ],
+      "occupations": [
+        "aat:300386206__pottery painters"
+      ],
+      "WD": "Q56314893___Jane_Doe_(Q56314893)_-_placeholder_name_for_an_anonymous_person",
+      "birthTimeString": "1780",
+      "birthTimeEDTF": "1780",
+      "deathTimeString": "1870",
+      "deathTimeEDTF": "1870",
+      "locations": [
+        {
+          "id": "0",
+          "city": "Nottingham",
+          "country": "England",
+          "WD": "Q41262___Nottingham_(Q41262)_-_city_in_Nottinghamshire,_England,_UK"
+        }
+      ]
+    },
+    "sSa1739524142149": {
+      "id": "sSa1739524142149",
+      "label": "John Herschel",
+      "type": "person",
+      "names": [
+        {
+          "id": "2",
+          "type": "aat:300404651__first name",
+          "value": "John"
+        },
+        {
+          "id": "3",
+          "type": "aat:300435247__family name",
+          "value": "Herschel"
+        }
+      ],
+      "gender": "aat:300411836",
+      "cultures": [
+        "aat:300111159__British (modern)"
+      ],
+      "occupations": [
+        "aat:300025789__astronomers"
+      ],
+      "WD": "Q14278___John_Frederick_William_Herschel_(Q14278)_-_English_polymath,_mathematician,_astronomer,_chemist,_inventor_and_photographer_(*1792_–_†1871)",
+      "ULAN": "ulan/500115027___Herschel,_John_(ulan/500115027)",
+      "birthTimeString": "1792-03-07",
+      "birthTimeEDTF": "1792-03-07",
+      "deathTimeString": "1871-05-11",
+      "deathTimeEDTF": "1871-05-11",
+      "locations": [
+        {
+          "id": "1",
+          "city": "Cambridge",
+          "country": "England",
+          "WD": "Q350___Cambridge_(Q350)_-_city_in_Cambridgeshire,_England"
+        }
+      ]
+    },
+    "zNw1739524483758": {
+      "id": "zNw1739524483758",
+      "label": "Mary Somerville",
+      "type": "person",
+      "names": [
+        {
+          "id": "4",
+          "type": "aat:300404651__first name",
+          "value": "Mary"
+        },
+        {
+          "id": "5",
+          "type": "aat:300435247__family name",
+          "value": "Somerville"
+        }
+      ],
+      "gender": "aat:300411837",
+      "cultures": [
+        "aat:300111212__Scottish"
+      ],
+      "occupations": [
+        "aat:300025788__scientists"
+      ],
+      "WD": "Q268702___Mary_Somerville_(Q268702)_-_Scottish_scientist,_writer_and_polymath_(1780–1872)",
+      "ULAN": "ulan/500085274___Somerville,_Mary_(ulan/500085274)",
+      "birthTimeString": "1780-12-26",
+      "birthTimeEDTF": "1780-12-26",
+      "deathTimeString": "1872-11-28",
+      "deathTimeEDTF": "1872-11-28",
+      "locations": [
+        {
+          "id": "2",
+          "city": "London",
+          "country": "England",
+          "WD": "Q84___London_(Q84)_-_capital_and_largest_city_of_England_and_the_United_Kingdom"
+        }
+      ]
+    },
+    "thq1739524716463": {
+      "id": "thq1739524716463",
+      "label": "Arcane Antiquities Ltd.",
+      "type": "group",
+      "names": [
+        {
+          "id": "6",
+          "type": "aat:300417216__group titles",
+          "value": "Arcane Antiquities Ltd."
+        }
+      ],
+      "cultures": [
+        "aat:300111153__Austrian"
+      ],
+      "groupTypes": [
+        "aat:300417515__auction houses (businesses)"
+      ],
+      "birthTimeString": "1902",
+      "birthTimeEDTF": "1902",
+      "deathTimeString": "1904",
+      "deathTimeEDTF": "1904"
+    },
+    "UwN1739524861297": {
+      "id": "UwN1739524861297",
+      "label": "Obscura Collectors' Society",
+      "type": "group",
+      "names": [
+        {
+          "id": "7",
+          "type": "aat:300417216__group titles",
+          "value": "Obscura Collectors' Society"
+        }
+      ],
+      "groupTypes": [
+        "aat:300026020__secret societies"
+      ],
+      "birthTimeString": "by 1999",
+      "birthTimeEDTF": "../1999"
+    },
+    "kiZ1739525137347": {
+      "id": "kiZ1739525137347",
+      "label": "Cracked Pot Museum",
+      "type": "group",
+      "names": [
+        {
+          "id": "8",
+          "type": "aat:300417216__group titles",
+          "value": "Cracked Pot Museum"
+        }
+      ],
+      "groupTypes": [
+        "aat:300312309__ecomuseums (institutions)"
+      ],
+      "birthTimeString": "1970",
+      "birthTimeEDTF": "1970",
+      "locations": [
+        {
+          "id": "3",
+          "city": "Minas Tirith",
+          "country": "Gondor",
+          "WD": "Q308657___Minas_Tirith_(Q308657)_-_fictional_city_in_Middle-earth"
+        }
+      ]
+    },
+    "MaU1739525635687": {
+      "id": "MaU1739525635687",
+      "label": "Charles Babbage",
+      "type": "person",
+      "names": [
+        {
+          "id": "0",
+          "type": "aat:300404651__first name",
+          "value": "Charles"
+        },
+        {
+          "id": "1",
+          "type": "aat:300435247__family name",
+          "value": "Babbage"
+        }
+      ],
+      "gender": "aat:300411836",
+      "occupations": [
+        "aat:300025786__mathematicians"
+      ],
+      "WD": "Q46633___Charles_Babbage_(Q46633)_-_English_mathematician,_philosopher,_and_engineer_(1791–1871)",
+      "birthTimeString": "1791-12-26",
+      "birthTimeEDTF": "1791-12-26",
+      "deathTimeString": "1871-10-18",
+      "deathTimeEDTF": "1871-10-18",
+      "locations": [
+        {
+          "id": "0",
+          "city": "London",
+          "country": "England",
+          "WD": "Q84___London_(Q84)_-_capital_and_largest_city_of_England_and_the_United_Kingdom"
+        }
+      ]
+    },
+    "GZq1739525870909": {
+      "id": "GZq1739525870909",
+      "label": "John Doe",
+      "type": "person",
+      "names": [
+        {
+          "id": "2",
+          "type": "aat:300404651__first name",
+          "value": "John"
+        },
+        {
+          "id": "3",
+          "type": "aat:300435247__family name",
+          "value": "Doe"
+        }
+      ],
+      "gender": "aat:300411836",
+      "WD": "Q302057___John_Doe_(Q302057)_-_placeholder_name_for_an_anonymous_or_unknown_person"
+    },
+    "dLo1739525982805": {
+      "id": "dLo1739525982805",
+      "label": "Ada Lovelace",
+      "type": "person",
+      "gender": "aat:300411837",
+      "occupations": [
+        "aat:300025786__mathematicians"
+      ]
+    },
+    "CRd1739526474508": {
+      "id": "CRd1739526474508",
+      "label": "Eccentric Curiosities & Co.",
+      "type": "group",
+      "groupTypes": [
+        "aat:300417515__auction houses (businesses)"
+      ]
+    }
+  }
+}
