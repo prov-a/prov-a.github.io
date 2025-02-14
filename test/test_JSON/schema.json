@@ -20,9 +20,6 @@
         "items": {
           "type": "object",
           "properties": {
-            "_id": {
-              "type": "integer"
-            },
             "title": {
               "type": "string"
             },
