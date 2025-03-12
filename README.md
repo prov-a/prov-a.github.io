@@ -38,3 +38,6 @@ PROV-A leverages open-source libraries, including:
 
 ## License
 PROV-A is released under the MIT License. See [LICENSE](https://github.com/prov-a/prov-a.github.io/blob/main/LICENSE) for details.
+
+## Acknowledgement
+Created by Fabio Mariani as part of the [Provenance Lab](https://www.leuphana.de/en/institutes/ipk/provenance-lab.html), funded through the Lichtenberg Professorship of Lynn Rother by the Volkswagen Foundation.
