@@ -200,7 +200,7 @@ ex:ProvenanceAssessmentShape a sh:NodeShape ;
         sh:class crm:E39_Actor ;
         sh:node [
             sh:property [
-                sh:path rdf:label ;
+                sh:path rdfs:label ;
                 sh:datatype xsd:string ;
             ] ;
         ] ;
