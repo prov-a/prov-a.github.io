@@ -227,13 +227,13 @@
           - **Value:** [Physical Object](#physical-object)
         - **[crm:P23_transferred_title_from](http://www.cidoc-crm.org/cidoc-crm/P23_transferred_title_from)**  
           - **Description:** Identifies the previous owner of the object.  
-          - **Value:** `Party`
+          - **Value:** [Party](#party)
         - **[crm:P22_transferred_title_to](http://www.cidoc-crm.org/cidoc-crm/P22_transferred_title_to)**  
           - **Description:** Identifies the new owner of the object.  
-          - **Value:** `Party`
+          - **Value:** [Party](#party)
         - **[crm:P14_carried_out_by](http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by)**  
           - **Description:** The individual or organization responsible for executing the acquisition.  
-          - **Value:** `Party`
+          - **Value:** [Party](#party)
 
 - **[crm:P9_consists_of](http://www.cidoc-crm.org/cidoc-crm/P9_consists_of)**
   - **Description:** A component of the provenance activity recording the transfer of custody of an object, distinct from legal ownership.
@@ -246,13 +246,13 @@
           - **Value:** [Physical Object](#physical-object)
         - **[crm:P28_custody_surrendered_by](http://www.cidoc-crm.org/cidoc-crm/P28_custody_surrendered_by)**  
           - **Description:** Identifies the party that relinquished custody of the object.  
-          - **Value:** `Party`
+          - **Value:** [Party](#party)
         - **[crm:P29_custody_received_by](http://www.cidoc-crm.org/cidoc-crm/P29_custody_received_by)**  
           - **Description:** Identifies the party that received custody of the object.  
-          - **Value:** `Party`
+          - **Value:** [Party](#party)
         - **[crm:P14_carried_out_by](http://www.cidoc-crm.org/cidoc-crm/P14_carried_out_by)**  
           - **Description:** The individual or organization responsible for executing the transfer of custody.  
-          - **Value:** `Party`
+          - **Value:** [Party](#party)
 
 ---
 
