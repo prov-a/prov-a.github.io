@@ -45,7 +45,7 @@
         - **Datatype:** `xsd:string`
       - **[crm:P2_has_type](http://www.cidoc-crm.org/cidoc-crm/P2_has_type)**  
         - **Description:** The type of title, defined by a [Getty AAT](http://vocab.getty.edu/aat/) term.  
-        - **Value:** [aat:300404670](http://vocab.getty.edu/aat/300404670)  
+        - **Value:** [http://vocab.getty.edu/aat/300404670](http://vocab.getty.edu/aat/300404670)  
 
 - **[crm:P70i_is_documented_in](http://www.cidoc-crm.org/cidoc-crm/P70i_is_documented_in)**  
   - **Description:** The document that provides evidence or details about the physical object.
@@ -64,7 +64,7 @@
               - **Datatype:** `xsd:string`
             - **[crm:P2_has_type](http://www.cidoc-crm.org/cidoc-crm/P2_has_type)**  
               - **Description:** The type of identifier, defined by a [Getty AAT](http://vocab.getty.edu/aat/) term.  
-              - **Value:** [aat:300404630](http://vocab.getty.edu/aat/300404630)  
+              - **Value:** [http://vocab.getty.edu/aat/300404630](http://vocab.getty.edu/aat/300404630)  
 
 - **[crm:P67i_is_referred_to_by](http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by)**  
   - **Description:** The linguistic object representing the author of the physical object.
@@ -77,7 +77,7 @@
         - **Datatype:** `xsd:string`
       - **[crm:P2_has_type](http://www.cidoc-crm.org/cidoc-crm/P2_has_type)**  
         - **Description:** The type of linguistic object for the author, defined by a [Getty AAT](http://vocab.getty.edu/aat/) term.  
-        - **Value:** [aat:300435446](http://vocab.getty.edu/aat/300435446)  
+        - **Value:** [http://vocab.getty.edu/aat/300435446](http://vocab.getty.edu/aat/300435446)  
 
 - **[crm:P67i_is_referred_to_by](http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by)**  
   - **Description:** The linguistic object representing the institution related to the physical object.
@@ -90,7 +90,7 @@
         - **Datatype:** `xsd:string`
       - **[crm:P2_has_type](http://www.cidoc-crm.org/cidoc-crm/P2_has_type)**  
         - **Description:** The type of linguistic object for the institution, defined by a [Getty AAT](http://vocab.getty.edu/aat/) term.  
-        - **Value:** [aat:300435449](http://vocab.getty.edu/aat/300435449)  
+        - **Value:** [http://vocab.getty.edu/aat/300435449](http://vocab.getty.edu/aat/300435449)  
 
 - **[crm:P67i_is_referred_to_by](http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by)**  
   - **Description:** The linguistic object representing the date associated with the physical object.
@@ -103,7 +103,7 @@
         - **Datatype:** `xsd:string`
       - **[crm:P2_has_type](http://www.cidoc-crm.org/cidoc-crm/P2_has_type)**  
         - **Description:** The type of linguistic object for the date, defined by a [Getty AAT](http://vocab.getty.edu/aat/) term.  
-        - **Value:** [aat:300435447](http://vocab.getty.edu/aat/300435447)  
+        - **Value:** [http://vocab.getty.edu/aat/300435447](http://vocab.getty.edu/aat/300435447)  
 
 - **[crm:P67i_is_referred_to_by](http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by)**  
   - **Description:** The linguistic object representing the accession ID of the physical object.
@@ -116,7 +116,7 @@
         - **Datatype:** `xsd:string`
       - **[crm:P2_has_type](http://www.cidoc-crm.org/cidoc-crm/P2_has_type)**  
         - **Description:** The type of linguistic object for the accession ID, defined by a [Getty AAT](http://vocab.getty.edu/aat/) term.  
-        - **Value:** [aat:300312355](http://vocab.getty.edu/aat/300312355)  
+        - **Value:** [http://vocab.getty.edu/aat/300312355](http://vocab.getty.edu/aat/300312355)  
 
 - **[crm:P67i_is_referred_to_by](http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by)**  
   - **Description:** The linguistic object representing the medium of the physical object.
@@ -129,7 +129,7 @@
         - **Datatype:** `xsd:string`
       - **[crm:P2_has_type](http://www.cidoc-crm.org/cidoc-crm/P2_has_type)**  
         - **Description:** The type of linguistic object for the medium, defined by a [Getty AAT](http://vocab.getty.edu/aat/) term.  
-        - **Value:** [aat:300435429](http://vocab.getty.edu/aat/300435429)  
+        - **Value:** [http://vocab.getty.edu/aat/300435429](http://vocab.getty.edu/aat/300435429)  
 
 - **[crm:P67i_is_referred_to_by](http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by)**  
   - **Description:** The linguistic object representing the credit line information.
@@ -142,7 +142,7 @@
         - **Datatype:** `xsd:string`
       - **[crm:P2_has_type](http://www.cidoc-crm.org/cidoc-crm/P2_has_type)**  
         - **Description:** The type of linguistic object for the credit line, defined by a [Getty AAT](http://vocab.getty.edu/aat/) term.  
-        - **Value:** [aat:300435418](http://vocab.getty.edu/aat/300435418)  
+        - **Value:** [http://vocab.getty.edu/aat/300435418](http://vocab.getty.edu/aat/300435418)  
 
 ---
 
