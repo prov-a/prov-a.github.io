@@ -971,7 +971,7 @@ export async function generateLOD(projData) {
                 ))
                 quadsArray.push(quad(
                     cultureNode,
-                    namedNode(pfx.rdf + "P127_has_broader_term"),
+                    namedNode(pfx.crm + "P127_has_broader_term"),
                     namedNode(pfx.aat + "300055768"),
                     namedNode(partiesURI)
                 ))
@@ -995,7 +995,7 @@ export async function generateLOD(projData) {
                 ))
                 quadsArray.push(quad(
                     occupationNode,
-                    namedNode(pfx.rdf + "P127_has_broader_term"),
+                    namedNode(pfx.crm + "P127_has_broader_term"),
                     namedNode(pfx.aat + "300263369"),
                     namedNode(partiesURI)
                 ))
@@ -1019,7 +1019,7 @@ export async function generateLOD(projData) {
                 ))
                 quadsArray.push(quad(
                     groupTypeNode,
-                    namedNode(pfx.rdf + "P127_has_broader_term"),
+                    namedNode(pfx.crm + "P127_has_broader_term"),
                     namedNode(pfx.aat + "300192630"),
                     namedNode(partiesURI)
                 ))
@@ -1042,7 +1042,7 @@ export async function generateLOD(projData) {
             ))
             quadsArray.push(quad(
                 genderNode,
-                namedNode(pfx.rdf + "P127_has_broader_term"),
+                namedNode(pfx.crm + "P127_has_broader_term"),
                 namedNode(pfx.aat + "300445640"),
                 namedNode(partiesURI)
             ))
