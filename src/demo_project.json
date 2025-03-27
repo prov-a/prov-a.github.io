@@ -1,0 +1,1170 @@
+{
+  "orcid": "0000-0002-1825-0097",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "uri": "https://example.com/provenance",
+  "data": [
+    {
+      "title": "Portrait of a Woman",
+      "author": "Amedeo Modigliani",
+      "institution": "The Art Institute of Chicago",
+      "url": "https://www.artic.edu/artworks/80586",
+      "date": "c. 1917/19",
+      "accessionID": "1954.316",
+      "provenance": "Galerie Zborowski, Paris, probably acquired directly from the artist. Bernheim Jeune, Paris, before 1929 [Pfannstiel, 1929]. Reinhardt Galleries, New York, by 1936 [this and the following according to Winterbotham Collection inventory, Oct. 2, 1936, copy in curatorial file]; sold to Joseph Winterbotham, Jr. (1878–1954), Chicago and Burlington, Vt., by Oct. 2, 1936; bequeathed to the Art Institute, 1954.",
+      "creditLine": "Bequest of Joseph Winterbotham",
+      "medium": "Oil on canvas",
+      "image": "https://www.artic.edu/iiif/2/e458fc80-cb2e-f5c0-3c81-8c24b0bdc15b/full/400,/0/default.jpg",
+      "provenanceData": [
+        {
+          "id": 145,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300404387__Creation",
+            "activityTimeString": "c. 1917/19",
+            "activityTimeEDTF": "1917~/1919~",
+            "parties": [
+              {
+                "index": "226",
+                "data": {
+                  "id": "fwg1701855541",
+                  "role": "agent"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-05-03",
+            "assertionTimeEDTF": "2021-05-03"
+          }
+        },
+        {
+          "id": 146,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300157782__Acquisition",
+            "parties": [
+              {
+                "index": "227",
+                "data": {
+                  "id": "rMm1701855678",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-05-03",
+            "assertionTimeEDTF": "2021-05-03"
+          }
+        },
+        {
+          "id": 151,
+          "data": {
+            "activityCertainty": "aat:300435721",
+            "activityType": "aat:300157782__Acquisition",
+            "parties": [
+              {
+                "index": "235",
+                "data": {
+                  "id": "rMm1701855678",
+                  "role": "receiver"
+                }
+              },
+              {
+                "index": "236",
+                "data": {
+                  "id": "fwg1701855541",
+                  "role": "sender"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-05-03",
+            "assertionTimeEDTF": "2021-05-03",
+            "assertionContradiction": "on"
+          }
+        },
+        {
+          "id": 147,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300157782__Acquisition",
+            "activityTimeString": "before 1929",
+            "activityTimeEDTF": "../1929",
+            "parties": [
+              {
+                "index": "229",
+                "data": {
+                  "id": "gcZ1701855680",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-05-03",
+            "assertionTimeEDTF": "2021-05-03",
+            "assertionNotes": "Pfannstiel, 1929",
+            "sources": [
+              {
+                "id": "0",
+                "type": "aat:300028051__books",
+                "citation": "Pfannstiel, Arthur. Modigliani: L’art et la vie. Paris: Seheur, 1929.",
+                "url": "http://zotero.org/groups/2756997/items/FTHR4L5J",
+                "author": "Pfannstiel, Arthur",
+                "date": "1929",
+                "notes": "pp. 14–15, as Femme au corsage bleu"
+              }
+            ]
+          }
+        },
+        {
+          "id": 148,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300157782__Acquisition",
+            "activityTimeString": "by 1936",
+            "activityTimeEDTF": "../1936",
+            "parties": [
+              {
+                "index": "230",
+                "data": {
+                  "id": "QnY1701855681",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-05-03",
+            "assertionTimeEDTF": "2021-05-03",
+            "assertionNotes": "according to Winterbotham Collection inventory, Oct. 2, 1936, copy in curatorial file",
+            "sources": [
+              {
+                "id": "1",
+                "type": "aat:300027045__inventories",
+                "citation": "“Winterbotham Collection Inventory.” October 2, 1936. Curatorial files, The Art Institute of Chicago.",
+                "url": "http://zotero.org/groups/2756997/items/68IFD8AA",
+                "date": "1936-10-02"
+              }
+            ]
+          }
+        },
+        {
+          "id": 149,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300417642__Purchase",
+            "activityTimeString": "by Oct. 2, 1936",
+            "activityTimeEDTF": "../1936-10-02",
+            "parties": [
+              {
+                "index": "232",
+                "data": {
+                  "id": "QnY1701855681",
+                  "role": "sender"
+                }
+              },
+              {
+                "index": "231",
+                "data": {
+                  "id": "TPE1701855682",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-05-03",
+            "assertionTimeEDTF": "2021-05-03",
+            "assertionNotes": "according to Winterbotham Collection inventory, Oct. 2, 1936, copy in curatorial file",
+            "sources": [
+              {
+                "id": "1",
+                "type": "aat:300027045__inventories",
+                "citation": "“Winterbotham Collection Inventory.” October 2, 1936. Curatorial files, The Art Institute of Chicago.",
+                "url": "http://zotero.org/groups/2756997/items/68IFD8AA",
+                "date": "1936-10-02"
+              }
+            ]
+          }
+        },
+        {
+          "id": 150,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300417641__Bequest",
+            "activityTimeString": "1954",
+            "activityTimeEDTF": "1954",
+            "parties": [
+              {
+                "index": "234",
+                "data": {
+                  "id": "TPE1701855682",
+                  "role": "sender"
+                }
+              },
+              {
+                "index": "233",
+                "data": {
+                  "id": "agL1701855513",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-05-03",
+            "assertionTimeEDTF": "2021-05-03"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Cagnes",
+      "author": "André Derain",
+      "institution": "The Art Institute of Chicago",
+      "url": "https://www.artic.edu/artworks/12402",
+      "date": "1910",
+      "accessionID": "1960.777",
+      "provenance": "Galerie Kahnweiler, Paris, probably acquired directly from the artist. Louis Lion & Co., New York, by Feb. 1957 [verso inscription; this and the following according to letter from Knoedler and Co., Apr. 8, 1975, copy in curatorial file]; sold to Knoedler & Co., New York, Feb. 1957; sold to the Art Institute of Chicago, 1960.",
+      "creditLine": "Worcester Sketch Fund",
+      "medium": "Oil on canvas",
+      "image": "https://www.artic.edu/iiif/2/429629b1-0966-8238-30c8-953fe783c6fd/full/400,/0/default.jpg",
+      "provenanceData": [
+        {
+          "id": 151,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300404387__Creation",
+            "activityTimeString": "1910",
+            "activityTimeEDTF": "1910",
+            "parties": [
+              {
+                "index": "235",
+                "data": {
+                  "id": "HzH1701855506",
+                  "role": "agent"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-05-03",
+            "assertionTimeEDTF": "2021-05-03"
+          }
+        },
+        {
+          "id": 152,
+          "data": {
+            "activityCertainty": "aat:300435721",
+            "activityType": "aat:300157782__Acquisition",
+            "parties": [
+              {
+                "index": "236",
+                "data": {
+                  "id": "hKG1701855614",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-05-03",
+            "assertionTimeEDTF": "2021-05-03"
+          }
+        },
+        {
+          "id": 156,
+          "data": {
+            "activityCertainty": "aat:300435721",
+            "activityType": "aat:300157782__Acquisition",
+            "parties": [
+              {
+                "index": "243",
+                "data": {
+                  "id": "hKG1701855614",
+                  "role": "receiver"
+                }
+              },
+              {
+                "index": "244",
+                "data": {
+                  "id": "HzH1701855506",
+                  "role": "sender"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-05-03",
+            "assertionTimeEDTF": "2021-05-03",
+            "assertionContradiction": "on"
+          }
+        },
+        {
+          "id": 153,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300157782__Acquisition",
+            "activityTimeString": "by Feb. 1957",
+            "activityTimeEDTF": "../1957-02",
+            "parties": [
+              {
+                "index": "238",
+                "data": {
+                  "id": "Qyj1701855687",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-05-03",
+            "assertionTimeEDTF": "2021-05-03",
+            "assertionNotes": "verso inscription; according to letter from Knoedler and Co., Apr. 8, 1975, copy in curatorial file",
+            "sources": [
+              {
+                "id": "2",
+                "type": "aat:300026879__letters (correspondence)",
+                "citation": "Knoedler and Co. “Letter from Knoedler and Co.” April 8, 1975. Curatorial files, The Art Institute of Chicago.",
+                "url": "http://zotero.org/groups/2756997/items/NGBRZI5C",
+                "author": "Knoedler and Co.",
+                "date": "1975-04-08"
+              },
+              {
+                "id": "3",
+                "type": "aat:300028702__inscriptions",
+                "citation": "“Verso Inscription - 1960.777.” The Art Institute of Chicago, n.d.",
+                "url": "http://zotero.org/groups/2756997/items/Y6258ZMF"
+              }
+            ]
+          }
+        },
+        {
+          "id": 154,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300417642__Purchase",
+            "activityTimeString": "Feb. 1957",
+            "activityTimeEDTF": "1957-02",
+            "parties": [
+              {
+                "index": "240",
+                "data": {
+                  "id": "Qyj1701855687",
+                  "role": "sender"
+                }
+              },
+              {
+                "index": "239",
+                "data": {
+                  "id": "yJk1701855688",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-05-03",
+            "assertionTimeEDTF": "2021-05-03",
+            "assertionNotes": "according to letter from Knoedler and Co., Apr. 8, 1975, copy in curatorial file",
+            "sources": [
+              {
+                "id": "1",
+                "type": "aat:300026879__letters (correspondence)",
+                "citation": "Knoedler and Co. “Letter from Knoedler and Co.” April 8, 1975. Curatorial files, The Art Institute of Chicago.",
+                "url": "http://zotero.org/groups/2756997/items/NGBRZI5C",
+                "author": "Knoedler and Co.",
+                "date": "1975-04-08"
+              }
+            ]
+          }
+        },
+        {
+          "id": 155,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300417642__Purchase",
+            "activityTimeString": "1960",
+            "activityTimeEDTF": "1960",
+            "parties": [
+              {
+                "index": "242",
+                "data": {
+                  "id": "yJk1701855688",
+                  "role": "sender"
+                }
+              },
+              {
+                "index": "241",
+                "data": {
+                  "id": "agL1701855513",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-05-03",
+            "assertionTimeEDTF": "2021-05-03"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Still Life",
+      "author": "Jean Metzinger",
+      "institution": "The Art Institute of Chicago",
+      "url": "https://www.artic.edu/artworks/82418",
+      "date": "1918",
+      "accessionID": "1954.1312",
+      "provenance": "Léonce Rosenberg (1877–1947), Paris [this and the following according to letter from Mrs. Barnett Malbin, (formerly Mrs. Harry L. Winston), Mar. 18, 1975, in curatorial file]. Galerie Rive Gauche, Paris, by 1952; sold to Mr. and Mrs. Harry L. Winston, Birmingham, MI, Nov. 19, 1952; given to the Art Institute of Chicago, 1954.",
+      "creditLine": "Gift of Mr. and Mrs. Harry L. Winston",
+      "medium": "Oil on canvas",
+      "image": "https://www.artic.edu/iiif/2/27f5b73d-152a-ecce-e6f0-04d2b1277d81/full/400,/0/default.jpg",
+      "provenanceData": [
+        {
+          "id": 683,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300404387__Creation",
+            "activityTimeString": "1918",
+            "activityTimeEDTF": "1918",
+            "parties": [
+              {
+                "index": "1078",
+                "data": {
+                  "id": "iRj1701855722",
+                  "role": "agent"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-08-03",
+            "assertionTimeEDTF": "2021-08-03"
+          }
+        },
+        {
+          "id": 684,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300157782__Acquisition",
+            "parties": [
+              {
+                "index": "1079",
+                "data": {
+                  "id": "EEn1701855724",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-08-03",
+            "assertionTimeEDTF": "2021-08-03",
+            "assertionNotes": "according to letter from Mrs. Barnett Malbin, (formerly Mrs. Harry L. Winston), Mar. 18, 1975, in curatorial file",
+            "sources": [
+              {
+                "id": "0",
+                "type": "aat:300026879__letters (correspondence)",
+                "citation": "Malbin, Lydia. “Letter from Mrs. Barnett Malbin, (Formerly Mrs. Harry L. Winston).” March 18, 1975. Curatorial files, The Art Institute of Chicago.",
+                "url": "http://zotero.org/groups/2756997/items/SP52FLWV",
+                "author": "Malbin, Lydia",
+                "date": "1975-03-18"
+              }
+            ]
+          }
+        },
+        {
+          "id": 685,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300157782__Acquisition",
+            "activityTimeString": "by 1952",
+            "activityTimeEDTF": "../1952",
+            "parties": [
+              {
+                "index": "1080",
+                "data": {
+                  "id": "AGJ1701856304",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-08-03",
+            "assertionTimeEDTF": "2021-08-03",
+            "assertionNotes": "according to letter from Mrs. Barnett Malbin, (formerly Mrs. Harry L. Winston), Mar. 18, 1975, in curatorial file",
+            "sources": [
+              {
+                "id": "0",
+                "type": "aat:300026879__letters (correspondence)",
+                "citation": "Malbin, Lydia. “Letter from Mrs. Barnett Malbin, (Formerly Mrs. Harry L. Winston).” March 18, 1975. Curatorial files, The Art Institute of Chicago.",
+                "url": "http://zotero.org/groups/2756997/items/SP52FLWV",
+                "author": "Malbin, Lydia",
+                "date": "1975-03-18"
+              }
+            ]
+          }
+        },
+        {
+          "id": 686,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300417642__Purchase",
+            "activityTimeString": "Nov. 19, 1952",
+            "activityTimeEDTF": "1952-11-19",
+            "parties": [
+              {
+                "index": "1082",
+                "data": {
+                  "id": "AGJ1701856304",
+                  "role": "sender"
+                }
+              },
+              {
+                "index": "1081",
+                "data": {
+                  "id": "dOj1701856305",
+                  "role": "receiver"
+                }
+              },
+              {
+                "index": "1085",
+                "data": {
+                  "id": "IDB1704203643782",
+                  "role": "receiver"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-08-03",
+            "assertionTimeEDTF": "2021-08-03"
+          }
+        },
+        {
+          "id": 687,
+          "data": {
+            "activityCertainty": "aat:300068765",
+            "activityType": "aat:300417637__Gift",
+            "activityTimeString": "1954",
+            "activityTimeEDTF": "1954",
+            "parties": [
+              {
+                "index": "1084",
+                "data": {
+                  "id": "dOj1701856305",
+                  "role": "sender"
+                }
+              },
+              {
+                "index": "1083",
+                "data": {
+                  "id": "agL1701855513",
+                  "role": "receiver"
+                }
+              },
+              {
+                "index": "1086",
+                "data": {
+                  "id": "IDB1704203643782",
+                  "role": "sender"
+                }
+              }
+            ],
+            "assertionAuthor": "The Art Institute of Chicago",
+            "assertionTimeString": "2021-08-03",
+            "assertionTimeEDTF": "2021-08-03"
+          }
+        }
+      ]
+    }
+  ],
+  "parties": {
+    "fwg1701855541": {
+      "id": "fwg1701855541",
+      "label": "Amedeo Modigliani",
+      "type": "person",
+      "names": [
+        {
+          "id": "35",
+          "type": "aat:300404651__first name",
+          "value": "Amedeo"
+        },
+        {
+          "id": "40",
+          "type": "aat:300404654__middle name",
+          "value": "Clemente"
+        },
+        {
+          "id": "41",
+          "type": "aat:300435247__family name",
+          "value": "Modigliani"
+        }
+      ],
+      "gender": "aat:300411836",
+      "WD": "Q120993___Amedeo_Modigliani_(Q120993)_-_Italian_painter_and_sculptor_(1884–1920)",
+      "ULAN": "ulan/500026509___Modigliani,_Amedeo_(ulan/500026509)",
+      "birthTimeString": "1884-07-12",
+      "birthTimeEDTF": "1884-07-12",
+      "deathTimeString": "1920-01-24",
+      "deathTimeEDTF": "1920-01-24"
+    },
+    "rMm1701855678": {
+      "id": "rMm1701855678",
+      "label": "Galerie Zborowski",
+      "type": "group",
+      "names": [
+        {
+          "id": "165",
+          "value": "Galerie Zborowski"
+        }
+      ],
+      "groupTypes": [
+        "aat:300312243__art galleries (institutions)"
+      ],
+      "WD": "Q28922252___Zborowski_Gallery_of_Art_(Q28922252)_-_art_gallery_in_Paris,_France",
+      "birthTimeString": "1922",
+      "birthTimeEDTF": "1922",
+      "locations": [
+        {
+          "id": "59",
+          "city": "Paris",
+          "WD": "Q90___Paris_(Q90)_-_capital_of_France"
+        }
+      ]
+    },
+    "gcZ1701855680": {
+      "id": "gcZ1701855680",
+      "label": "Bernheim-Jeune",
+      "type": "group",
+      "names": [
+        {
+          "id": "167",
+          "value": "Bernheim Jeune"
+        }
+      ],
+      "groupTypes": [
+        "aat:300312243__art galleries (institutions)"
+      ],
+      "WD": "Q826482___Bernheim-Jeune_(Q826482)_-_French_art_gallery_and_publisher",
+      "birthTimeString": "1863",
+      "birthTimeEDTF": "1863",
+      "deathTimeString": "2019",
+      "deathTimeEDTF": "2019",
+      "locations": [
+        {
+          "id": "60",
+          "city": "Paris",
+          "WD": "Q90___Paris_(Q90)_-_capital_of_France"
+        }
+      ]
+    },
+    "QnY1701855681": {
+      "id": "QnY1701855681",
+      "label": "Reinhardt Galleries",
+      "type": "group",
+      "names": [
+        {
+          "id": "168",
+          "value": "Reinhardt Galleries"
+        }
+      ],
+      "groupTypes": [
+        "aat:300312243__art galleries (institutions)"
+      ],
+      "WD": "Q72882932___Reinhardt_Galleries_(New_York,_N.Y.)_(Q72882932)_-_1936-1952_New_York_City_NY_Dealer/Gallery",
+      "birthTimeString": "1936",
+      "birthTimeEDTF": "1936",
+      "deathTimeString": "1952",
+      "deathTimeEDTF": "1952",
+      "locations": [
+        {
+          "id": "61",
+          "city": "New York",
+          "WD": "Q60___New_York_City_(Q60)_-_most_populous_city_in_the_United_States"
+        }
+      ]
+    },
+    "TPE1701855682": {
+      "id": "TPE1701855682",
+      "label": "Joseph Winterbotham, Jr.",
+      "type": "person",
+      "names": [
+        {
+          "id": "169",
+          "type": "aat:300404651__first name",
+          "value": "Joseph"
+        },
+        {
+          "id": "170",
+          "type": "aat:300435247__family name",
+          "value": "Winterbotham"
+        },
+        {
+          "id": "171",
+          "type": "aat:300404662__suffix",
+          "value": "Jr."
+        }
+      ],
+      "gender": "aat:300411836",
+      "WD": "Q125944381___Joseph_Winterbotham,_Jr._(Q125944381)_-_Chicago_businessman_and_art_collector_(1879_-_1954)",
+      "relations": [
+        {
+          "id": "0",
+          "type": "gvp:ulan1501_sibling_of__sibling of",
+          "party": "UBy1701856588"
+        }
+      ],
+      "birthTimeString": "1878",
+      "birthTimeEDTF": "1878",
+      "deathTimeString": "1954",
+      "deathTimeEDTF": "1954",
+      "locations": [
+        {
+          "id": "62",
+          "city": "Chicago",
+          "WD": "Q1297___Chicago_(Q1297)_-_city_and_county_seat_of_Cook_County,_Illinois,_United_States_of_America"
+        },
+        {
+          "id": "63",
+          "city": "Burlington",
+          "province": "VT",
+          "WD": "Q31058___Burlington_(Q31058)_-_city_in_Chittenden_County,_Vermont,_United_States"
+        }
+      ]
+    },
+    "agL1701855513": {
+      "id": "agL1701855513",
+      "label": "The Art Institute of Chicago",
+      "type": "group",
+      "names": [
+        {
+          "id": "7",
+          "value": "The Art Institute of Chicago"
+        }
+      ],
+      "WD": "Q239303___Art_Institute_of_Chicago_(Q239303)_-_art_museum_and_school_in_Chicago,_United_States",
+      "ULAN": "ulan/500304669___Art_Institute_of_Chicago_(ulan/500304669)",
+      "birthTimeString": "1879",
+      "birthTimeEDTF": "1879",
+      "locations": [
+        {
+          "id": "5",
+          "city": "Chicago",
+          "WD": "Q1297___Chicago_(Q1297)_-_city_and_county_seat_of_Cook_County,_Illinois,_United_States_of_America"
+        }
+      ]
+    },
+    "HzH1701855506": {
+      "id": "HzH1701855506",
+      "label": "André Derain",
+      "type": "person",
+      "names": [
+        {
+          "id": "0",
+          "type": "aat:300404651__first name",
+          "value": "André"
+        },
+        {
+          "id": "8",
+          "type": "aat:300435247__family name",
+          "value": "Derain"
+        }
+      ],
+      "gender": "aat:300411836",
+      "WD": "Q156272___André_Derain_(Q156272)_-_French_painter_and_engraver_(1880-1954)",
+      "ULAN": "ulan/500004535___Derain,_André_(ulan/500004535)",
+      "birthTimeString": "1880-06-10",
+      "birthTimeEDTF": "1880-06-10",
+      "deathTimeString": "1954-09-08",
+      "deathTimeEDTF": "1954-09-08"
+    },
+    "hKG1701855614": {
+      "id": "hKG1701855614",
+      "label": "Galerie Kahnweiler",
+      "type": "group",
+      "names": [
+        {
+          "id": "106",
+          "value": "Galerie Kahnweiler"
+        }
+      ],
+      "groupTypes": [
+        "aat:300312243__art galleries (institutions)"
+      ],
+      "WD": "Q60010460___Kahnweiler_gallery_(Q60010460)_-_art_gallery_in_Paris",
+      "ULAN": "ulan/500310332___Galerie_Kahnweiler_(ulan/500310332)",
+      "birthTimeString": "May 1907",
+      "birthTimeEDTF": "1907-05",
+      "deathTimeString": "1914",
+      "deathTimeEDTF": "1914",
+      "locations": [
+        {
+          "id": "32",
+          "city": "Paris",
+          "WD": "Q90___Paris_(Q90)_-_capital_of_France"
+        }
+      ]
+    },
+    "Qyj1701855687": {
+      "id": "Qyj1701855687",
+      "label": "Louis Lion & Co.",
+      "type": "group",
+      "names": [
+        {
+          "id": "173",
+          "value": "Louis Lion & Co."
+        }
+      ],
+      "groupTypes": [
+        "aat:300312243__art galleries (institutions)"
+      ],
+      "locations": [
+        {
+          "id": "64",
+          "city": "New York",
+          "WD": "Q60___New_York_City_(Q60)_-_most_populous_city_in_the_United_States"
+        }
+      ]
+    },
+    "yJk1701855688": {
+      "id": "yJk1701855688",
+      "label": "M. Knoedler & Co.",
+      "type": "group",
+      "names": [
+        {
+          "id": "174",
+          "value": "Knoedler & Co."
+        }
+      ],
+      "groupTypes": [
+        "aat:300312243__art galleries (institutions)"
+      ],
+      "WD": "Q10288073___M._Knoedler_&_Co._(Q10288073)_-_art_dealer_in_New_York",
+      "ULAN": "ulan/500304270___M._Knoedler_&_Co._(ulan/500304270)",
+      "birthTimeString": "1848",
+      "birthTimeEDTF": "1848",
+      "deathTimeString": "2011",
+      "deathTimeEDTF": "2011",
+      "locations": [
+        {
+          "id": "65",
+          "city": "New York"
+        }
+      ]
+    },
+    "iRj1701855722": {
+      "id": "iRj1701855722",
+      "label": "Jean Metzinger",
+      "type": "person",
+      "names": [
+        {
+          "id": "210",
+          "type": "aat:300404651__first name",
+          "value": "Jean"
+        },
+        {
+          "id": "216",
+          "type": "aat:300404654__middle name",
+          "value": "Dominique"
+        },
+        {
+          "id": "217",
+          "type": "aat:300404654__middle name",
+          "value": "Antony"
+        },
+        {
+          "id": "218",
+          "type": "aat:300435247__family name",
+          "value": "Metzinger"
+        }
+      ],
+      "gender": "aat:300411836",
+      "WD": "Q313096___Jean_Metzinger_(Q313096)_-_French_painter_(1883-1956)",
+      "ULAN": "ulan/500001079___Metzinger,_Jean_(ulan/500001079)",
+      "birthTimeString": "1883-06-24",
+      "birthTimeEDTF": "1883-06-24",
+      "deathTimeString": "1956-11-01",
+      "deathTimeEDTF": "1956-11-01"
+    },
+    "EEn1701855724": {
+      "id": "EEn1701855724",
+      "label": "Léonce Rosenberg",
+      "type": "person",
+      "names": [
+        {
+          "id": "212",
+          "type": "aat:300404651__first name",
+          "value": "Léonce"
+        },
+        {
+          "id": "219",
+          "type": "aat:300435247__family name",
+          "value": "Rosenberg"
+        }
+      ],
+      "gender": "aat:300411836",
+      "WD": "Q947522___Léonce_Rosenberg_(Q947522)_-_French_art_dealer_and_art_historian_(1879-1947)",
+      "relations": [
+        {
+          "id": "67",
+          "type": "gvp:ulan2778_owner_of__owner of",
+          "party": "JNl1701855957"
+        },
+        {
+          "id": "92",
+          "type": "gvp:ulan1501_sibling_of__sibling of",
+          "party": "KJE1701855857"
+        }
+      ],
+      "birthTimeString": "1877",
+      "birthTimeEDTF": "1877",
+      "deathTimeString": "1947-07-31",
+      "deathTimeEDTF": "1947-07-31",
+      "locations": [
+        {
+          "id": "80",
+          "city": "Paris",
+          "WD": "Q90___Paris_(Q90)_-_capital_of_France"
+        }
+      ]
+    },
+    "AGJ1701856304": {
+      "id": "AGJ1701856304",
+      "label": "Galerie Rive Gauche",
+      "type": "group",
+      "names": [
+        {
+          "id": "744",
+          "value": "Galerie Rive Gauche"
+        }
+      ],
+      "groupTypes": [
+        "aat:300312243__art galleries (institutions)"
+      ],
+      "WD": "Q73572785___Galerie_Rive_Gauche_(Q73572785)_-_1950-1970_Paris_Dealer/Gallery",
+      "birthTimeString": "1950",
+      "birthTimeEDTF": "1950",
+      "deathTimeString": "1970",
+      "deathTimeEDTF": "1970",
+      "locations": [
+        {
+          "id": "235",
+          "city": "Paris",
+          "WD": "Q90___Paris_(Q90)_-_capital_of_France"
+        }
+      ]
+    },
+    "dOj1701856305": {
+      "id": "dOj1701856305",
+      "label": "Harry Lewis Winston",
+      "type": "person",
+      "names": [
+        {
+          "id": "745",
+          "type": "aat:300404651__first name",
+          "value": "Harry"
+        },
+        {
+          "id": "749",
+          "type": "aat:300404654__middle name",
+          "value": "Lewis"
+        },
+        {
+          "id": "750",
+          "type": "aat:300435247__family name",
+          "value": "Winston"
+        }
+      ],
+      "gender": "aat:300411836",
+      "WD": "Q55950027___Harry_Lewis_Winston_(Q55950027)_-_Winston,_Harry_Lewis",
+      "ULAN": "ulan/500348528___Winston,_Harry_Lewis_(ulan/500348528)",
+      "relations": [
+        {
+          "id": "1",
+          "type": "gvp:ulan1541_spouse_of__spouse of",
+          "party": "IDB1704203643782"
+        }
+      ],
+      "birthTimeString": "Jan. 10, 1892",
+      "birthTimeEDTF": "1892-01-10",
+      "deathTimeString": "Apr. 1966",
+      "deathTimeEDTF": "1966-04",
+      "locations": [
+        {
+          "id": "236",
+          "city": "Birmingham",
+          "province": "MI",
+          "WD": "Q593324___Birmingham_(Q593324)_-_city_in_Michigan,_United_States"
+        }
+      ]
+    },
+    "IDB1704203643782": {
+      "id": "IDB1704203643782",
+      "label": "Lydia Malbin",
+      "type": "person",
+      "names": [
+        {
+          "id": "746",
+          "type": "aat:300404651__first name",
+          "value": "Lydia"
+        },
+        {
+          "id": "747",
+          "type": "aat:300404681__birth name",
+          "value": "Kahn"
+        },
+        {
+          "id": "748",
+          "type": "aat:300404683__married name",
+          "value": "Winston"
+        },
+        {
+          "id": "751",
+          "type": "aat:300404683__married name",
+          "value": "Malbin"
+        }
+      ],
+      "gender": "aat:300411837",
+      "WD": "Q55999404___Lydia_Winston_(Q55999404)_-_Detroit,_MI_Art_Collector",
+      "ULAN": "ulan/500342124___Winston,_Lydia_(ulan/500342124)",
+      "relations": [
+        {
+          "id": "0",
+          "type": "gvp:ulan1541_spouse_of__spouse of",
+          "party": "dOj1701856305"
+        }
+      ],
+      "birthTimeString": "1897-11-13",
+      "birthTimeEDTF": "1897-11-13",
+      "deathTimeString": "1989-10-14",
+      "deathTimeEDTF": "1989-10-14",
+      "locations": [
+        {
+          "id": "404",
+          "city": "Birmingham",
+          "province": "MI",
+          "WD": "Q593324___Birmingham_(Q593324)_-_city_in_Michigan,_United_States"
+        }
+      ]
+    },
+    "UBy1701856588": {
+      "id": "UBy1701856588",
+      "label": "Rue Carpenter",
+      "type": "person",
+      "names": [
+        {
+          "id": "998",
+          "type": "aat:300404656__nickname",
+          "value": "Rue"
+        },
+        {
+          "id": "1001",
+          "type": "aat:300404651__first name",
+          "value": "Luritia"
+        },
+        {
+          "id": "1003",
+          "type": "aat:300404681__birth name",
+          "value": "Winterbotham"
+        },
+        {
+          "id": "1004",
+          "type": "aat:300404683__married name",
+          "value": "Carpenter"
+        }
+      ],
+      "gender": "aat:300411837",
+      "WD": "Q65045566___Rue_Winterbotham_Carpenter_(Q65045566)_-_American_art_collector_and_philanthropist",
+      "relations": [
+        {
+          "id": "174",
+          "type": "gvp:ulan1512_parent_of__parent of",
+          "party": "PCQ1701856589"
+        },
+        {
+          "id": "175",
+          "type": "gvp:ulan1501_sibling_of__sibling of",
+          "party": "TPE1701855682"
+        }
+      ],
+      "birthTimeString": "1876",
+      "birthTimeEDTF": "1876",
+      "deathTimeString": "1931",
+      "deathTimeEDTF": "1931",
+      "locations": [
+        {
+          "id": "302",
+          "city": "Chicago",
+          "WD": "Q1297___Chicago_(Q1297)_-_city_and_county_seat_of_Cook_County,_Illinois,_United_States_of_America"
+        }
+      ]
+    },
+    "JNl1701855957": {
+      "id": "JNl1701855957",
+      "label": "Galerie de L’Effort Moderne",
+      "type": "group",
+      "names": [
+        {
+          "id": "422",
+          "value": "Galerie de L’Effort Moderne"
+        }
+      ],
+      "groupTypes": [
+        "aat:300312243__art galleries (institutions)"
+      ],
+      "WD": "Q73572753___Galerie_de_l'Effort_Moderne_(Q73572753)_-_1918-_Paris_Art_Dealership/Gallery",
+      "ULAN": "ulan/500310183___Galerie_de_l'Effort_Moderne_(ulan/500310183)",
+      "relations": [
+        {
+          "id": "66",
+          "type": "gvp:ulan2779_owned_by__owned by",
+          "party": "EEn1701855724"
+        }
+      ],
+      "birthTimeString": "1918",
+      "birthTimeEDTF": "1918",
+      "deathTimeString": "1941",
+      "deathTimeEDTF": "1941",
+      "locations": [
+        {
+          "id": "146",
+          "city": "Paris",
+          "WD": "Q90___Paris_(Q90)_-_capital_of_France"
+        }
+      ]
+    },
+    "KJE1701855857": {
+      "id": "KJE1701855857",
+      "label": "Paul Rosenberg",
+      "type": "person",
+      "names": [
+        {
+          "id": "330",
+          "type": "aat:300404651__first name",
+          "value": "Paul"
+        },
+        {
+          "id": "337",
+          "type": "aat:300435247__family name",
+          "value": "Rosenberg"
+        }
+      ],
+      "gender": "aat:300411836",
+      "WD": "Q560643___Paul_Rosenberg_(Q560643)_-_French_art_dealer_(1881-1959)",
+      "ULAN": "ulan/500372940___Rosenberg,_Paul_(ulan/500372940)",
+      "relations": [
+        {
+          "id": "91",
+          "type": "gvp:ulan1501_sibling_of__sibling of",
+          "party": "EEn1701855724"
+        }
+      ],
+      "birthTimeString": "1881-12-29",
+      "birthTimeEDTF": "1881-12-29",
+      "deathTimeString": "1959-06-29",
+      "deathTimeEDTF": "1959-06-29",
+      "locations": [
+        {
+          "id": "126",
+          "city": "Paris",
+          "WD": "Q90___Paris_(Q90)_-_capital_city_and_largest_city_of_France"
+        },
+        {
+          "id": "127",
+          "city": "New York City",
+          "WD": "Q60___New_York_City_(Q60)_-_most_populous_city_in_the_United_States"
+        }
+      ]
+    }
+  }
+}
