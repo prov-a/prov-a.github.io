@@ -255,7 +255,7 @@
 
         // Add event listener to remove buttons
         $(document).on('click', '.btn-remove', function() {
-            const confirmed = confirm('Are you sure you want to delete the row?');
+            const confirmed = confirm('⚠️ Are you sure you want to delete the row?');
             if (confirmed) {
                 $(this).closest('tr').remove();
                 updateAddRowButtonVisibility(); // Update Add Row button visibility
@@ -336,7 +336,7 @@
 
         // Confirmation before leaving the page
         window.addEventListener('beforeunload', function(e) {
-            const confirmationMessage = 'Data will be lost. Are you sure you want to leave this page?';
+            const confirmationMessage = '⚠️ Data will be lost. Are you sure you want to leave this page?';
             e.returnValue = confirmationMessage;
             return confirmationMessage;
         });

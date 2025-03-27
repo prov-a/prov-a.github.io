@@ -104,7 +104,7 @@
         const relation_snippet = relation_form;
 
          $(document).on('click', '.btn-change', function() {
-            const confirmed = confirm('Make sure you downloaded the project before exiting. Are you sure you want to change project?');
+            const confirmed = confirm('⚠️ Make sure you downloaded the project before exiting. Are you sure you want to change project?');
             if (confirmed) {
                 localStorage.clear()
                 indexedDB.databases().then(databases => {

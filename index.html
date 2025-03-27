@@ -76,6 +76,11 @@
     </section>
 
     <div class="container" style="flex: 1">
+        <div class="d-flex justify-content-center my-5">
+            <button type="button" class="btn btn-primary ms-2" id="demoDataBtn">
+                <i class="fa-solid fa-forward-fast"></i> Quick Start with Demo Project
+            </button>
+        </div>
         <div class="row text-center my-5 mx-5 align-items-stretch">
             <!-- Step 1: Initialise Project -->
             <div class="col-sm pb-2">
@@ -83,7 +88,7 @@
                     <div class="card-body d-flex flex-column align-items-center flex-grow-1 justify-content-between">
                         <a href="initialise-project.html" class="home-card" aria-label="Initialise Project">
                             <i class="fa-solid fa-play fa-6x bg-init text-white icon-circular"></i><br>
-                            <span class="btn bg-init mt-3">Initialise Project</span>
+                            <span class="btn bg-init mt-3" style="color: white !important">Initialise Project</span>
                         </a>
                         <p class="mt-2 text-muted">
                             Start your project by importing a table or creating one from scratch.
@@ -103,7 +108,7 @@
                     <div class="card-body d-flex flex-column align-items-center flex-grow-1 justify-content-between">
                         <a href="structure-data.html" class="home-card" aria-label="Structure Data">
                             <i class="fa-solid fa-list-check fa-6x bg-edit text-white icon-circular"></i><br>
-                            <span class="btn bg-edit mt-3">Structure Data</span>
+                            <span class="btn bg-edit mt-3" style="color: white !important">Structure Data</span>
                         </a>
                         <p class="mt-2 text-muted">
                             Organise and structure your data interactively.
@@ -123,7 +128,7 @@
                     <div class="card-body d-flex flex-column align-items-center flex-grow-1 justify-content-between">
                         <a href="generate-lod.html" class="home-card" aria-label="Query Data">
                             <i class="fa-solid fa-diagram-project fa-6x bg-data text-white icon-circular"></i><br>
-                            <span class="btn bg-data mt-3">Generate LOD</span>
+                            <span class="btn bg-data mt-3" style="color: white !important">Generate LOD</span>
                         </a>
                         <p class="mt-2 text-muted">
                             Generate Linked Open Data and query it using SPARQL.
@@ -149,4 +154,26 @@
         </div>
     </footer>
 </body>
+<script>
+document.getElementById('demoDataBtn').addEventListener('click', function(event) {
+    event.preventDefault();
+    const userConfirmed = confirm("⚠️ Any previous project will be overwritten! Are you sure you want to use demo project?");
+    if (!userConfirmed) {
+        return;
+    }
+    const jsonUrl = 'https://raw.githubusercontent.com/prov-a/prov-a.github.io/refs/heads/main/src/demo_project.json';
+    fetch(jsonUrl)
+        .then(response => {
+            return response.json();
+        })
+        .then(jsonData => {
+            localStorage.setItem('provaData', JSON.stringify(jsonData));
+            window.location.href = "structure-data.html";
+        })
+        .catch(error => {
+            console.error('Error loading JSON:', error);
+            alert('Failed to load project data.');
+        });
+});
+</script>
 </html>
