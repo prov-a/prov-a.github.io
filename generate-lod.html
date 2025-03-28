@@ -62,7 +62,7 @@
             <div class="row">
                  <div class="col text-center">
                     <button class="btn btn-success d-none" id="generateLODButton">Initialize Database</button>
-                    <div id="noDataMessage" class="mt-3 d-none">No data found. Please <a href="project.html">initialize a new project</a>. </div>
+                    <div id="noDataMessage" class="mt-3 d-none">No data found. Please <a href="initialise-project.html">initialize a new project</a>. </div>
                 </div>
             </div>
         </div>
@@ -83,9 +83,21 @@
         </div>
         <div id="step2" class="d-none">
             <div class="container">
-                <div class="d-block text-center my-4">
-                    <a type="button" class="btn btn-success" id="downloadLink"><i class="fa-solid fa-file-arrow-down"></i> Download LOD</a>
-                    <a type="button" class="btn btn-primary" id="updateLOD"><i class="fa-solid fa-arrow-rotate-right"></i> Refresh LOD</a>
+                <div class="d-flex justify-content-between align-items-center my-4">
+                    <div>
+                        <a type="button" class="btn btn-success me-2" id="downloadLink">
+                            <i class="fa-solid fa-file-arrow-down"></i> Download LOD
+                        </a>
+                        <a type="button" class="btn btn-primary" id="updateLOD">
+                            <i class="fa-solid fa-arrow-rotate-right"></i> Refresh LOD
+                        </a>
+                    </div>
+                    <div>
+                        <button class="btn btn-info me-2" data-bs-toggle="modal" data-bs-target="#sparqlModal"> <i class="fa-solid fa-folder-open"></i> SPARQL Queries</button>
+                        <a href="https://github.com/prov-a/prov-a.github.io/blob/main/data-model.md" type="button" class="btn btn-secondary" target="_blank">
+                            Data Model <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </div>
                 </div>
                 <div class="row">
                   <div class="col">
@@ -103,10 +115,10 @@ PREFIX np: <http://www.nanopub.org/nschema#>
 PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX gvp: <http://vocab.getty.edu/ontology#>
 
-SELECT ?s ?p ?o ?g
+SELECT ?subject ?predicate ?object ?graph
 WHERE {
-  GRAPH ?g {
-    ?s ?p ?o .
+  GRAPH ?graph {
+    ?subject ?predicate ?object .
   }
 } LIMIT 1000</textarea>
                     </div>
@@ -144,6 +156,26 @@ WHERE {
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="sparqlModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="sparqlModalLabel">SPARQL Queries</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="list-group" id="sparqlQueryList">
+              <!-- Queries will be dynamically added here -->
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <script src="./src/dist/codemirror.js"></script>
     <script src="./src/dist/matchbrackets.js"></script>
@@ -258,6 +290,116 @@ WHERE {
                         link.click();
                         document.body.removeChild(link);
                     }
+                });
+
+                const sparqlPrefixes = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>
+PREFIX crminf: <http://www.cidoc-crm.org/crminf/>
+PREFIX np: <http://www.nanopub.org/nschema#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX gvp: <http://vocab.getty.edu/ontology#>
+
+`;
+                const sparqlQuerySections = [
+                    {
+                        category: "Queries for Physical Objects",
+                        queries: [
+                            { id: 1, description: "Retrieve Titles of Physical Objects", query: `SELECT ?physical_object ?title_content\nWHERE {\n  GRAPH ?object_graph {\n    ?physical_object a crm:E19_Physical_Object .\n    ?physical_object crm:P102_has_title ?title.\n    ?title crm:P190_has_symbolic_content ?title_content.\n  }\n}\n` },
+                            { id: 2, description: "Retrieve URLs for Physical Objects", query: `SELECT ?physical_object ?url_content\nWHERE {\n  GRAPH ?object_graph {\n    ?physical_object a crm:E19_Physical_Object .\n    ?physical_object crm:P70i_is_documented_in ?document.\n    ?document crm:P1_is_identified_by ?url.\n    ?url crm:P190_has_symbolic_content ?url_content.\n  }\n}\n` },
+                            { id: 3, description: "Retrieve Medium Information of Physical Objects", query: `SELECT ?physical_object ?medium_content\nWHERE {\n  GRAPH ?object_graph {\n    ?physical_object a crm:E19_Physical_Object .\n    ?physical_object crm:P67i_is_referred_to_by ?linguistic_object .\n    ?linguistic_object crm:P2_has_type <http://vocab.getty.edu/aat/300435429> .\n    ?linguistic_object crm:P190_has_symbolic_content ?medium_content .\n  }\n}\n` },
+                            { id: 4, description: "Retrieve Accession Numbers of Physical Objects", query: `SELECT ?physical_object ?accession\nWHERE {\n  GRAPH ?object_graph {\n    ?physical_object a crm:E19_Physical_Object .\n    ?physical_object crm:P67i_is_referred_to_by ?linguistic_object .\n    ?linguistic_object crm:P2_has_type <http://vocab.getty.edu/aat/300312355> .\n    ?linguistic_object crm:P190_has_symbolic_content ?accession .\n  }\n}\n` },
+                            { id: 5, description: "Retrieve Credit Line for Physical Objects", query: `SELECT ?physical_object ?credit_line\nWHERE {\n  GRAPH ?object_graph {\n    ?physical_object a crm:E19_Physical_Object .\n    ?physical_object crm:P67i_is_referred_to_by ?linguistic_object .\n    ?linguistic_object crm:P2_has_type <http://vocab.getty.edu/aat/300435418> .\n    ?linguistic_object crm:P190_has_symbolic_content ?credit_line .\n  }\n}\n` }
+                        ]
+                    },
+                    {
+                        category: "Queries for Provenance Activities",
+                        queries: [
+                            { id: 6, description: "Retrieve Provenance Activity Date Range", query: `SELECT DISTINCT ?provenance_activity ?begin_of_the_begin ?end_of_the_end\nWHERE {\n  GRAPH ?assertion_graph {\n    ?provenance_activity a crm:E7_Activity .\n    ?provenance_activity crm:P4_has_time-span ?timespan .\n    OPTIONAL { ?timespan crm:P82a_begin_of_the_begin ?begin_of_the_begin . }\n    OPTIONAL { ?timespan crm:P82b_end_of_the_end ?end_of_the_end . }\n  }\n}\n` },
+                            { id: 7, description: "Retrieve Provenance Event Type", query: `SELECT DISTINCT ?provenance_activity ?activity_type\nWHERE {\n  GRAPH ?assertion_graph {\n    ?provenance_activity a crm:E7_Activity .\n    ?provenance_activity crm:P2_has_type ?activity_type\n  }\n}\n` },
+                            { id: 8, description: "Retrieve Sender and Receiver of Ownership Transfer", query: `SELECT ?provenance_activity ?sender ?receiver ?physical_object\nWHERE {\n  GRAPH ?assertion_graph {\n    ?provenance_activity a crm:E7_Activity .\n    ?provenance_activity crm:P9_consists_of ?acquisition .\n    ?acquisition crm:P24_transferred_title_of ?physical_object .\n    ?acquisition crm:P22_transferred_title_to ?receiver .\n    ?acquisition crm:P23_transferred_title_from ?sender .\n  }\n}\n` },
+                            { id: 9, description: "Retrieve Sender and Receiver of Custody Transfers", query: `SELECT ?provenance_activity ?sender ?receiver ?physical_object\nWHERE {\n  GRAPH ?assertion_graph {\n    ?provenance_activity a crm:E7_Activity .\n    ?provenance_activity crm:P9_consists_of ?custody_change .\n    ?custody_change crm:P30_transferred_custody_of ?physical_object .\n    ?custody_change crm:P29_custody_received_by ?receiver .\n    ?custody_change crm:P28_custody_surrendered_by ?sender .\n  }\n}\n` },
+                            { id: 10, description: "Retrieve Agents Involved in Provenance Activities", query: `SELECT ?provenance_activity ?agent\nWHERE {\n  GRAPH ?assertion_graph {\n    ?provenance_activity a crm:E7_Activity .\n    ?provenance_activity crm:P9_consists_of ?acquisition .\n    ?acquisition crm:P14_carried_out_by ?agent .\n  }\n}\n` },
+                        ]
+                    },
+                    {
+                        category: "Queries for Parties",
+                        queries: [
+                            { id: 11, description: "Retrieve Group Types of Parties", query: `SELECT DISTINCT ?party ?type\nWHERE {\n  GRAPH ?party_graph {\n    ?party a crm:E74_Group .\n    ?party crm:P2_has_type ?type .\n    ?type crm:P127_has_broader_term <http://vocab.getty.edu/aat/300192630> .\n  }\n}\n` },
+                            { id: 12, description: "Retrieve Gender Classification of Individuals", query: `SELECT DISTINCT ?party ?sex\nWHERE {\n  GRAPH ?party_graph {\n    ?party a crm:E21_Person .\n    ?party crm:P2_has_type ?sex .\n    ?sex crm:P127_has_broader_term <http://vocab.getty.edu/aat/300445640> .\n  }\n}\n` },
+                            { id: 13, description: "Retrieve Birth and Death Dates of Individuals", query: `SELECT DISTINCT ?party ?birth_begin_of_the_begin ?birth_end_of_the_end ?death_begin_of_the_begin ?death_end_of_the_end\nWHERE {\n  GRAPH ?party_graph {\n    ?party a crm:E21_Person .\n    ?party crm:P98i_was_born ?birth .\n    ?birth crm:P4_has_time-span ?birth_timespan .\n    ?birth_timespan crm:P82a_begin_of_the_begin ?birth_begin_of_the_begin .\n    ?birth_timespan crm:P82b_end_of_the_end ?birth_end_of_the_end .\n    ?party crm:P100i_died_in ?death .\n    ?death crm:P4_has_time-span ?death_timespan .\n    ?death_timespan crm:P82a_begin_of_the_begin ?death_begin_of_the_begin .\n    ?death_timespan crm:P82b_end_of_the_end ?death_end_of_the_end .\n  }\n}\n` },
+                            { id: 14, description: "Retrieve Names and Appellations of Individuals", query: `SELECT ?party ?party_label (GROUP_CONCAT(DISTINCT ?appellation_content; separator='; ') AS ?appellations)\nWHERE {\n  GRAPH ?party_graph {\n    ?party a crm:E21_Person .\n    ?party rdfs:label ?party_label .\n    ?party crm:P1_is_identified_by ?appellation .\n    ?appellation crm:P190_has_symbolic_content ?appellation_content .\n  }\n}\nGROUP BY ?party ?party_label\n` },
+                            { id: 15, description: "Retrieve Locations Associated with Individuals", query: `SELECT ?party ?party_label (GROUP_CONCAT(DISTINCT ?location_label; separator='; ') AS ?locations)\nWHERE {\n  GRAPH ?party_graph {\n    ?party a crm:E21_Person .\n    ?party rdfs:label ?party_label .\n    ?party crm:P74_has_current_or_former_residence ?location .\n    ?location rdfs:label ?location_label .\n  }\n}\nGROUP BY ?party ?party_label\n` },
+                        ]
+                    },
+                    {
+                        category: "Queries for Provenance Assessments",
+                        queries: [
+                            { id: 16, description: "Retrieve Physical Objects in Provenance Assessments", query: `SELECT ?assessment ?physical_object\nWHERE {\n  GRAPH ?provenance_graph {\n    ?assessment a crminf:I15_Provenance_Assessment .\n    ?assessment crminf:J20_is_about_the_provenance_of ?physical_object .\n  }\n}\n` },
+                            { id: 17, description: "Retrieve Sources Used in Provenance Assessments", query: `SELECT ?assessment ?source_label\nWHERE {\n  GRAPH ?provenance_graph {\n    ?assessment a crminf:I15_Provenance_Assessment .\n    ?assessment crm:P16_used_specific_object ?source .\n    ?source rdfs:label ?source_label .\n  }\n}\n` },
+                            { id: 18, description: "Retrieve Authors of Provenance Assessments", query: `SELECT ?assessment ?author_label\nWHERE {\n  GRAPH ?provenance_graph {\n    ?assessment a crminf:I15_Provenance_Assessment .\n    ?assessment crm:P14_carried_out_by ?author .\n    ?author rdfs:label ?author_label .\n  }\n}\n` },
+                            { id: 19, description: "Retrieve Date Range of Provenance Assessments", query: `SELECT ?assessment ?begin_of_the_begin ?end_of_the_end\nWHERE {\n  GRAPH ?provenance_graph {\n    ?assessment a crminf:I15_Provenance_Assessment .\n    ?assessment crm:P4_has_time-span ?timespan .\n    ?timespan crm:P82a_begin_of_the_begin ?begin_of_the_begin .\n    ?timespan crm:P82b_end_of_the_end ?end_of_the_end .\n  }\n}\n` },
+                            { id: 20, description: "Retrieve Assertions in Provenance Assessments", query: `SELECT ?assessment ?assertion_graph\nWHERE {\n  GRAPH ?provenance_graph {\n    ?assessment a crminf:I15_Provenance_Assessment .\n    ?assessment crminf:J21_concluded_provenance ?belief .\n    ?belief crminf:J4_that ?assertion_graph .\n  }\n}\n` }
+                        ]
+                    },
+                    {
+                        category: "Queries Across Multiple Graphs",
+                        queries: [
+                            { id: 21, description: "Retrieve Activities Involving Female Parties", query: `SELECT ?activity ?party ?party_label\nWHERE {\n  GRAPH ?assertion_graph {\n    ?activity a crm:E7_Activity .\n    ?activity crm:P9_consists_of ?sub_activity .\n    ?sub_activity ?role ?party .\n  }\n  GRAPH ?party_graph {\n  	?party crm:P2_has_type <http://vocab.getty.edu/aat/300411837> .\n    ?party rdfs:label ?party_label .\n  }\n}\n` },
+                            { id: 22, description: "Retrieve Uncertain Activity Types", query: `SELECT ?provenance_activity ?activity_type\nWHERE {\n  GRAPH ?provenance_graph {\n    ?assessment a crminf:I15_Provenance_Assessment .\n    ?assessment crminf:J21_concluded_provenance ?belief .\n    ?belief crminf:J5_holds_to_be <http://vocab.getty.edu/aat/300435721> .\n    ?belief crminf:J4_that ?assertion_graph .\n  }\n  GRAPH ?assertion_graph {\n    ?provenance_activity a crm:E7_Activity .\n    ?provenance_activity crm:P2_has_type ?activity_type .\n  }\n}\n` },
+                            { id: 23, description: "Retrieve Senders and Sources in Activities", query: `SELECT ?source_label ?party_label ?sender\nWHERE {\n  GRAPH ?provenance_graph {\n    ?assessment a crminf:I15_Provenance_Assessment .\n    ?assessment crm:P16_used_specific_object ?source .\n    ?source rdfs:label ?source_label .\n    ?assessment crminf:J21_concluded_provenance ?belief .\n    ?belief crminf:J4_that ?assertion_graph .\n  }\n  GRAPH ?assertion_graph {\n    ?provenance_activity a crm:E7_Activity .\n    ?provenance_activity crm:P9_consists_of ?sub_activity .\n    ?sub_activity ?sender ?party .\n  }\n  GRAPH ?party_graph {\n    ?party rdfs:label ?party_label .\n  }\n  FILTER ( ?sender = crm:P23_transferred_title_from || ?sender = crm:P28_custody_surrendered_by )\n}\n` },
+                            { id: 24, description: "Retrieve Acquisition Receivers in Paris", query: `SELECT DISTINCT ?provenance_activity ?party_label\nWHERE {\n  GRAPH ?assertion_graph {\n    ?provenance_activity a crm:E7_Activity .\n    ?provenance_activity crm:P9_consists_of ?sub_activity .\n    ?sub_activity crm:P22_transferred_title_to ?party .\n  }\n  GRAPH ?party_graph {\n    ?party rdfs:label ?party_label .\n    ?party crm:P74_has_current_or_former_residence ?location .\n    ?location owl:sameAs <https://www.wikidata.org/wiki/Q90> .\n  }\n}\n` },
+                            { id: 25, description: "Retrieve Activity Dates and Object Titles", query: `SELECT DISTINCT ?title_content ?end_of_the_end\nWHERE {\n  GRAPH ?assertion_graph {\n    ?provenance_activity a crm:E7_Activity .\n    ?provenance_activity crm:P9_consists_of ?sub_activity .\n    ?sub_activity ?involved ?physical_object .\n    ?provenance_activity a crm:E7_Activity .\n    ?provenance_activity crm:P4_has_time-span ?timespan .\n    OPTIONAL { ?timespan crm:P82b_end_of_the_end ?end_of_the_end . }\n  }\n  GRAPH ?object_graph {\n    ?physical_object a crm:E19_Physical_Object .\n    ?physical_object crm:P102_has_title ?title.\n    ?title crm:P190_has_symbolic_content ?title_content.\n  }\n  FILTER ( ?involved = crm:P24_transferred_title_of || ?involved = crm:P30_transferred_custody_of )\n}\nORDER BY ?end_of_the_end\n` }
+                        ]
+                    },
+                    {
+                        category: "Query for Incomplete Records",
+                        queries: [
+                            { id: 26, description: "Retrieve Gaps Between Consecutive Activities", query: `SELECT DISTINCT ?activity_1 ?activity_2\nWHERE {\n  GRAPH ?assertion_graph_1 {\n    ?activity_1 crm:P9_consists_of ?sub_activity_1 .\n    ?sub_activity_1 ?receiver ?party_A .\n    VALUES ?receiver { crm:P29_custody_received_by crm:P22_transferred_title_to } \n  }\n  GRAPH ?assertion_graph_2 {\n    ?activity_2 crm:P183i_starts_after_the_end_of ?activity_1 .\n    FILTER NOT EXISTS {\n      ?activity_2 crm:P9_consists_of ?sub_activity_2 .\n      ?sub_activity_2 ?sender ?party_A .\n      VALUES ?sender { crm:P28_custody_surrendered_by crm:P23_transferred_title_from }     \n    }\n  }\n}\n` },
+                            { id: 27, description: "Retrieve Gaps After Object Creation", query: `SELECT DISTINCT ?activity_1 ?activity_2\nWHERE {\n  GRAPH ?assertion_graph_1 {\n    ?activity_1 crm:P9_consists_of ?sub_activity_1 .\n    ?sub_activity_1 a crm:E12_Production .\n    ?sub_activity_1 crm:P14_carried_out_by ?party_A .\n  }\n  GRAPH ?assertion_graph_2 {\n    ?activity_2 crm:P183i_starts_after_the_end_of ?activity_1 .\n    FILTER NOT EXISTS {\n      ?activity_2 crm:P9_consists_of ?sub_activity_2 .\n      ?sub_activity_2 ?sender ?party_A .\n      VALUES ?sender { crm:P28_custody_surrendered_by crm:P23_transferred_title_from }     \n    }\n  }\n}\n` },
+                            { id: 28, description: "Retrieve Activities Missing Dates", query: `SELECT DISTINCT ?provenance_activity\nWHERE {\n  GRAPH ?assertion_graph {\n    ?provenance_activity a crm:E7_Activity .\n    FILTER NOT EXISTS {\n      ?provenance_activity crm:P4_has_time-span ?timespan .\n    }\n  }\n}\n` },
+                            { id: 29, description: "Retrieve Assertions Missing Sources", query: `SELECT DISTINCT ?provenance_activity\nWHERE {\n  GRAPH ?provenance_graph {\n    ?assessment a crminf:I15_Provenance_Assessment .\n    ?assessment crminf:J21_concluded_provenance ?belief .\n    ?belief crminf:J4_that ?assertion_graph .\n    FILTER NOT EXISTS { ?assessment crm:P16_used_specific_object ?source . }\n  }\n  GRAPH ?assertion_graph {\n    ?provenance_activity a crm:E7_Activity .\n  }\n}\n` },
+                            { id: 30, description: "Retrieve People Missing ULAN Identifiers", query: `SELECT DISTINCT ?party ?party_label\nWHERE {\n  GRAPH ?party_graph {\n    ?party a crm:E21_Person .\n    ?party rdfs:label ?party_label .\n    FILTER NOT EXISTS {\n      ?party owl:sameAs ?ulan .\n      FILTER(CONTAINS(STR(?ulan), 'ulan'))\n    }\n  }\n}\n` }
+                        ]
+                    }
+                ];
+
+                const $sparqlQueryList = $("#sparqlQueryList");
+                sparqlQuerySections.forEach((section, index) => {
+                    const categoryId = `category-${index}`;
+                    const $categoryTitle = $(`<h5 class="mt-3 text-primary">${section.category}</h5>`);
+                    $sparqlQueryList.append($categoryTitle);
+                    const $categoryAccordion = $(`
+                        <div class="accordion" id="${categoryId}"></div>
+                    `);
+                    section.queries.forEach((query, queryIndex) => {
+                        const queryId = `${categoryId}-query-${queryIndex}`;
+                        const $queryItem = $(`
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-${queryId}">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${queryId}" aria-expanded="false">
+                                        ${query.description}
+                                    </button>
+                                </h2>
+                                <div id="collapse-${queryId}" class="accordion-collapse collapse" aria-labelledby="heading-${queryId}" data-bs-parent="#${categoryId}">
+                                    <div class="accordion-body">
+                                        <pre class="bg-light p-2 border rounded">${query.query}</pre>
+                                        <button class="btn btn-sm btn-primary use-query-btn mt-2" data-query="${query.query}">Use</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                        $queryItem.find(".use-query-btn").on("click", function () {
+                            const selectedQuery = sparqlPrefixes + $(this).data("query");
+                            $("#codeTextarea").val(selectedQuery);
+                            editor.setValue(selectedQuery);
+                            $('#sparqlModal').modal('hide');
+                        });
+                        $categoryAccordion.append($queryItem);
+                    });
+                    $sparqlQueryList.append($categoryAccordion);
                 });
             }
         });

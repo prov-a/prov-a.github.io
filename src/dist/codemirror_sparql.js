@@ -11,7 +11,7 @@ CodeMirror.defineMode("sparql", function(config) {
                              "ask", "from", "named", "where", "order", "limit", "offset", "filter", "optional",
                              "graph", "by", "asc", "desc", "as", "having", "undef", "values", "group",
                              "minus", "in", "not", "service", "silent", "using", "insert", "delete", "union",
-                             "data", "copy", "to", "move", "add", "create", "drop", "clear", "load"]);
+                             "data", "copy", "to", "move", "add", "create", "drop", "clear", "load", "exists", "contains", "str"]);
   var operatorChars = /[*+\-<>=&|]/;
 
   function tokenBase(stream, state) {
